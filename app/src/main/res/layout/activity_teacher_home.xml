@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/app_bar_bg"
+    tools:context=".TeacherHomeActivity">
+
+    <include layout="@layout/collapsing_toolbar" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/dashboard_layout_bg"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_30"
+            android:orientation="vertical"
+            android:padding="@dimen/padding_large">
+
+            <TextView
+                android:id="@+id/teacher_createSubject_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_semibold"
+                android:text="@string/create_subject"
+                android:textSize="@dimen/text_22"
+                app:drawableEndCompat="@drawable/ic_arrow_down" />
+
+            <LinearLayout
+                android:id="@+id/teacher_createSubject_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/gray" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/teacher_subjectName_til"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_5"
+                    android:hint="@string/subject_class"
+                    app:endIconMode="clear_text"
+                    app:startIconDrawable="@drawable/ic_class"
+                    app:startIconTint="@color/color_primary_variant">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/teacher_subjectName_et"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="text" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/teacher_yourName_til"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_10"
+                    android:hint="@string/your_name"
+                    app:endIconMode="clear_text"
+                    app:startIconDrawable="@drawable/ic_person"
+                    app:startIconTint="@color/color_primary_variant">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/teacher_yourName_et"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="text" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/teacher_classLink_til"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_10"
+                    android:hint="@string/class_link"
+                    app:endIconMode="clear_text"
+                    app:startIconDrawable="@drawable/ic_insert_link"
+                    app:startIconTint="@color/color_primary_variant">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/teacher_classLink_et"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textUri" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/teacher_timing_til"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_10"
+                    android:hint="@string/timing_if_any"
+                    app:endIconMode="clear_text"
+                    app:startIconDrawable="@drawable/ic_access_time"
+                    app:startIconTint="@color/color_primary_variant">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/teacher_timing_et"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="text" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/teacher_create_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="@dimen/margin_10"
+                    android:text="@string/create"
+                    android:textAllCaps="false"
+                    android:textSize="@dimen/text_16" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/margin_10"
+                android:background="@color/gray" />
+
+
+            <TextView
+                android:id="@+id/question_bank"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_semibold"
+                android:paddingHorizontal="@dimen/padding_small"
+                android:paddingVertical="@dimen/padding_normal"
+                android:text="@string/question_bank"
+                android:textSize="@dimen/text_22"
+                app:drawableEndCompat="@drawable/ic_arrow_forward" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/gray" />
+
+            <TextView
+                android:id="@+id/add_quiz"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_semibold"
+                android:paddingHorizontal="@dimen/padding_small"
+                android:paddingVertical="@dimen/padding_normal"
+                android:text="@string/add_quiz"
+                android:textSize="@dimen/text_22"
+                app:drawableEndCompat="@drawable/ic_arrow_forward" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/gray" />
+
+            <TextView
+                android:id="@+id/teacher_logout_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_semibold"
+                android:paddingHorizontal="@dimen/padding_small"
+                android:paddingVertical="@dimen/padding_normal"
+                android:text="@string/logout"
+                android:textColor="@android:color/holo_red_light"
+                android:textSize="@dimen/text_22" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/gray" />
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

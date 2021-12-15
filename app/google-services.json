@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "203355897416",
+    "project_id": "kotlinquiz-b000d",
+    "storage_bucket": "kotlinquiz-b000d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:203355897416:android:caa27ee9484528dcf4627d",
+        "android_client_info": {
+          "package_name": "com.example.quizkotlin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "203355897416-0dsgeut18lqo07s0pq8fu1ssd39kkr14.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDFXexGW3KW-hFD4_QlOdLw-Dff4PmbMvc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "203355897416-0dsgeut18lqo07s0pq8fu1ssd39kkr14.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

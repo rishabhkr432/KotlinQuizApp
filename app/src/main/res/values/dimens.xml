@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="padding_small">5dp</dimen>
+    <dimen name="padding_normal">8dp</dimen>
+    <dimen name="padding_large">12dp</dimen>
+    <dimen name="padding_xlarge">16dp</dimen>
+    <dimen name="padding_huge">24dp</dimen>
+
+    <dimen name="margin_5">5dp</dimen>
+    <dimen name="margin_10">10dp</dimen>
+    <dimen name="margin_15">15dp</dimen>
+    <dimen name="margin_20">20dp</dimen>
+    <dimen name="margin_25">25dp</dimen>
+    <dimen name="margin_30">30dp</dimen>
+
+    <dimen name="text_12">12sp</dimen>
+    <dimen name="text_16">16sp</dimen>
+    <dimen name="text_18">18sp</dimen>
+    <dimen name="text_20">20sp</dimen>
+    <dimen name="text_22">22sp</dimen>
+    <dimen name="text_24">24sp</dimen>
+    <dimen name="text_26">26sp</dimen>
+
+    <dimen name="background_corner_radius">20dp</dimen>
+    <dimen name="top_bar_radius">30dp</dimen>
+
+    <dimen name="top_bar_height">90dp</dimen>
+    <dimen name="top_bar_height_normal">60dp</dimen>
+    <dimen name="profile_image_size">65dp</dimen>
+    <dimen name="app_bar_height">250dp</dimen>
+    <dimen name="display_name_size">100dp</dimen>
+    <dimen name="display_name_text_size">70sp</dimen>
+
+    <dimen name="pop_up_cross_size">60dp</dimen>
+    <dimen name="splash_logo_size">125dp</dimen>
+</resources>
