@@ -15,15 +15,15 @@
 
 
 <!--        <activity android:name=".AddQuestionActivity"></activity>-->
-<!--        <activity android:name=".AttemptQuizActivity" />-->
+        <activity android:name=".AddQuiz" />
         <activity android:name=".StudentHomeActivity" />
         <activity android:name=".TeacherHomeActivity" />
         <activity android:name=".RegistrationActivity" />
-<!--        <activity android:name=".LoginActivity" />-->
+        <activity android:name=".LoginActivity" />
         <activity android:name=".QuestionBank" />
         <activity android:name=".AddQuestion" />
-<!--        <activity android:name=".SplashActivity"-->
-        <activity android:name=".LoginActivity"
+        <activity android:name=".SplashActivity"
+
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

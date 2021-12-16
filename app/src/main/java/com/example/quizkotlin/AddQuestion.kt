@@ -1,5 +1,7 @@
 package com.example.quizkotlin
 
+import android.annotation.SuppressLint
+import android.app.Activity
 import android.os.Bundle
 import android.util.Log
 import android.widget.EditText
@@ -11,6 +13,9 @@ import com.google.android.material.button.MaterialButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
+import android.content.Intent
+import android.widget.ImageView
+
 
 class AddQuestion : AppCompatActivity(){
     private lateinit var question: EditText
@@ -20,7 +25,7 @@ class AddQuestion : AppCompatActivity(){
     private lateinit var option4: EditText
     private lateinit var answer: EditText
     private var questionsList: ArrayList<Question> = arrayListOf()
-
+    private lateinit var goBack: ImageView
     private lateinit var save_button: MaterialButton
     private lateinit var database: FirebaseFirestore
     private lateinit var auth: FirebaseAuth
@@ -39,37 +44,64 @@ class AddQuestion : AppCompatActivity(){
 
         save_button.setOnClickListener {
             print("button clicked")
-            var question_temp : String = question.text.toString().trim()
-            var optionA : String = option1.text.toString().trim()
-            var optionB : String = option2.text.toString().trim()
-            var optionC : String = option3.text.toString().trim()
-            var optionD : String = option4.text.toString().trim()
-            var correctAnswer = answer.text.toString().trim()
-            validations(question_temp, optionA, optionB, optionC, optionD, correctAnswer)
-            if (isValidation == true) {
-                questionsList.add(Question(question_temp,optionA,optionB,optionC,optionD,correctAnswer))
-                saveClassToDatabase(Question(question_temp,optionA,optionB,optionC,optionD,correctAnswer))
+//            saveClassToDatabase
+
+        var question_temp : String = question.text.toString().trim()
+        var optionA : String = option1.text.toString().trim()
+        var optionB : String = option2.text.toString().trim()
+        var optionC : String = option3.text.toString().trim()
+        var optionD : String = option4.text.toString().trim()
+        var correctAnswer = answer.text.toString().trim()
+//            validations(question_temp, optionA, optionB, optionC, optionD, correctAnswer)
+//            if (isValidation == true) {
+//                questionsList.add(Question(question_temp,optionA,optionB,optionC,optionD,correctAnswer))
+            saveClassToDatabase(question_temp,optionA,optionB,optionC,optionD,correctAnswer)
             }
 
 
+
+        goBack.setOnClickListener {
+            TeacherHomeActivity.teachershomeActivity.finish()
+            val intent = Intent(this, TeacherHomeActivity::class.java)
+            startActivity(intent)
+            finish()
         }
     }
-    private fun saveClassToDatabase(question_save: Question ) {
+    private fun saveClassToDatabase(question_name: String, optionA: String, optionB: String, optionC: String, optionD: String, correctAnswer: String ) {
         val docRef = database.collection("Questions").document()
+        validations(question_name, optionA, optionB, optionC, optionD, correctAnswer)
+
+            if (isValidation == true) {
+                val newQuestion = Question(
+                    docRef.id,
+                    question_name,
+                    optionA,
+                    optionB,
+                    optionC,
+                    optionD,
+                    correctAnswer
+                )
+                questionsList.add(newQuestion)
 
 
 
-        docRef.set(question_save)
-            .addOnSuccessListener {
-                Toast.makeText(this, "Created", Toast.LENGTH_LONG).show()
-                finish();
-                this.recreate();
-            }
-            .addOnFailureListener { exception ->
-                Toast.makeText(this, "Failed", Toast.LENGTH_LONG).show()
-                finish();
-                this.recreate();
-                Log.d(TAG, "get failed with ", exception)
+
+
+                docRef.set(newQuestion)
+                    .addOnSuccessListener {
+                        Toast.makeText(this, "Created", Toast.LENGTH_LONG).show()
+                        Log.d(TAG, "Created")
+                        finish();
+                        overridePendingTransition(0, 0);
+                        startActivity(intent);
+                        overridePendingTransition(0, 0);
+                    }
+                    .addOnFailureListener { exception ->
+                        Toast.makeText(this, "Failed", Toast.LENGTH_LONG).show()
+                        finish();
+//                this.recreate();
+                        Log.d(TAG, "get failed with ", exception)
+                    }
             }
     }
 
@@ -82,6 +114,7 @@ class AddQuestion : AppCompatActivity(){
         option4 = findViewById(R.id.option4)
         answer = findViewById(R.id.correct_answer)
         save_button = findViewById(R.id.save_button)
+        goBack = findViewById(R.id.goBackButton)
         print("Info taken")
 
 
@@ -101,7 +134,7 @@ class AddQuestion : AppCompatActivity(){
                     if (optionB != "" && !optionB.isEmpty()) {
                         if (optionC != "" && !optionC.isEmpty()) {
                             if (optionD != "" && !optionD.isEmpty()) {
-                                if (correctAnswer != "" && !correctAnswer.isEmpty()) {
+                                if ((correctAnswer != "" && !correctAnswer.isEmpty()) && correctAnswer == optionA || correctAnswer == optionB || correctAnswer == optionC || correctAnswer == optionD)  {
                                     isValidation = true
                                     return
                                 } else {
@@ -141,8 +174,17 @@ class AddQuestion : AppCompatActivity(){
                 return
             }
         }
-    companion object {
-        private const val TAG = "AddQuestion"
+    init {
+        addquestionActivity = this
     }
+    companion object {
+        @SuppressLint("StaticFieldLeak")
+        private const val TAG = "AddQuestion"
+        lateinit var addquestionActivity: Activity
+    }
+
+}
+
+private operator fun Boolean.invoke(value: Any) {
 
 }

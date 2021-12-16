@@ -27,6 +27,7 @@ class TeacherHomeActivity : AppCompatActivity() {
     private var subjectName = ""
     private lateinit var question_bank: TextView
     private lateinit var add_quiz: TextView
+    private lateinit var add_question: TextView
     private lateinit var tvDisplayName: TextView
     private lateinit var tvEmail: TextView
     private lateinit var tvUserType: TextView
@@ -71,9 +72,15 @@ class TeacherHomeActivity : AppCompatActivity() {
             startActivity(loginIntent)
             finish()
         }
-        add_quiz.setOnClickListener {
+        add_question.setOnClickListener {
 
             val loginIntent = Intent(this, AddQuestion::class.java)
+            startActivity(loginIntent)
+            finish()
+        }
+        add_quiz.setOnClickListener {
+
+            val loginIntent = Intent(this, AddQuiz::class.java)
             startActivity(loginIntent)
             finish()
         }
@@ -88,6 +95,7 @@ class TeacherHomeActivity : AppCompatActivity() {
 
         question_bank = findViewById(R.id.question_bank)
         add_quiz = findViewById(R.id.add_quiz)
+        add_question = findViewById(R.id.add_question)
         tvLogout = findViewById(R.id.teacher_logout_tv)
         tvDisplayName = findViewById(R.id.toolbar_displayName_tv)
         tvEmail = findViewById(R.id.toolbar_email_tv)
