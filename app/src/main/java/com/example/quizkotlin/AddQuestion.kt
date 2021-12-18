@@ -4,17 +4,18 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.os.Bundle
 import android.util.Log
-import android.widget.EditText
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.quizkotlin.models.Question
 import com.google.android.material.button.MaterialButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import android.content.Intent
-import android.widget.ImageView
+import android.view.View
+import android.widget.*
+import com.example.quizkotlin.models.Quiz
+import com.google.firebase.firestore.FieldValue
+import com.google.firebase.firestore.QueryDocumentSnapshot
 
 
 class AddQuestion : AppCompatActivity(){
@@ -24,7 +25,10 @@ class AddQuestion : AppCompatActivity(){
     private lateinit var option3: EditText
     private lateinit var option4: EditText
     private lateinit var answer: EditText
+    private lateinit var spinnerSelectedText: String
     private var questionsList: ArrayList<Question> = arrayListOf()
+    private var quizList: ArrayList<Quiz> = arrayListOf()
+    private var quizListString: ArrayList<String> = arrayListOf()
     private lateinit var goBack: ImageView
     private lateinit var save_button: MaterialButton
     private lateinit var database: FirebaseFirestore
@@ -35,12 +39,32 @@ class AddQuestion : AppCompatActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.add_question)
-
-        initViews()
         auth = FirebaseAuth.getInstance()
         database = FirebaseFirestore.getInstance()
 
         user = auth.currentUser!!
+        database.collection("Quizzes").get()
+            .addOnSuccessListener {
+                if (it.isEmpty) {
+                    Toast.makeText(this, "No quizzes found", Toast.LENGTH_SHORT).show()
+                } else {
+                    for (doc in it) {
+                        val quiz = doc.toObject(Quiz::class.java)
+                        quizList.add(quiz)
+                        quizListString.add(quiz.id)
+//                        if (quiz.questionsForQuiz.size > 0) {
+//                            for (i in quiz.questionsForQuiz) {
+//                                questionsList.add(i)
+//                            }
+//                        }
+                        Log.d(TAG, quiz.toString())
+                    }
+                    getSpinnerValue()
+                }
+            }
+
+        initViews()
+
 
         save_button.setOnClickListener {
             print("button clicked")
@@ -68,12 +92,12 @@ class AddQuestion : AppCompatActivity(){
         }
     }
     private fun saveClassToDatabase(question_name: String, optionA: String, optionB: String, optionC: String, optionD: String, correctAnswer: String ) {
-        val docRef = database.collection("Questions").document()
         validations(question_name, optionA, optionB, optionC, optionD, correctAnswer)
+        val upperlimit = 10
 
             if (isValidation == true) {
                 val newQuestion = Question(
-                    docRef.id,
+                    "1",
                     question_name,
                     optionA,
                     optionB,
@@ -81,27 +105,65 @@ class AddQuestion : AppCompatActivity(){
                     optionD,
                     correctAnswer
                 )
-                questionsList.add(newQuestion)
+                database.collection("Quizzes").get()
+                    .addOnSuccessListener { documents ->
+                        for (document in documents) {
+                            if (document.get("id") == (spinnerSelectedText)) {
+                                val array = document.get("questionsForQuiz")
+                                array.hashCode()
 
+                                if (array != 10){
+                                    document.reference.update(
+                                        "questionsForQuiz",
+                                        FieldValue.arrayUnion(newQuestion)
+                                    )
+                                        .addOnSuccessListener {
+                                            Toast.makeText(this, "Added, Total questions: "+ array, Toast.LENGTH_LONG).show()
+                                            Log.d(
+                                                TAG,
+                                                "Question successfully added!"
+                                            )
 
+                                            finish();
+                                            overridePendingTransition(0, 0);
+                                            startActivity(intent);
+                                            overridePendingTransition(0, 0);
+                                        }
+                                        .addOnFailureListener { e ->
+                                            Toast.makeText(this, "Failed", Toast.LENGTH_LONG).show()
+                                            Log.w(
+                                                TAG,
+                                                "Error adding question",
+                                                e
+                                            )
 
-
-
-                docRef.set(newQuestion)
-                    .addOnSuccessListener {
-                        Toast.makeText(this, "Created", Toast.LENGTH_LONG).show()
-                        Log.d(TAG, "Created")
-                        finish();
-                        overridePendingTransition(0, 0);
-                        startActivity(intent);
-                        overridePendingTransition(0, 0);
+                                            finish();
+                                            this.recreate();
+                                        }
+                                }
+                                else{
+                                    Toast.makeText(this, "Cannot add more to this quiz", Toast.LENGTH_LONG).show()
+                                }
+                            }
+                        }
                     }
-                    .addOnFailureListener { exception ->
-                        Toast.makeText(this, "Failed", Toast.LENGTH_LONG).show()
-                        finish();
-//                this.recreate();
-                        Log.d(TAG, "get failed with ", exception)
-                    }
+
+
+//                washingtonRef.set(newQuestion)
+//                    .addOnSuccessListener {
+//                        Toast.makeText(this, "Created", Toast.LENGTH_LONG).show()
+//                        Log.d(TAG, "Created")
+//                        finish();
+//                        overridePendingTransition(0, 0);
+//                        startActivity(intent);
+//                        overridePendingTransition(0, 0);
+//                    }
+//                    .addOnFailureListener { exception ->
+//                        Toast.makeText(this, "Failed", Toast.LENGTH_LONG).show()
+//                        finish();
+////                this.recreate();
+//                        Log.d(TAG, "get failed with ", exception)
+//                    }
             }
     }
 
@@ -115,9 +177,36 @@ class AddQuestion : AppCompatActivity(){
         answer = findViewById(R.id.correct_answer)
         save_button = findViewById(R.id.save_button)
         goBack = findViewById(R.id.goBackButton)
+//        getSpinnerValue()
+
         print("Info taken")
 
 
+    }
+    private fun getSpinnerValue(){
+        val spinner = findViewById<Spinner>(R.id.spinner)
+//        spinnerSelectedText = quizListString.first()
+        spinnerSelectedText = quizList.first().id
+
+        if (spinner != null) {
+            val adapter = ArrayAdapter( this, android.R.layout.simple_spinner_item, quizListString)
+            spinner.adapter = adapter
+
+            spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
+                    spinnerSelectedText = quizList[position].id
+                    println("QuizList selected is $spinnerSelectedText")  // <-- this works
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>) {
+                    // write code to perform some action
+                }
+            }
+        }
+
+// selectedText is not seen here:
+        println("quizList selected is $spinnerSelectedText")
+//        return
     }
     private fun validations(
         question_check: String,
@@ -184,6 +273,9 @@ class AddQuestion : AppCompatActivity(){
     }
 
 }
+
+
+
 
 private operator fun Boolean.invoke(value: Any) {
 

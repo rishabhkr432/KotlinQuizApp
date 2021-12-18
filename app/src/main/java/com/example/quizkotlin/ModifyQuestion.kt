@@ -92,6 +92,6 @@ class ModifyQuestion(
 
 }
 
-private fun <E> ArrayList<E>.add(element: String) {
+fun <E> ArrayList<E>.add(element: String) {
 
 }

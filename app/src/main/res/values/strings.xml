@@ -90,6 +90,8 @@
     <string name="_78_100">78/100</string>
     <string name="deleteButton">Delete</string>
     <string name="question_bank_is_empty">No questions found</string>
+    <string name="enter_quiz_title">Enter title(Optional)</string>
+    <string name="select_question_bank">Select question bank</string>
     <string name="create_subject">Create Subject</string>
     <string name="subject_class">Subject/Class</string>
     <string name="your_name">Your Name</string>
