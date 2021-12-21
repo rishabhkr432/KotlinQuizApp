@@ -4,19 +4,9 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.AppCompatButton
-import androidx.databinding.DataBindingUtil
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.quizkotlin.constants.SUBJECT_NAME
-import com.example.quizkotlin.constants.TOTAL_QUESTIONS_TO_ADD
 import com.example.quizkotlin.databinding.ActivityTeacherHomeBinding
 import com.example.quizkotlin.models.User
 import com.google.firebase.auth.FirebaseAuth
@@ -68,7 +58,7 @@ class TeacherHomeActivity : AppCompatActivity() {
         }
         question_bank.setOnClickListener {
 
-            val loginIntent = Intent(this, QuestionBank::class.java)
+            val loginIntent = Intent(this, QuizBank::class.java)
             startActivity(loginIntent)
             finish()
         }

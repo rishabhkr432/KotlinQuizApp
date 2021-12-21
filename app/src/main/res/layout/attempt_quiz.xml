@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
 
-    tools:context=".QuizBank">
+    tools:context=".ShowQuestions">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -26,10 +26,11 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_15"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="123dp"
             android:layout_toEndOf="@+id/goBackButton"
             android:fontFamily="@font/poppins_bold"
-            android:text="@string/add_question"
+            android:text="@string/Quiz"
             android:textColor="@color/white"
             android:textSize="@dimen/text_26" />
 
@@ -57,18 +58,8 @@
         android:visibility="gone" />
 
 
-    <Spinner
-        android:id="@+id/spinner"
-        android:layout_width="365dp"
-        android:layout_height="47dp"
-        android:layout_marginStart="@dimen/margin_15"
-        android:layout_marginTop="20dp"
-        android:fontFamily="@font/poppins_bold"
-        android:hint="@string/select_question_bank"
-        android:textColor="@color/black" />
-
     <EditText
-        android:id="@+id/add_question"
+        android:id="@+id/show_question"
         android:layout_width="365dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_15"
@@ -81,7 +72,7 @@
         android:textSize="@dimen/text_26" />
 
     <EditText
-        android:id="@+id/option1"
+        android:id="@+id/show_option1"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_15"
@@ -93,7 +84,7 @@
         android:textSize="@dimen/text_18" />
 
     <EditText
-        android:id="@+id/option2"
+        android:id="@+id/show_option2"
 
         android:layout_width="150dp"
             android:layout_height="wrap_content"
@@ -106,7 +97,7 @@
         android:textSize="@dimen/text_18" />
 
     <EditText
-        android:id="@+id/option3"
+        android:id="@+id/show_option3"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_15"
@@ -118,7 +109,7 @@
         android:textSize="@dimen/text_18" />
 
     <EditText
-        android:id="@+id/option4"
+        android:id="@+id/show_option4"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_15"
@@ -130,7 +121,7 @@
         android:textSize="@dimen/text_18" />
 
     <EditText
-        android:id="@+id/correct_answer"
+        android:id="@+id/show_correct_answer"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_15"
@@ -141,16 +132,45 @@
         android:textColorHint="#78909C"
         android:textSize="@dimen/text_18" />
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_10"
+        android:orientation="horizontal">
+
+
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/save_button"
+        android:id="@+id/delete_button_demo"
         style="?attr/borderlessButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
+        android:paddingHorizontal="50dp"
+        android:layout_weight=".50"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="@dimen/margin_10"
-        android:text="@string/save_button"
+        android:text="@string/delete_button"
         android:textAllCaps="false"
         android:textSize="@dimen/text_24" />
+
+        <View android:id="@+id/strut"
+            android:layout_width="30dp"
+            android:layout_height="0dp"
+            />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/next_button_demo"
+        style="?attr/borderlessButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="50dp"
+        android:layout_gravity="end"
+        android:layout_marginEnd="@dimen/margin_10"
+        android:layout_weight=".50"
+        android:layout_marginTop="10dp"
+        android:text="@string/next_button"
+        android:textAllCaps="false"
+        android:textSize="@dimen/text_24" />
+    </LinearLayout>
 
 </LinearLayout>

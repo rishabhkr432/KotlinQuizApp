@@ -16,11 +16,12 @@
 
 <!--        <activity android:name=".AddQuestionActivity"></activity>-->
         <activity android:name=".AddQuiz" />
+<!--        <activity android:name=".ShowQuestions" />-->
         <activity android:name=".StudentHomeActivity" />
         <activity android:name=".TeacherHomeActivity" />
         <activity android:name=".RegistrationActivity" />
         <activity android:name=".LoginActivity" />
-        <activity android:name=".QuestionBank" />
+        <activity android:name=".QuizBank" />
         <activity android:name=".AddQuestion" />
         <activity android:name=".SplashActivity"
 

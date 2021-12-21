@@ -12,6 +12,7 @@
         <entry key="..\:/Uni final year/CS31620/Assignment/app/src/main/res/layout/activity_teacher_home.xml" value="0.152" />
         <entry key="..\:/Uni final year/CS31620/Assignment/app/src/main/res/layout/addQuestion.xml" value="0.264" />
         <entry key="..\:/Uni final year/CS31620/Assignment/app/src/main/res/layout/add_question.xml" value="0.264" />
+        <entry key="..\:/Uni final year/CS31620/Assignment/app/src/main/res/layout/attempt_quiz.xml" value="0.264" />
         <entry key="..\:/Uni final year/CS31620/Assignment/app/src/main/res/layout/collapsing_toolbar.xml" value="0.12760416666666666" />
         <entry key="..\:/Uni final year/CS31620/Assignment/app/src/main/res/layout/create_quiz.xml" value="0.11354166666666667" />
         <entry key="..\:/Uni final year/CS31620/Assignment/app/src/main/res/layout/custom_add_subject_dialog_box.xml" value="0.25416666666666665" />
@@ -24,7 +25,9 @@
         <entry key="..\:/Uni final year/CS31620/Assignment/app/src/main/res/layout/fragment_usertype.xml" value="0.25416666666666665" />
         <entry key="..\:/Uni final year/CS31620/Assignment/app/src/main/res/layout/list_questions.xml" value="0.25416666666666665" />
         <entry key="..\:/Uni final year/CS31620/Assignment/app/src/main/res/layout/list_questions_in_bank.xml" value="0.1852355072463768" />
+        <entry key="..\:/Uni final year/CS31620/Assignment/app/src/main/res/layout/list_quizzes_in_bank.xml" value="0.25416666666666665" />
         <entry key="..\:/Uni final year/CS31620/Assignment/app/src/main/res/layout/question_card.xml" value="0.2" />
+        <entry key="..\:/Uni final year/CS31620/Assignment/app/src/main/res/layout/quiz_card.xml" value="0.264" />
         <entry key="..\:/Uni final year/CS31620/Assignment/app/src/main/res/layout/toolbar.xml" value="0.12760416666666666" />
         <entry key="..\:/Uni final year/CS31620/Assignment/app/src/main/res/layout/user_rights.xml" value="0.25416666666666665" />
         <entry key="..\:/Uni final year/CS31620/Quiz-master/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.4035897435897436" />

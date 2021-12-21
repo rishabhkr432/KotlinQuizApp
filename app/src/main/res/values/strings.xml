@@ -86,9 +86,12 @@
     <string name="upcoming">Upcoming</string>
     <string name="past">Past</string>
     <string name="no_test_found">No Test Found !</string>
+    <string name="quiz_card">Quiz1</string>
     <string name="due_31_08_2021_11_59">Due: 31/08/2021 11:59</string>
     <string name="_78_100">78/100</string>
     <string name="deleteButton">Delete</string>
+    <string name="viewButton">View</string>
+    <string name="addButton">Add</string>
     <string name="question_bank_is_empty">No questions found</string>
     <string name="enter_quiz_title">Enter title(Optional)</string>
     <string name="select_question_bank">Select question bank</string>
@@ -119,5 +122,9 @@
     <string name="enter_option4">Enter option D</string>
     <string name="correct_answer">Enter correct option</string>
     <string name="save_button">Save</string>
+    <string name="next_button">Next</string>
+    <string name="delete_button">Delete</string>
+    <string name="Quiz">Quiz</string>
+
 
 </resources>

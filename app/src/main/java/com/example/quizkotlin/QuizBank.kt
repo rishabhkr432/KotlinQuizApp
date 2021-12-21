@@ -2,7 +2,6 @@ package com.example.quizkotlin
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.ProgressBar
@@ -16,7 +15,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 
-class QuestionBank : AppCompatActivity() {
+class QuizBank : AppCompatActivity() {
 
     private lateinit var ivClose: ImageView
     private lateinit var rv: RecyclerView
@@ -29,11 +28,11 @@ class QuestionBank : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private lateinit var user: FirebaseUser
 
-    private var questionbanklist: ArrayList<Question> = arrayListOf()
+    private var quizbanklist: ArrayList<Quiz> = arrayListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.list_questions_in_bank)
+        setContentView(R.layout.list_quizzes_in_bank)
 
         initViews()
 
@@ -41,24 +40,24 @@ class QuestionBank : AppCompatActivity() {
         database = FirebaseFirestore.getInstance()
 
         user = auth.currentUser!!
-        var intent = intent.extras
-        Log.d(TAG, "intent: " + intent)
-        if (intent != null) {
-            addquizcheck = intent!!.getBoolean("addquizcheck")
-            val docRef = database.collection("Quizzes").document()
-            database.collection("Quizzes").get()
-//                .addSnapshotListener
+//        var intent = intent.extras
+//        Log.d(TAG, "intent: " + intent)
+//        if (intent != null) {
+//            addquizcheck = intent!!.getBoolean("addquizcheck")
+//            val docRef = database.collection("Quizzes").document()
+//            database.collection("Quizzes").get()
+////                .addSnapshotListener
+////
+////                            val quiz = doc.toObject(Quiz::class.java)
+////                            if (assignment.done)
+////            }
 //
-//                            val quiz = doc.toObject(Quiz::class.java)
-//                            if (assignment.done)
-//            }
+////            if (newQuiz != null) {
+////                Log.d(TAG, "quizID: " + newQuiz!!.quizID)
+////            }
+//        }
 
-//            if (newQuiz != null) {
-//                Log.d(TAG, "quizID: " + newQuiz!!.quizID)
-//            }
-        }
-
-        Log.d(TAG, "addquizcheck: " + addquizcheck)
+//        Log.d(TAG, "addquizcheck: " + addquizcheck)
 
         fetchAvlSubject()
 
@@ -86,7 +85,7 @@ class QuestionBank : AppCompatActivity() {
     }
     private fun fetchAvlSubject() {
         progress.visibility = View.VISIBLE
-        database.collection("Questions").get()
+        database.collection("Quizzes").get()
             .addOnSuccessListener {
                 progress.visibility = View.GONE
                 if (it.isEmpty) {
@@ -94,19 +93,16 @@ class QuestionBank : AppCompatActivity() {
                 } else {
                     tvMsg.visibility = View.GONE
                     for (doc in it) {
-                        val subject = doc.toObject(Question::class.java)
-                        questionbanklist.add(subject)
+                        val quiz = doc.toObject(Quiz::class.java)
+                        quizbanklist.add(quiz)
                     }
-//                    modifyQuestionSetting = if (addquizcheck == true) {
-//                        ModifyQuestion(
-//                            questionbanklist, addquizcheck, newQuiz,
-//                            this
-//                        )
-//                    } else{
                     modifyQuestionSetting = ModifyQuestion(
-                            questionbanklist, addquizcheck,Quizz.questionsForQuiz,
+                            quizbanklist,
                             this
                         )
+
+
+
 
 
                     rv.adapter = modifyQuestionSetting
@@ -120,7 +116,7 @@ class QuestionBank : AppCompatActivity() {
     }
 
     companion object {
-        private const val TAG = "QuestionBank"
+        private const val TAG = "QuizBank"
     }
 
 }

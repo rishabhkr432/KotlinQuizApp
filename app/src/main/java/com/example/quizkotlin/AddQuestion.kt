@@ -26,7 +26,7 @@ class AddQuestion : AppCompatActivity(){
     private lateinit var option4: EditText
     private lateinit var answer: EditText
     private lateinit var spinnerSelectedText: String
-    private var questionsList: ArrayList<Question> = arrayListOf()
+//    private var questionsList: ArrayList<Question> = arrayListOf()
     private var quizList: ArrayList<Quiz> = arrayListOf()
     private var quizListString: ArrayList<String> = arrayListOf()
     private lateinit var goBack: ImageView
@@ -34,6 +34,7 @@ class AddQuestion : AppCompatActivity(){
     private lateinit var database: FirebaseFirestore
     private lateinit var auth: FirebaseAuth
     private lateinit var user: FirebaseUser
+//    private lateinit var counter: Int
     private var isValidation : Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -109,13 +110,17 @@ class AddQuestion : AppCompatActivity(){
                     .addOnSuccessListener { documents ->
                         for (document in documents) {
                             if (document.get("id") == (spinnerSelectedText)) {
-                                val array = document.get("questionsForQuiz")
-                                array.hashCode()
+//                                val array = document.get("questionsForQuiz")
+                                val array = (document.toObject(Quiz::class.java).questionsForQuiz.size)
+                                Log.d(TAG, array.toString())
 
-                                if (array != 10){
+
+                                if (array < 10){
+
                                     document.reference.update(
                                         "questionsForQuiz",
                                         FieldValue.arrayUnion(newQuestion)
+
                                     )
                                         .addOnSuccessListener {
                                             Toast.makeText(this, "Added, Total questions: "+ array, Toast.LENGTH_LONG).show()
@@ -185,8 +190,8 @@ class AddQuestion : AppCompatActivity(){
     }
     private fun getSpinnerValue(){
         val spinner = findViewById<Spinner>(R.id.spinner)
-//        spinnerSelectedText = quizListString.first()
         spinnerSelectedText = quizList.first().id
+
 
         if (spinner != null) {
             val adapter = ArrayAdapter( this, android.R.layout.simple_spinner_item, quizListString)
@@ -273,8 +278,6 @@ class AddQuestion : AppCompatActivity(){
     }
 
 }
-
-
 
 
 private operator fun Boolean.invoke(value: Any) {
