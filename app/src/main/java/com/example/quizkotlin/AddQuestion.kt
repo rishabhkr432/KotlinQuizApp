@@ -94,7 +94,7 @@ class AddQuestion : AppCompatActivity(){
     }
     private fun saveClassToDatabase(question_name: String, optionA: String, optionB: String, optionC: String, optionD: String, correctAnswer: String ) {
         validations(question_name, optionA, optionB, optionC, optionD, correctAnswer)
-        val upperlimit = 10
+
 
             if (isValidation == true) {
                 val newQuestion = Question(
@@ -106,7 +106,8 @@ class AddQuestion : AppCompatActivity(){
                     optionD,
                     correctAnswer
                 )
-                database.collection("Quizzes").get()
+                database.collection("Quizzes")
+                    .get()
                     .addOnSuccessListener { documents ->
                         for (document in documents) {
                             if (document.get("id") == (spinnerSelectedText)) {
@@ -123,7 +124,8 @@ class AddQuestion : AppCompatActivity(){
 
                                     )
                                         .addOnSuccessListener {
-                                            Toast.makeText(this, "Added, Total questions: "+ array, Toast.LENGTH_LONG).show()
+                                            Toast.makeText(this,
+                                                "Added, Total questions in the quiz: $array", Toast.LENGTH_LONG).show()
                                             Log.d(
                                                 TAG,
                                                 "Question successfully added!"
@@ -147,7 +149,9 @@ class AddQuestion : AppCompatActivity(){
                                         }
                                 }
                                 else{
-                                    Toast.makeText(this, "Cannot add more to this quiz", Toast.LENGTH_LONG).show()
+                                    Toast.makeText(this,
+                                        "Cannot add more questions to this quiz. Current size: $array", Toast.LENGTH_LONG).show()
+
                                 }
                             }
                         }

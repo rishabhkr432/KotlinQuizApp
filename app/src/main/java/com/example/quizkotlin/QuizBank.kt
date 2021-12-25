@@ -6,11 +6,12 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.quizkotlin.models.Question
 import com.example.quizkotlin.models.Quiz
+import com.example.quizkotlin.models.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
@@ -27,6 +28,7 @@ class QuizBank : AppCompatActivity() {
     private lateinit var database: FirebaseFirestore
     private lateinit var auth: FirebaseAuth
     private lateinit var user: FirebaseUser
+    private  var userType: Int = 2
 
     private var quizbanklist: ArrayList<Quiz> = arrayListOf()
 
@@ -40,6 +42,29 @@ class QuizBank : AppCompatActivity() {
         database = FirebaseFirestore.getInstance()
 
         user = auth.currentUser!!
+        val user = auth.currentUser
+
+        if (user != null) {
+            database.collection("Users").document(user.uid).get()
+                .addOnCompleteListener {
+                    if (it.isSuccessful) {
+                        val doc = it.result
+                        if (doc.exists()) {
+                            val userDetail = doc.toObject(User::class.java)
+                            if (userDetail != null) {
+                                userType = userDetail.userType
+                            }
+                        } else {
+                            Toast.makeText(
+                                this,
+                                "Error while fetching your data from server: ${it.exception}",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    }
+                }
+        }
+
 //        var intent = intent.extras
 //        Log.d(TAG, "intent: " + intent)
 //        if (intent != null) {
@@ -63,11 +88,22 @@ class QuizBank : AppCompatActivity() {
 
 
         ivClose.setOnClickListener {
+            if (userType == 1){
+
             TeacherHomeActivity.teachershomeActivity.finish()
             val intent = Intent(this, TeacherHomeActivity::class.java)
             startActivity(intent)
             finish()
         }
+            else{
+                StudentHomeActivity.studenthomeActivity.finish()
+                val intent = Intent(this, StudentHomeActivity::class.java)
+                startActivity(intent)
+                finish()
+
+            }
+
+            }
 
     }
 
@@ -97,7 +133,7 @@ class QuizBank : AppCompatActivity() {
                         quizbanklist.add(quiz)
                     }
                     modifyQuestionSetting = ModifyQuestion(
-                            quizbanklist,
+                            quizbanklist,userType,
                             this
                         )
 

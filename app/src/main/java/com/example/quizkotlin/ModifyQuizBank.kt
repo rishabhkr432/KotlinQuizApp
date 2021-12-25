@@ -13,17 +13,15 @@ import com.example.quizkotlin.models.Quiz
 import com.google.android.material.button.MaterialButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import androidx.core.content.ContextCompat.startActivity
-
-import android.os.Bundle
 
 import android.content.Intent
-import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.startActivity
+import com.google.firebase.auth.ktx.userProfileChangeRequest
 
 
 class ModifyQuestion(
     private val quizBank: ArrayList<Quiz>,
-//    private val checkaddquiz: Boolean,
+    private val userType: Int,
 //    private val questionsForQuiz:  ArrayList<Question>,
     private val context: Context,
 //
@@ -35,13 +33,18 @@ class ModifyQuestion(
     val database = FirebaseFirestore.getInstance()
     val user = FirebaseAuth.getInstance()
     var quizPos: Int = 0
+    private lateinit var intent: Intent
 
 
 //    var i = intent!!.
 
     class MyViewHolder(view: View): RecyclerView.ViewHolder(view) {
+//        if (userType == 1)
+//        {}
         val quizcardtitle: TextView = view.findViewById(R.id.quiz_name)
-        val delbtn: MaterialButton = view.findViewById(R.id.quizDeleteButton)
+
+            val delbtn: MaterialButton = view.findViewById(R.id.quizDeleteButton)
+
         val viewbtn: MaterialButton = view.findViewById(R.id.quizViewButton)
 
 //        init {
@@ -64,10 +67,13 @@ class ModifyQuestion(
 
 
 
-    @SuppressLint("SetTextI18n", "NotifyDataSetChanged")
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
 //        val docRef = database.collection("Quizzes").document()
-
+        if (userType ==2){
+            holder.delbtn.visibility = View.INVISIBLE;
+            holder.viewbtn.text = "Start"
+        }
         holder.quizcardtitle.text = quizBank[position].id.trim()
 //        Log.d(TAG, questionBank.toString())
         Log.d(TAG, "deleted question: "+ holder.quizcardtitle.text.toString())
@@ -110,18 +116,24 @@ class ModifyQuestion(
                 .addOnSuccessListener {
                     sendQuiz = quizBank[position]
 //                        showquestion = ShowQuestions(quizBank[position])
-//                        val intent = Intent(this, ShowQuestions::class.java)
-//                         //Your id
-//
-//                        intent.putExtras("quizObj", quizBank[position]) //Put your id to your next Intent
-//
-//                        startActivity(intent)
-//                        finish()
-                    Toast.makeText(context, "Opening Quiz", Toast.LENGTH_SHORT).show()
+                    if (userType == 2) {
+                        intent = Intent(holder.itemView.context, AttemptQuizActivity::class.java)
+                        intent.putExtra(AttemptQuizActivity.QUIZ_PASS, sendQuiz)
+                    }
+                    else {
+
+                        intent = Intent(holder.itemView.context, ShowQuestions::class.java)
+                        intent.putExtra(
+                            ShowQuestions.QUIZ_PASS,
+                            sendQuiz
+                        ) //Put your id to your next Intent
+                    }
+                    Toast.makeText(holder.itemView.context, "Opening Quiz", Toast.LENGTH_SHORT).show()
+                   holder.itemView.context.startActivity(intent)
                 }
                 .addOnFailureListener {
 //                    holder.deletebtn_card.text = "Un Enroll"
-                    Toast.makeText(context, "Failed to open Quiz", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(holder.itemView.context, "Failed to open Quiz", Toast.LENGTH_SHORT).show()
                 }
 
 
@@ -150,6 +162,9 @@ class ModifyQuestion(
 
 
 
+}
+interface CallbackInterface {
+    fun passResultCallback(message: Quiz)
 }
 
 fun <E> ArrayList<E>.add(element: String) {

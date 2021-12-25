@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
 
-    tools:context=".AttemptQuizActivity">
+    tools:context=".ShowQuestions">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -15,7 +15,7 @@
         android:padding="@dimen/padding_normal">
 
         <ImageView
-            android:id="@+id/goBackButton_quiz_attempt"
+            android:id="@+id/goBackButton_attempt"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_centerVertical="true"
@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginStart="123dp"
-            android:layout_toEndOf="@+id/goBackButton_quiz_attempt"
+            android:layout_toEndOf="@+id/goBackButton_attempt"
             android:fontFamily="@font/poppins_bold"
             android:text="@string/Quiz"
             android:textColor="@color/white"
@@ -58,94 +58,119 @@
         android:visibility="gone" />
 
 
-    <TextView
-        android:id="@+id/question_attempt"
+    <EditText
+        android:id="@+id/show_question_attempt"
         android:layout_width="365dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_15"
         android:layout_marginTop="10dp"
         android:fontFamily="@font/poppins_bold"
-        android:hint="@string/question_is"
+        android:hint="@string/enter_question_hint"
         android:textColor="@color/black"
         android:textColorHint="@color/browser_actions_title_color"
 
         android:textSize="@dimen/text_26" />
-    <RadioGroup
-        android:id="@+id/radioGrp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
 
-
-    <RadioButton
-        android:id="@+id/student_option1_attempt"
-        android:layout_width="wrap_content"
+    <EditText
+        android:id="@+id/show_option1_attempt"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_15"
         android:layout_marginTop="10dp"
         android:fontFamily="@font/poppins_semibold"
-        android:hint="@string/option1"
+        android:hint="@string/enter_option1"
         android:textColor="@color/black"
         android:textColorHint="#78909C"
         android:textSize="@dimen/text_18" />
 
-    <RadioButton
-        android:id="@+id/student_option2_attempt"
+    <EditText
+        android:id="@+id/show_option2_attempt"
 
-        android:layout_width="wrap_content"
+        android:layout_width="150dp"
+            android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_15"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/poppins_semibold"
+        android:hint="@string/enter_option2"
+        android:textColor="@color/black"
+        android:textColorHint="#78909C"
+        android:textSize="@dimen/text_18" />
+
+    <EditText
+        android:id="@+id/show_option3_attempt"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_15"
         android:layout_marginTop="10dp"
         android:fontFamily="@font/poppins_semibold"
-        android:hint="@string/option2"
+        android:hint="@string/enter_option3"
         android:textColor="@color/black"
         android:textColorHint="#78909C"
         android:textSize="@dimen/text_18" />
 
-    <RadioButton
-        android:id="@+id/student_option3_attempt"
-        android:layout_width="wrap_content"
+    <EditText
+        android:id="@+id/show_option4_attempt"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_15"
         android:layout_marginTop="10dp"
         android:fontFamily="@font/poppins_semibold"
-        android:hint="@string/option3"
+        android:hint="@string/enter_option4"
         android:textColor="@color/black"
         android:textColorHint="#78909C"
         android:textSize="@dimen/text_18" />
 
-    <RadioButton
-        android:id="@+id/student_option4_attempt"
-        android:layout_width="wrap_content"
+    <EditText
+        android:id="@+id/show_correct_answer_attempt"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_15"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="0dp"
         android:fontFamily="@font/poppins_semibold"
-        android:hint="@string/option4"
+        android:hint="@string/correct_answer"
         android:textColor="@color/black"
         android:textColorHint="#78909C"
         android:textSize="@dimen/text_18" />
-    </RadioGroup>
-
-
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin_10"
         android:orientation="horizontal">
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/next_button_demo"
-            style="?attr/borderlessButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingHorizontal="50dp"
-            android:layout_gravity="end"
-            android:layout_marginEnd="@dimen/margin_10"
-            android:layout_weight=".50"
-            android:layout_marginTop="10dp"
-            android:text="@string/next_button"
-            android:textAllCaps="false"
-            android:textSize="@dimen/text_24" />
+
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/delete_button_demo"
+        style="?attr/borderlessButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:paddingHorizontal="50dp"
+        android:layout_weight=".50"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="@dimen/margin_10"
+        android:text="@string/delete_button"
+        android:textAllCaps="false"
+        android:textSize="@dimen/text_24" />
+
+        <View android:id="@+id/strut"
+            android:layout_width="30dp"
+            android:layout_height="0dp"
+            />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/next_button_demo"
+        style="?attr/borderlessButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="50dp"
+        android:layout_gravity="end"
+        android:layout_marginEnd="@dimen/margin_10"
+        android:layout_weight=".50"
+        android:layout_marginTop="10dp"
+        android:text="@string/next_button"
+        android:textAllCaps="false"
+        android:textSize="@dimen/text_24" />
     </LinearLayout>
 
 </LinearLayout>

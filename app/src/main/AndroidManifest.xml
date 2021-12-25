@@ -16,7 +16,8 @@
 
 <!--        <activity android:name=".AddQuestionActivity"></activity>-->
         <activity android:name=".AddQuiz" />
-<!--        <activity android:name=".ShowQuestions" />-->
+        <activity android:name=".ShowQuestions" />
+        <activity android:name=".AttemptQuizActivity" />
         <activity android:name=".StudentHomeActivity" />
         <activity android:name=".TeacherHomeActivity" />
         <activity android:name=".RegistrationActivity" />

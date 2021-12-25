@@ -13,8 +13,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
 class TeacherHomeActivity : AppCompatActivity() {
-    private lateinit var binding : ActivityTeacherHomeBinding
-    private var subjectName = ""
     private lateinit var question_bank: TextView
     private lateinit var add_quiz: TextView
     private lateinit var add_question: TextView

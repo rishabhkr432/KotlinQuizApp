@@ -1,63 +1,70 @@
 package com.example.quizkotlin
 
+import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.ViewGroup
 import android.widget.TextView
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.AppCompatButton
-import androidx.databinding.DataBindingUtil
-import com.example.quizkotlin.constants.SCORE
-import com.example.quizkotlin.databinding.ActivityStudentHomeBinding
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
 class StudentHomeActivity : AppCompatActivity() {
-    private lateinit var binding : ActivityStudentHomeBinding
-    private var myscore : String = ""
+    private lateinit var tvDisplayName: TextView
+    private lateinit var viewQuizBank: TextView
+    private lateinit var checkMarks: TextView
+    private lateinit var tvEmail: TextView
+    private lateinit var tvUserType: TextView
+    private lateinit var tvLogout: TextView
+    private lateinit var auth: FirebaseAuth
+    private lateinit var database: FirebaseFirestore
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_student_home)
-        binding.logOut.setOnClickListener {
-            val builder = AlertDialog.Builder(this@StudentHomeActivity)
-            val viewGroup = findViewById<ViewGroup>(android.R.id.content)
-            val dialogView = LayoutInflater.from(it.getContext())
-                .inflate(
-                    R.layout.custom_dialog_layout_3,
-                    viewGroup,
-                    false
-                )
-            builder.setView(dialogView)
-            val dialog = builder.create()
-            dialog.show()
-            val log_out: AppCompatButton = dialogView.findViewById(R.id.log_out)
-            log_out.setOnClickListener {
-                dialog.dismiss()
-                startActivity(Intent(applicationContext, LoginActivity::class.java))
-            }
+        setContentView(R.layout.activity_student_home)
+
+        initViews()
+
+        auth = FirebaseAuth.getInstance()
+        database = FirebaseFirestore.getInstance()
+
+
+        viewQuizBank.setOnClickListener {
+
+            val loginIntent = Intent(this, QuizBank::class.java)
+            startActivity(loginIntent)
+            finish()
+        }
+        checkMarks.setOnClickListener {
+
+            val loginIntent = Intent(this, AddQuiz::class.java)
+            startActivity(loginIntent)
+            finish()
+        }
+        tvLogout.setOnClickListener {
+            auth.signOut()
+            val loginIntent = Intent(this, LoginActivity::class.java)
+            startActivity(loginIntent)
+            finish()
         }
 
-//        binding.attemptQuiz.setOnClickListener {
-//            startActivity(Intent(this, AttemptQuizActivity::class.java))
-//        }
-
-        binding.marksOfQuiz.setOnClickListener {
-            val builder = AlertDialog.Builder(this@StudentHomeActivity)
-            val viewGroup = findViewById<ViewGroup>(android.R.id.content)
-            val dialogView = LayoutInflater.from(it.getContext())
-                .inflate(
-                    R.layout.custom_dialog_layout_4,
-                    viewGroup,
-                    false
-                )
-            builder.setView(dialogView)
-            val dialog = builder.create()
-            dialog.show()
-            myscore = java.lang.String.valueOf(SCORE)
-            val score = dialogView.findViewById<TextView>(R.id.score_tv)
-            score.text = myscore
-            val continuebtn: AppCompatButton = dialogView.findViewById(R.id.score_continue)
-            continuebtn.setOnClickListener { dialog.dismiss() }
-        }
     }
-}
+
+    private fun initViews() {
+
+        checkMarks = findViewById(R.id.marks)
+        viewQuizBank = findViewById(R.id.view_quiz)
+        tvLogout = findViewById(R.id.student_logout_tv)
+        tvDisplayName = findViewById(R.id.toolbar_displayName_tv)
+        tvEmail = findViewById(R.id.toolbar_email_tv)
+        tvUserType = findViewById(R.id.toolbar_userType_tv)
+
+    }
+    init {
+        studenthomeActivity = this
+    }
+    companion object {
+        @SuppressLint("StaticFieldLeak")
+        lateinit var studenthomeActivity: Activity
+    }
+
+   }
