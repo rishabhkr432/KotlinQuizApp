@@ -19,7 +19,7 @@ import kotlin.collections.ArrayList
 class AttemptQuizActivity : AppCompatActivity() {
     private var result : String = "highScore"
     private var score : Int = 0
-    private var questionsList: List<Question> = ArrayList<Question>()
+    private var questionsList: List<Question> = ArrayList()
     private lateinit var database: FirebaseFirestore
     private lateinit var auth: FirebaseAuth
     private lateinit var user: FirebaseUser
@@ -70,6 +70,8 @@ class AttemptQuizActivity : AppCompatActivity() {
                 Toast.makeText(this, "Answer is wrong", Toast.LENGTH_SHORT)
                     .show()
             }
+            Toast.makeText(this, "Next question", Toast.LENGTH_SHORT)
+                .show()
 
 
             if (q_num < questionsList.size) {
