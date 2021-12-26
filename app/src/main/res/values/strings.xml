@@ -134,6 +134,7 @@
     <string name="option3">Option C</string>
     <string name="option4">Option D</string>
     <string name="start">Start</string>
+    <string name="qnum">10</string>
 
 
 </resources>

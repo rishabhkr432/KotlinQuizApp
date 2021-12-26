@@ -2,6 +2,7 @@ package com.example.quizkotlin
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.ProgressBar
@@ -28,7 +29,10 @@ class QuizBank : AppCompatActivity() {
     private lateinit var database: FirebaseFirestore
     private lateinit var auth: FirebaseAuth
     private lateinit var user: FirebaseUser
-    private  var userType: Int = 2
+    private  var userType: Int = 0
+    private var quizPath: String  = "Quizzes"
+
+
 
     private var quizbanklist: ArrayList<Quiz> = arrayListOf()
 
@@ -42,51 +46,27 @@ class QuizBank : AppCompatActivity() {
         database = FirebaseFirestore.getInstance()
 
         user = auth.currentUser!!
-        val user = auth.currentUser
+//        val user = auth.currentUser
 
-        if (user != null) {
-            database.collection("Users").document(user.uid).get()
-                .addOnCompleteListener {
-                    if (it.isSuccessful) {
-                        val doc = it.result
-                        if (doc.exists()) {
-                            val userDetail = doc.toObject(User::class.java)
-                            if (userDetail != null) {
-                                userType = userDetail.userType
-                            }
-                        } else {
-                            Toast.makeText(
-                                this,
-                                "Error while fetching your data from server: ${it.exception}",
-                                Toast.LENGTH_SHORT
-                            ).show()
+        database.collection("Users").document(user.uid).get()
+            .addOnCompleteListener {
+                if (it.isSuccessful) {
+                    val doc = it.result
+                    if (doc.exists()) {
+                        val userDetail = doc.toObject(User::class.java)
+                        if (userDetail != null) {
+                            userType = userDetail.userType
                         }
+                    } else {
+                        Toast.makeText(
+                            this,
+                            "Error while fetching your data from server: ${it.exception}",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                 }
-        }
-
-//        var intent = intent.extras
-//        Log.d(TAG, "intent: " + intent)
-//        if (intent != null) {
-//            addquizcheck = intent!!.getBoolean("addquizcheck")
-//            val docRef = database.collection("Quizzes").document()
-//            database.collection("Quizzes").get()
-////                .addSnapshotListener
-////
-////                            val quiz = doc.toObject(Quiz::class.java)
-////                            if (assignment.done)
-////            }
-//
-////            if (newQuiz != null) {
-////                Log.d(TAG, "quizID: " + newQuiz!!.quizID)
-////            }
-//        }
-
-//        Log.d(TAG, "addquizcheck: " + addquizcheck)
-
-        fetchAvlSubject()
-
-
+                fetchAvlSubject()
+            }
         ivClose.setOnClickListener {
             if (userType == 1){
 
@@ -121,7 +101,12 @@ class QuizBank : AppCompatActivity() {
     }
     private fun fetchAvlSubject() {
         progress.visibility = View.VISIBLE
-        database.collection("Quizzes").get()
+        if (userType == 2){
+            quizPath = "Student's quiz records"
+        }
+//        Log.i(TAG, "userType:" + userType)
+        Log.i(TAG, "quizPath:$quizPath")
+        database.collection(quizPath).get()
             .addOnSuccessListener {
                 progress.visibility = View.GONE
                 if (it.isEmpty) {
@@ -133,7 +118,7 @@ class QuizBank : AppCompatActivity() {
                         quizbanklist.add(quiz)
                     }
                     modifyQuestionSetting = ModifyQuestion(
-                            quizbanklist,userType,
+                            quizbanklist,userType,quizPath,
                             this
                         )
 

@@ -22,6 +22,7 @@ import com.google.firebase.auth.ktx.userProfileChangeRequest
 class ModifyQuestion(
     private val quizBank: ArrayList<Quiz>,
     private val userType: Int,
+    private var quizPath: String,
 //    private val questionsForQuiz:  ArrayList<Question>,
     private val context: Context,
 //
@@ -32,7 +33,6 @@ class ModifyQuestion(
     private lateinit var sendQuiz: Quiz
     val database = FirebaseFirestore.getInstance()
     val user = FirebaseAuth.getInstance()
-    var quizPos: Int = 0
     private lateinit var intent: Intent
 
 
@@ -73,10 +73,9 @@ class ModifyQuestion(
         if (userType ==2){
             holder.delbtn.visibility = View.INVISIBLE;
             holder.viewbtn.text = "Start"
+//            quizPath = "Student's quiz records"
         }
         holder.quizcardtitle.text = quizBank[position].id.trim()
-//        Log.d(TAG, questionBank.toString())
-        Log.d(TAG, "deleted question: "+ holder.quizcardtitle.text.toString())
 
 
 
@@ -84,7 +83,7 @@ class ModifyQuestion(
 //
 //        }
         holder.delbtn.setOnClickListener {
-            database.collection("Quizzes").whereEqualTo("id",quizBank[position].id.trim())
+            database.collection(quizPath).whereEqualTo("id",quizBank[position].id.trim())
                 .get()
                 .addOnSuccessListener { documents ->
                     for (document in documents) {
@@ -111,7 +110,7 @@ class ModifyQuestion(
             }
 //        }
         holder.viewbtn.setOnClickListener {
-            database.collection("Quizzes").document(quizBank[position].id.trim())
+            database.collection(quizPath).document(quizBank[position].id.trim())
                 .set(quizBank[position])
                 .addOnSuccessListener {
                     sendQuiz = quizBank[position]
@@ -163,9 +162,7 @@ class ModifyQuestion(
 
 
 }
-interface CallbackInterface {
-    fun passResultCallback(message: Quiz)
-}
+
 
 fun <E> ArrayList<E>.add(element: String) {
 

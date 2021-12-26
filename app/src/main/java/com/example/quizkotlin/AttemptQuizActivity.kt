@@ -2,13 +2,11 @@ package com.example.quizkotlin;
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.provider.MediaStore
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.example.quizkotlin.*
 import com.example.quizkotlin.models.Question
 import com.example.quizkotlin.models.Quiz
-import com.example.quizkotlin.models.Student
 import com.google.android.material.button.MaterialButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -25,12 +23,13 @@ class AttemptQuizActivity : AppCompatActivity() {
     private lateinit var user: FirebaseUser
     private lateinit var next_button: MaterialButton
     private lateinit var question: TextView
+    private lateinit var qnum_display: TextView
     private lateinit var option1: RadioButton
     private lateinit var option2: RadioButton
     private lateinit var option3: RadioButton
     private lateinit var option4: RadioButton
     private lateinit var quizPas: Quiz
-    private var q_num : Int = 0
+    private var qNum : Int = 0
     private lateinit var goBack: ImageView
     private lateinit var currentQuestion : Question
     var radioGroup: RadioGroup? = null
@@ -45,7 +44,7 @@ class AttemptQuizActivity : AppCompatActivity() {
         initViews()
         questionsList = quizPas.questionsForQuiz
         Collections.shuffle(questionsList)
-        currentQuestion = questionsList[q_num]
+        currentQuestion = questionsList[qNum]
         setCurrentQuestion(currentQuestion)
 
         goBack.setOnClickListener {
@@ -74,8 +73,8 @@ class AttemptQuizActivity : AppCompatActivity() {
                 .show()
 
 
-            if (q_num < questionsList.size) {
-                currentQuestion = questionsList[q_num]
+            if (qNum < questionsList.size) {
+                currentQuestion = questionsList[qNum]
                 setCurrentQuestion(currentQuestion)
             } else {
                 val sharedPreferences = getSharedPreferences("Result", MODE_PRIVATE)
@@ -125,7 +124,7 @@ class AttemptQuizActivity : AppCompatActivity() {
 
 
         private fun initViews() {
-
+            qnum_display = findViewById(R.id.qnum_display)
             question = findViewById(R.id.question_attempt)
             option1 = findViewById(R.id.student_option1_attempt) as RadioButton
             option2 = findViewById(R.id.student_option2_attempt)
@@ -143,7 +142,9 @@ class AttemptQuizActivity : AppCompatActivity() {
             option2.text = currentQuestion.option2
             option3.text = currentQuestion.option3
             option4.text = currentQuestion.option4
-            q_num += 1
+            qNum += 1
+            qnum_display.text = ((qNum+1).toString() + "/10")
+
         }
     companion object {
         @SuppressLint("StaticFieldLeak")

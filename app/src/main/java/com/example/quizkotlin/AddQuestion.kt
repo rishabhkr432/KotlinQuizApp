@@ -16,6 +16,12 @@ import android.widget.*
 import com.example.quizkotlin.models.Quiz
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.QueryDocumentSnapshot
+import com.google.firebase.firestore.DocumentSnapshot
+
+import com.google.android.gms.tasks.OnCompleteListener
+
+
+
 
 
 class AddQuestion : AppCompatActivity(){
@@ -111,12 +117,13 @@ class AddQuestion : AppCompatActivity(){
                     .addOnSuccessListener { documents ->
                         for (document in documents) {
                             if (document.get("id") == (spinnerSelectedText)) {
-//                                val array = document.get("questionsForQuiz")
-                                val array = (document.toObject(Quiz::class.java).questionsForQuiz.size)
-                                Log.d(TAG, array.toString())
+//
+                                val quiz = (document.toObject(Quiz::class.java))
+                                val quizSize= quiz.questionsForQuiz.size
+                                Log.d(TAG, quiz.toString())
 
 
-                                if (array < 10){
+                                if (quizSize < 10){
 
                                     document.reference.update(
                                         "questionsForQuiz",
@@ -125,7 +132,7 @@ class AddQuestion : AppCompatActivity(){
                                     )
                                         .addOnSuccessListener {
                                             Toast.makeText(this,
-                                                "Added, Total questions in the quiz: $array", Toast.LENGTH_LONG).show()
+                                                "Added, Total questions in the quiz: $quizSize", Toast.LENGTH_LONG).show()
                                             Log.d(
                                                 TAG,
                                                 "Question successfully added!"
@@ -148,9 +155,15 @@ class AddQuestion : AppCompatActivity(){
                                             this.recreate();
                                         }
                                 }
-                                else{
+                                if (quizSize == 10){
                                     Toast.makeText(this,
-                                        "Cannot add more questions to this quiz. Current size: $array", Toast.LENGTH_LONG).show()
+                                        "Cannot add more questions to this quiz. Current size: $quizSize", Toast.LENGTH_LONG).show()
+                                    sendQuiztoStudentDatabase(document, quiz)
+                                }
+                                else{
+
+                                    Toast.makeText(this,
+                                        "Cannot add more questions to this quiz. Current size: $quizSize", Toast.LENGTH_LONG).show()
 
                                 }
                             }
@@ -272,6 +285,48 @@ class AddQuestion : AppCompatActivity(){
                 return
             }
         }
+
+    private fun sendQuiztoStudentDatabase(quid: QueryDocumentSnapshot, quiz: Quiz) {
+        val docRef = database.collection("Student's quiz records").document(quid.id)
+        Log.d(TAG, quid.id)
+        docRef.get().addOnCompleteListener(OnCompleteListener<DocumentSnapshot?> { task ->
+            if (task.isSuccessful) {
+                val document = task.result
+                if (document.exists()) {
+                    Log.d(TAG, "Document exists!")
+                    Toast.makeText(this, "Failed to send Quiz, document already exists", Toast.LENGTH_LONG).show()
+
+                } else {
+                    Log.d(TAG, "Document does not exist!")
+                    val save = (quid.toObject(Quiz::class.java))
+                    docRef.set(save)
+//                    docRef.set((quid.id.toObject(Quiz::class.java))
+                        .addOnSuccessListener {
+                            Toast.makeText(this, "Quiz send to the student database", Toast.LENGTH_LONG).show()
+//                            makeInputFieldEmpty()
+                        }
+                        .addOnFailureListener {
+                            Toast.makeText(this, "Failed to send quiz", Toast.LENGTH_LONG).show()
+//                            makeInputFieldEmpty()
+                        }
+
+                }
+            } else {
+                Log.d(TAG, "Failed with: ", task.exception)
+            }
+        })
+
+
+
+            .addOnSuccessListener {
+                Toast.makeText(this, "Quiz send to student database", Toast.LENGTH_LONG).show()
+
+            }
+            .addOnFailureListener {
+                Toast.makeText(this, "Failed to send Quiz", Toast.LENGTH_LONG).show()
+
+            }
+    }
     init {
         addquestionActivity = this
     }
