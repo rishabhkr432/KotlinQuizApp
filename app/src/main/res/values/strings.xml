@@ -68,7 +68,9 @@
     <string name="login__info_msg">On Clicking -> Sign in with Google, You will be enrolled as a student. To enroll as
     enter as a teacher, please go to sign up screen via -> Create One</string>
     <string name="question_bank_view">Question Bank</string>
+    <string name="quiz_marks_view">Quiz Marks</string>
     <string name="question">Question</string>
+    <string name="option">Option</string>
     <string name="question_description">Question description</string>
     <string name="assignment">Assignment</string>
     <string name="quiz_test">Quiz / Test</string>
@@ -88,12 +90,15 @@
     <string name="past">Past</string>
     <string name="no_test_found">No Test Found !</string>
     <string name="quiz_card">Quiz1</string>
+    <string name="quiz_card_marks">You scored: 0/10</string>
     <string name="due_31_08_2021_11_59">Due: 31/08/2021 11:59</string>
     <string name="_78_100">78/100</string>
     <string name="deleteButton">Delete</string>
     <string name="viewButton">View</string>
     <string name="addButton">Add</string>
+    <string name="no_results_found">No results found</string>
     <string name="question_bank_is_empty">No questions found</string>
+    <string name="options_not_found">Options not found</string>
     <string name="enter_quiz_title">Enter title(Optional)</string>
     <string name="select_question_bank">Select question bank</string>
     <string name="create_subject">Create Subject</string>
@@ -108,6 +113,7 @@
     <string name="un_enroll">Un Enroll</string>
     <string name="cancel">Cancel</string>
     <string name="learn_and_test_yourself">Learn and Test Yourself</string>
+    <string name="results">You scored: </string>
     <string name="create_calendar_event_for_student">Create Calendar Event for Student.</string>
     <string name="title">Title</string>
     <string name="description">Description</string>
@@ -117,6 +123,7 @@
     <string name="calendar_note"><![CDATA[Note: Write -> Remote / Online <- in location field, if it is online.]]></string>
     <string name="calendar_warning">All fields are mandatory!!</string>
     <string name="enter_question_hint">Enter Question</string>
+    <string name="enter_num_of_options">Enter number of options</string>
     <string name="enter_option1">Enter option A</string>
     <string name="enter_option2">Enter option B</string>
     <string name="enter_option3">Enter option C</string>
@@ -124,6 +131,7 @@
     <string name="correct_answer">Enter correct option</string>
     <string name="save_button">Save</string>
     <string name="next_button">Next</string>
+    <string name="teacherDisclaimer">Space for disclaimer</string>
     <string name="delete_button">Delete</string>
     <string name="Quiz">Quiz</string>
     <string name="attempt_quiz">Attempt Quiz</string>

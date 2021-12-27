@@ -102,7 +102,7 @@ class QuizBank : AppCompatActivity() {
     private fun fetchAvlSubject() {
         progress.visibility = View.VISIBLE
         if (userType == 2){
-            quizPath = "Student's quiz records"
+            quizPath = "Student's quizzes"
         }
 //        Log.i(TAG, "userType:" + userType)
         Log.i(TAG, "quizPath:$quizPath")
@@ -121,10 +121,6 @@ class QuizBank : AppCompatActivity() {
                             quizbanklist,userType,quizPath,
                             this
                         )
-
-
-
-
 
                     rv.adapter = modifyQuestionSetting
 

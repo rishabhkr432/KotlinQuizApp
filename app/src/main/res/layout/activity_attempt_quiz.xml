@@ -35,6 +35,16 @@
             android:textSize="@dimen/text_26" />
 
     </RelativeLayout>
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/dashboard_layout_bg"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/padding_large">
 
     <ProgressBar
         android:id="@+id/avlSubject_progress"
@@ -74,7 +84,7 @@
         android:id="@+id/question_attempt"
         android:layout_width="365dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_15"
+        android:layout_marginStart="@dimen/margin_5"
         android:layout_marginTop="10dp"
         android:fontFamily="@font/poppins_bold"
         android:hint="@string/question_is"
@@ -82,61 +92,34 @@
         android:textColorHint="@color/browser_actions_title_color"
 
         android:textSize="@dimen/text_26" />
+    <ProgressBar
+        android:id="@+id/options_progress_attempt"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/margin_10"
+        android:visibility="gone" />
+    <TextView
+        android:id="@+id/options_failed_attempt_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/margin_15"
+        android:fontFamily="@font/poppins_bold"
+        android:gravity="center"
+        android:text="@string/options_not_found"
+        android:textSize="@dimen/text_22"
+        android:visibility="gone" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/options_list_attempt_rv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_5"/>
     <RadioGroup
         android:id="@+id/radioGrp"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
-
-    <RadioButton
-        android:id="@+id/student_option1_attempt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_15"
-        android:layout_marginTop="10dp"
-        android:fontFamily="@font/poppins_semibold"
-        android:hint="@string/option1"
-        android:textColor="@color/black"
-        android:textColorHint="#78909C"
-        android:textSize="@dimen/text_18" />
-
-    <RadioButton
-        android:id="@+id/student_option2_attempt"
-
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_15"
-        android:layout_marginTop="10dp"
-        android:fontFamily="@font/poppins_semibold"
-        android:hint="@string/option2"
-        android:textColor="@color/black"
-        android:textColorHint="#78909C"
-        android:textSize="@dimen/text_18" />
-
-    <RadioButton
-        android:id="@+id/student_option3_attempt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_15"
-        android:layout_marginTop="10dp"
-        android:fontFamily="@font/poppins_semibold"
-        android:hint="@string/option3"
-        android:textColor="@color/black"
-        android:textColorHint="#78909C"
-        android:textSize="@dimen/text_18" />
-
-    <RadioButton
-        android:id="@+id/student_option4_attempt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_15"
-        android:layout_marginTop="10dp"
-        android:fontFamily="@font/poppins_semibold"
-        android:hint="@string/option4"
-        android:textColor="@color/black"
-        android:textColorHint="#78909C"
-        android:textSize="@dimen/text_18" />
-    </RadioGroup>
+        android:layout_height="wrap_content"/>
 
 
 
@@ -159,5 +142,21 @@
             android:textAllCaps="false"
             android:textSize="@dimen/text_24" />
     </LinearLayout>
+
+            <TextView
+                android:id="@+id/hiddenDisclaimer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/teacherDisclaimer"
+                android:layout_marginTop="10dp"
+                android:textAlignment="center"
+                android:fontFamily="@font/poppins_bold"
+                android:textColor="@color/grey"
+                android:textColorHint="@color/browser_actions_title_color"
+                android:visibility="gone"/>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
 
 </LinearLayout>

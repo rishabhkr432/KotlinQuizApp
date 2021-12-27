@@ -36,7 +36,7 @@ class StudentHomeActivity : AppCompatActivity() {
         }
         checkMarks.setOnClickListener {
 
-            val loginIntent = Intent(this, AddQuiz::class.java)
+            val loginIntent = Intent(this, CheckMarks::class.java)
             startActivity(loginIntent)
             finish()
         }

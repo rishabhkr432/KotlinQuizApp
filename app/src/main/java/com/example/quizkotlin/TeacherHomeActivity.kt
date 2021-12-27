@@ -62,7 +62,7 @@ class TeacherHomeActivity : AppCompatActivity() {
         }
         add_question.setOnClickListener {
 
-            val loginIntent = Intent(this, AddQuestion::class.java)
+            val loginIntent = Intent(this, QuestionPopup::class.java)
             startActivity(loginIntent)
             finish()
         }

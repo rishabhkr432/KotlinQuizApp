@@ -36,6 +36,7 @@ class ModifyQuestion(
     private lateinit var intent: Intent
 
 
+
 //    var i = intent!!.
 
     class MyViewHolder(view: View): RecyclerView.ViewHolder(view) {
@@ -115,18 +116,12 @@ class ModifyQuestion(
                 .addOnSuccessListener {
                     sendQuiz = quizBank[position]
 //                        showquestion = ShowQuestions(quizBank[position])
-                    if (userType == 2) {
-                        intent = Intent(holder.itemView.context, AttemptQuizActivity::class.java)
-                        intent.putExtra(AttemptQuizActivity.QUIZ_PASS, sendQuiz)
-                    }
-                    else {
 
-                        intent = Intent(holder.itemView.context, ShowQuestions::class.java)
-                        intent.putExtra(
-                            ShowQuestions.QUIZ_PASS,
-                            sendQuiz
-                        ) //Put your id to your next Intent
-                    }
+                    intent = Intent(holder.itemView.context, AttemptQuizActivity::class.java)
+                    intent.putExtra(AttemptQuizActivity.QUIZ_PASS, sendQuiz)
+                    intent.putExtra(AttemptQuizActivity.USER_PASS, userType)
+
+
                     Toast.makeText(holder.itemView.context, "Opening Quiz", Toast.LENGTH_SHORT).show()
                    holder.itemView.context.startActivity(intent)
                 }

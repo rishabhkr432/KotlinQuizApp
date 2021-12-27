@@ -50,8 +50,29 @@
         <entry key="..\:/Uni final year/CS31620/Quiz-master/app/src/main/res/layout/custom_dialog_layout_3.xml" value="0.27309782608695654" />
         <entry key="..\:/Uni final year/CS31620/Quiz-master/app/src/main/res/layout/custom_dialog_layout_4.xml" value="0.27309782608695654" />
         <entry key="..\:/Uni_final_year/CS31620/Assignment/app/src/main/res/layout/activity_attempt_quiz.xml" value="0.17760416666666667" />
+        <entry key="..\:/Uni_final_year/CS31620/Assignment/app/src/main/res/layout/activity_login.xml" value="0.11354166666666667" />
+        <entry key="..\:/Uni_final_year/CS31620/Assignment/app/src/main/res/layout/activity_register.xml" value="0.11354166666666667" />
+        <entry key="..\:/Uni_final_year/CS31620/Assignment/app/src/main/res/layout/activity_results.xml" value="0.14739583333333334" />
+        <entry key="..\:/Uni_final_year/CS31620/Assignment/app/src/main/res/layout/activity_splash.xml" value="0.14739583333333334" />
+        <entry key="..\:/Uni_final_year/CS31620/Assignment/app/src/main/res/layout/activity_student_home.xml" value="0.14739583333333334" />
+        <entry key="..\:/Uni_final_year/CS31620/Assignment/app/src/main/res/layout/add_question.xml" value="0.25416666666666665" />
+        <entry key="..\:/Uni_final_year/CS31620/Assignment/app/src/main/res/layout/add_question_copy.xml" value="0.14739583333333334" />
+        <entry key="..\:/Uni_final_year/CS31620/Assignment/app/src/main/res/layout/checkmarks_activity.xml" value="0.12864583333333332" />
+        <entry key="..\:/Uni_final_year/CS31620/Assignment/app/src/main/res/layout/collapsing_toolbar.xml" value="0.14739583333333334" />
+        <entry key="..\:/Uni_final_year/CS31620/Assignment/app/src/main/res/layout/create_quiz.xml" value="0.14739583333333334" />
+        <entry key="..\:/Uni_final_year/CS31620/Assignment/app/src/main/res/layout/custom_add_subject_dialog_box.xml" value="0.264" />
         <entry key="..\:/Uni_final_year/CS31620/Assignment/app/src/main/res/layout/dummy_quiz.xml" value="0.17760416666666667" />
-        <entry key="..\:/Uni_final_year/CS31620/Assignment/app/src/main/res/layout/quiz_card.xml" value="0.25416666666666665" />
+        <entry key="..\:/Uni_final_year/CS31620/Assignment/app/src/main/res/layout/fragment_signup.xml" value="0.11354166666666667" />
+        <entry key="..\:/Uni_final_year/CS31620/Assignment/app/src/main/res/layout/fragment_user_type.xml" value="0.14739583333333334" />
+        <entry key="..\:/Uni_final_year/CS31620/Assignment/app/src/main/res/layout/list_questions.xml" value="0.11354166666666667" />
+        <entry key="..\:/Uni_final_year/CS31620/Assignment/app/src/main/res/layout/list_quizzes_in_bank.xml" value="0.11354166666666667" />
+        <entry key="..\:/Uni_final_year/CS31620/Assignment/app/src/main/res/layout/options_card.xml" value="0.4" />
+        <entry key="..\:/Uni_final_year/CS31620/Assignment/app/src/main/res/layout/options_card_radio.xml" value="0.18958333333333333" />
+        <entry key="..\:/Uni_final_year/CS31620/Assignment/app/src/main/res/layout/question_card.xml" value="0.11354166666666667" />
+        <entry key="..\:/Uni_final_year/CS31620/Assignment/app/src/main/res/layout/question_popup.xml" value="0.25416666666666665" />
+        <entry key="..\:/Uni_final_year/CS31620/Assignment/app/src/main/res/layout/quiz_card.xml" value="0.4" />
+        <entry key="..\:/Uni_final_year/CS31620/Assignment/app/src/main/res/layout/toolbar.xml" value="0.11354166666666667" />
+        <entry key="..\:/Uni_final_year/CS31620/Assignment/app/src/main/res/layout/user_rights.xml" value="0.11354166666666667" />
       </map>
     </option>
   </component>

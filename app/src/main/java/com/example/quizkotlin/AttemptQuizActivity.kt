@@ -2,9 +2,12 @@ package com.example.quizkotlin;
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
+import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import com.example.quizkotlin.*
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.quizkotlin.models.Question
 import com.example.quizkotlin.models.Quiz
 import com.google.android.material.button.MaterialButton
@@ -15,7 +18,6 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 class AttemptQuizActivity : AppCompatActivity() {
-    private var result : String = "highScore"
     private var score : Int = 0
     private var questionsList: List<Question> = ArrayList()
     private lateinit var database: FirebaseFirestore
@@ -24,131 +26,168 @@ class AttemptQuizActivity : AppCompatActivity() {
     private lateinit var next_button: MaterialButton
     private lateinit var question: TextView
     private lateinit var qnum_display: TextView
-    private lateinit var option1: RadioButton
-    private lateinit var option2: RadioButton
-    private lateinit var option3: RadioButton
-    private lateinit var option4: RadioButton
+  private var userType: Int = 1
+    private var disclaimText: String = "Preview mode - Marks will not count"
+    private lateinit var options_rv: RecyclerView
+    private var radioReturnString: String = ""
+    private lateinit var options_progress: ProgressBar
+    private lateinit var optionFailed: TextView
+private lateinit var attemptQuizAdapter: AttemptQuizAdapter
     private lateinit var quizPas: Quiz
     private var qNum : Int = 0
+    private lateinit var hiddenDisclaimer: TextView
     private lateinit var goBack: ImageView
     private lateinit var currentQuestion : Question
     var radioGroup: RadioGroup? = null
-
-
+//
+//
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_attempt_quiz)
+    super.onCreate(savedInstanceState)
+    setContentView(R.layout.activity_attempt_quiz)
+    auth = FirebaseAuth.getInstance()
+    database = FirebaseFirestore.getInstance()
+    user = auth.currentUser!!
+//
+//
+    quizPas = intent.getSerializableExtra(QUIZ_PASS) as Quiz
+    userType = intent.getSerializableExtra(USER_PASS) as Int
+    Log.i("userType", userType.toString())
+    initViews()
+    questionsList = quizPas.questionsForQuiz
+    Collections.shuffle(questionsList)
+    currentQuestion = questionsList[qNum]
+    setCurrentQuestion(currentQuestion)
+//
+    goBack.setOnClickListener {
+        StudentHomeActivity.studenthomeActivity.finish()
+        val intent = Intent(this, StudentHomeActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
+    next_button.setOnClickListener {
 
-
-        quizPas = intent.getSerializableExtra(QUIZ_PASS) as Quiz
-        initViews()
-        questionsList = quizPas.questionsForQuiz
-        Collections.shuffle(questionsList)
-        currentQuestion = questionsList[qNum]
-        setCurrentQuestion(currentQuestion)
-
-        goBack.setOnClickListener {
-            StudentHomeActivity.studenthomeActivity.finish()
-            val intent = Intent(this, StudentHomeActivity::class.java)
-            startActivity(intent)
-            finish()
-        }
-        next_button.setOnClickListener {
-            radioGroup?.clearCheck()
-
-            if (currentQuestion.correct_answer.equals(option1.text)){
-                score+=1
-
-            }else if (currentQuestion.correct_answer.equals(option2.text)) {
-                score += 1
-            }else if (currentQuestion.correct_answer.equals(option3.text)){
-                    score+=1
-            }else if (currentQuestion.correct_answer.equals(option4.text)){
-                    score+=1
-            }else{
-                Toast.makeText(this, "Answer is wrong", Toast.LENGTH_SHORT)
-                    .show()
-            }
-            Toast.makeText(this, "Next question", Toast.LENGTH_SHORT)
+        if (currentQuestion.correct_answer == radioReturnString) {
+            score += 1
+            radioReturnString = ""
+            Toast.makeText(this, "Correct Answer!", Toast.LENGTH_SHORT)
                 .show()
 
+        } else {
+            Toast.makeText(this, "Answer is wrong", Toast.LENGTH_SHORT)
+                .show()
+        }
 
-            if (qNum < questionsList.size) {
-                currentQuestion = questionsList[qNum]
-                setCurrentQuestion(currentQuestion)
-            } else {
-                val sharedPreferences = getSharedPreferences("Result", MODE_PRIVATE)
-                val editor = sharedPreferences.edit()
-                editor.putInt(result, score)
-                editor.commit()
-                constants.SCORE = score
-                val intent = Intent(this, StudentHomeActivity::class.java)
+//
+//
+        if (qNum < questionsList.size) {
+            currentQuestion = questionsList[qNum]
+            setCurrentQuestion(currentQuestion)
+        } else {
+
+            val quizResults = Results(quizPas.id, score, user.email.toString())
+
+            if (userType == 2) {
+                val ref = database.collection("Student's quiz results").document(quizPas.id)
+                ref.set(quizResults)
+                    .addOnSuccessListener {
+                        Log.i("Results", "Sending results to database")
+//                        Toast.makeText(this, "New quiz added", Toast.LENGTH_LONG).show()
+
+//                    TURN THIS BACK ON
+
+
+//                    TURN THIS BACK ON
+//                    database.collection("Student's quizzes")
+//                        .get()
+//                        .addOnSuccessListener { documents ->
+//                            for (document in documents) {
+//                                if (document.get("id") == (quizPas.id)) {
+//                                    document.reference.delete()
+//                                    Toast.makeText(this, "Quiz deleted", Toast.LENGTH_SHORT).show()
+//                                    Log.d(
+//                                        "Document",
+//                                        "Deleting - ${document.id} => ${document.data}"
+//                                    )
+//                                }
+//
+//                            }
+//                        }
+                    }
+                    .addOnFailureListener {
+//                        Toast.makeText(this, "Failed", Toast.LENGTH_LONG).show()
+                        Log.i("Results", "Failed to send results to database")
+
+                    }
+
+
+                val intent = Intent(this, ResultsActivity::class.java)
+                intent.putExtra(ResultsActivity.SCORE_PASS, score)
                 startActivity(intent)
-                finish()
             }
+            else{
+                val intent = Intent(this, TeacherHomeActivity::class.java)
+                startActivity(intent)
+            }
+
+            finish()
         }
     }
-        //
-//        questionViewModel = ViewModelProviders.of(this).get(QuestionViewModel::class.java)
-//        questionViewModel.getAllQuestionList().observe(this, {
-//            questionsList = it as ArrayList<Question>
-//        })
-//        Collections.shuffle(questionsList)
-//        currentQuestion = questionsList[quid]
-//        setQuestionView(currentQuestion)
-//
-//        binding.next.setOnClickListener {
-//            answerrow1 = binding.radioGroupRow1.checkedRadioButtonId as RadioButton
-//            answerrow2 = binding.radioGroupRow2.checkedRadioButtonId as RadioButton
-//            if (currentQuestion.correctAnswer.equals(answerrow1.text)){
-//                score+=1
-//            }else if (currentQuestion.correctAnswer.equals(answerrow2.text)){
-//                score+=1
-//            }else{
-//                Toast.makeText(this@AttemptQuizActivity, "Answer is wrong", Toast.LENGTH_SHORT)
-//                    .show()
-//            }
-//            if (quid<questionsList.size){
-//                currentQuestion =questionsList[quid]
-//                setQuestionView(currentQuestion)
-//            }else{
-//                val sharedPreferences = getSharedPreferences("Result", MODE_PRIVATE)
-//                val editor = sharedPreferences.edit()
-//                editor.putInt(result, score)
-//                editor.commit()
-//                SCORE = score
-//                val intent = Intent(applicationContext, StudentHomeActivity::class.java)
-//                startActivity(intent)
-//                finish()
-//            }
+}
+
 
 
         private fun initViews() {
             qnum_display = findViewById(R.id.qnum_display)
+            hiddenDisclaimer = findViewById(R.id.hiddenDisclaimer)
             question = findViewById(R.id.question_attempt)
-            option1 = findViewById(R.id.student_option1_attempt) as RadioButton
-            option2 = findViewById(R.id.student_option2_attempt)
-            option3 = findViewById(R.id.student_option3_attempt)
-            option4 = findViewById(R.id.student_option4_attempt)
+            options_rv = findViewById(R.id.options_list_attempt_rv)
             radioGroup = findViewById(R.id.radioGrp)
             next_button = findViewById(R.id.next_button_demo)
-
+            optionFailed = findViewById(R.id.options_failed_attempt_tv)
+            options_progress = findViewById(R.id.options_progress_attempt)
             goBack = findViewById(R.id.goBackButton_quiz_attempt)
+            options_rv.layoutManager = LinearLayoutManager(this)
+            options_rv.setHasFixedSize(true)
+            if (userType == 1){
+                hiddenDisclaimer.visibility = View.VISIBLE
+                hiddenDisclaimer.text = disclaimText
+            }
         }
+//
+private fun setCurrentQuestion(currentQuestion: Question) {
+    var optionsList = currentQuestion.options as ArrayList<String?>
+    optionsList.shuffle()
+    Log.i("optionsList", optionsList.toString())
+    question.text = currentQuestion.question
+    qNum += 1
 
-        private fun setCurrentQuestion(currentQuestion: Question) {
-            question.text = currentQuestion.question
-            option1.text = currentQuestion.option1
-            option2.text = currentQuestion.option2
-            option3.text = currentQuestion.option3
-            option4.text = currentQuestion.option4
-            qNum += 1
-            qnum_display.text = ((qNum+1).toString() + "/10")
+    qnum_display.text = ("Total Questions: " + (qNum).toString() + "/10")
 
-        }
+
+    if (optionsList.isEmpty()) {
+        options_progress.visibility = View.GONE
+        optionFailed.visibility = View.VISIBLE
+    } else {
+        optionFailed.visibility = View.GONE
+        attemptQuizAdapter = AttemptQuizAdapter(
+            optionsList,
+            this,
+            object : AttemptQuizAdapter.MyViewHolder.Listener {
+                override fun returnPosString(radioString: String) {
+                    radioReturnString = radioString
+                    Log.d("PosString", "optionsList returned : $radioString")
+                }
+            })
+        options_rv.adapter = attemptQuizAdapter
+    }
+}
+
+
+
     companion object {
         @SuppressLint("StaticFieldLeak")
         var QUIZ_PASS = "Quiz"
+        var USER_PASS = "userType"
     }
-
+//
 }
