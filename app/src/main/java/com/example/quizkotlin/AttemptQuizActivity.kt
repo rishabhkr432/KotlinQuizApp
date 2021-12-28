@@ -10,11 +10,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.quizkotlin.models.Question
 import com.example.quizkotlin.models.Quiz
+import com.example.quizkotlin.models.Results
 import com.google.android.material.button.MaterialButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
-import java.util.*
 import kotlin.collections.ArrayList
 
 class AttemptQuizActivity : AppCompatActivity() {
@@ -30,6 +30,7 @@ class AttemptQuizActivity : AppCompatActivity() {
     private var disclaimText: String = "Preview mode - Marks will not count"
     private lateinit var options_rv: RecyclerView
     private var radioReturnString: String = ""
+    private var radioStoreAnswer: ArrayList<String> = arrayListOf()
     private lateinit var options_progress: ProgressBar
     private lateinit var optionFailed: TextView
 private lateinit var attemptQuizAdapter: AttemptQuizAdapter
@@ -51,18 +52,29 @@ private lateinit var attemptQuizAdapter: AttemptQuizAdapter
 //
     quizPas = intent.getSerializableExtra(QUIZ_PASS) as Quiz
     userType = intent.getSerializableExtra(USER_PASS) as Int
-    Log.i("userType", userType.toString())
+    Log.i("$TAG- userType", userType.toString())
     initViews()
     questionsList = quizPas.questionsForQuiz
-    Collections.shuffle(questionsList)
+    (questionsList as ArrayList<Question>).shuffle()
     currentQuestion = questionsList[qNum]
     setCurrentQuestion(currentQuestion)
 //
     goBack.setOnClickListener {
-        StudentHomeActivity.studenthomeActivity.finish()
-        val intent = Intent(this, StudentHomeActivity::class.java)
-        startActivity(intent)
-        finish()
+        if (userType == 1){
+
+            TeacherHomeActivity.teachershomeActivity.finish()
+            val intent = Intent(this, TeacherHomeActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+        else{
+            StudentHomeActivity.studentHomeActivity.finish()
+            val intent = Intent(this, StudentHomeActivity::class.java)
+            startActivity(intent)
+            finish()
+
+        }
+
     }
     next_button.setOnClickListener {
 
@@ -173,9 +185,10 @@ private fun setCurrentQuestion(currentQuestion: Question) {
             optionsList,
             this,
             object : AttemptQuizAdapter.MyViewHolder.Listener {
-                override fun returnPosString(radioString: String) {
-                    radioReturnString = radioString
-                    Log.d("PosString", "optionsList returned : $radioString")
+                override fun returnPosString(pos: String) {
+                    radioReturnString = pos
+                    radioStoreAnswer.add(radioReturnString)
+                    Log.d("PosString", "optionsList returned : $pos")
                 }
             })
         options_rv.adapter = attemptQuizAdapter
@@ -188,6 +201,8 @@ private fun setCurrentQuestion(currentQuestion: Question) {
         @SuppressLint("StaticFieldLeak")
         var QUIZ_PASS = "Quiz"
         var USER_PASS = "userType"
+        private const val TAG = "AttemptQuizAdapter"
+
     }
 //
 }

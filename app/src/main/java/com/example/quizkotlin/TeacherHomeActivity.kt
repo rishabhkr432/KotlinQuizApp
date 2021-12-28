@@ -4,16 +4,16 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.quizkotlin.databinding.ActivityTeacherHomeBinding
 import com.example.quizkotlin.models.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
 class TeacherHomeActivity : AppCompatActivity() {
-    private lateinit var question_bank: TextView
+    private lateinit var quiz_bank: TextView
     private lateinit var add_quiz: TextView
     private lateinit var add_question: TextView
     private lateinit var tvDisplayName: TextView
@@ -54,34 +54,38 @@ class TeacherHomeActivity : AppCompatActivity() {
                     }
                 }
         }
-        question_bank.setOnClickListener {
+        quiz_bank.setOnClickListener {
 
-            val loginIntent = Intent(this, QuizBank::class.java)
-            startActivity(loginIntent)
+            val intent = Intent(this, QuizBank::class.java)
+            startActivity(intent)
+            Log.d("${TAG}", "Opening Quiz Bank activity")
             finish()
         }
         add_question.setOnClickListener {
 
-            val loginIntent = Intent(this, QuestionPopup::class.java)
-            startActivity(loginIntent)
+            val intent = Intent(this, QuestionPopup::class.java)
+            startActivity(intent)
+            Log.d("${TAG}", "Opening Add question activity")
             finish()
         }
         add_quiz.setOnClickListener {
 
-            val loginIntent = Intent(this, AddQuiz::class.java)
-            startActivity(loginIntent)
+            val intent = Intent(this, AddQuiz::class.java)
+            startActivity(intent)
+            Log.d("${TAG}", "Opening Add quiz activity")
             finish()
         }
         tvLogout.setOnClickListener {
             auth.signOut()
-            val loginIntent = Intent(this, LoginActivity::class.java)
-            startActivity(loginIntent)
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+            Log.d("${TAG}", "Exiting to login activity")
             finish()
         }
     }
     private fun initViews() {
 
-        question_bank = findViewById(R.id.question_bank)
+        quiz_bank = findViewById(R.id.question_bank)
         add_quiz = findViewById(R.id.add_quiz)
         add_question = findViewById(R.id.add_question)
         tvLogout = findViewById(R.id.teacher_logout_tv)
@@ -106,5 +110,8 @@ class TeacherHomeActivity : AppCompatActivity() {
     companion object {
         @SuppressLint("StaticFieldLeak")
         lateinit var teachershomeActivity: Activity
+
+        private const val TAG = "TeacherHomeActivity"
+
     }
 }

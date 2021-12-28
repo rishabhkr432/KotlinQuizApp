@@ -89,14 +89,11 @@ private val optionsTotal:  ArrayList<String> = arrayListOf()
 
 
 
-//    companion object {
-//        @SuppressLint("StaticFieldLeak")
-//        private const val TAG = "AddQuestion"
-//        lateinit var addquestionActivity: Activity
-//        var QUESTION = "Question"
-//        var SPINNER = "Spinner"
-//        var OPTIONS = "Options"
-//    }
+    companion object {
+        @SuppressLint("StaticFieldLeak")
+        private const val TAG = "AddQuestionAdapter"
+
+    }
 override fun getItemCount(): Int {
     return optionsList.size
 }

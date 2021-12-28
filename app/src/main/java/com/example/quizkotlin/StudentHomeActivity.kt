@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
@@ -11,8 +12,8 @@ import com.google.firebase.firestore.FirebaseFirestore
 
 class StudentHomeActivity : AppCompatActivity() {
     private lateinit var tvDisplayName: TextView
-    private lateinit var viewQuizBank: TextView
-    private lateinit var checkMarks: TextView
+    private lateinit var view_quiz_bank: TextView
+    private lateinit var check_marks: TextView
     private lateinit var tvEmail: TextView
     private lateinit var tvUserType: TextView
     private lateinit var tvLogout: TextView
@@ -28,22 +29,27 @@ class StudentHomeActivity : AppCompatActivity() {
         database = FirebaseFirestore.getInstance()
 
 
-        viewQuizBank.setOnClickListener {
+        view_quiz_bank.setOnClickListener {
 
-            val loginIntent = Intent(this, QuizBank::class.java)
-            startActivity(loginIntent)
+            val intent = Intent(this, QuizBank::class.java)
+            startActivity(intent)
+            Log.d("${TAG}", "Opening Quiz bank activity")
+
             finish()
         }
-        checkMarks.setOnClickListener {
+        check_marks.setOnClickListener {
 
-            val loginIntent = Intent(this, CheckMarks::class.java)
-            startActivity(loginIntent)
+            val intent = Intent(this, CheckMarks::class.java)
+            startActivity(intent)
+            Log.d("${TAG}", "Opening Check marks activity")
+
             finish()
         }
         tvLogout.setOnClickListener {
             auth.signOut()
-            val loginIntent = Intent(this, LoginActivity::class.java)
-            startActivity(loginIntent)
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+            Log.d("${TAG}", "Exiting to login activity")
             finish()
         }
 
@@ -51,8 +57,8 @@ class StudentHomeActivity : AppCompatActivity() {
 
     private fun initViews() {
 
-        checkMarks = findViewById(R.id.marks)
-        viewQuizBank = findViewById(R.id.view_quiz)
+        check_marks = findViewById(R.id.marks)
+        view_quiz_bank = findViewById(R.id.view_quiz)
         tvLogout = findViewById(R.id.student_logout_tv)
         tvDisplayName = findViewById(R.id.toolbar_displayName_tv)
         tvEmail = findViewById(R.id.toolbar_email_tv)
@@ -60,11 +66,12 @@ class StudentHomeActivity : AppCompatActivity() {
 
     }
     init {
-        studenthomeActivity = this
+        studentHomeActivity = this
     }
     companion object {
         @SuppressLint("StaticFieldLeak")
-        lateinit var studenthomeActivity: Activity
+        lateinit var studentHomeActivity: Activity
+        private const val TAG = "StudentHomeActivity"
     }
 
    }

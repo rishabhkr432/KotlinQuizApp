@@ -1,7 +1,6 @@
 package com.example.quizkotlin
 
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
@@ -28,12 +27,8 @@ import com.google.android.gms.tasks.OnCompleteListener
 
 class AddQuestion : AppCompatActivity() {
     private lateinit var question: EditText
-    private lateinit var option1: EditText
-    private lateinit var option2: EditText
-    private lateinit var option3: EditText
-    private lateinit var option4: EditText
     private lateinit var answer: EditText
-    private lateinit var spinnerSelectedText: String
+    private var spinnerSelectedText: HashMap<String,Int>? = null
 
     private var creatingOptionsList: ArrayList<String?> = arrayListOf()
     private lateinit var addQuestionadapter: AddQuestionAdapter
@@ -45,10 +40,9 @@ class AddQuestion : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private lateinit var user: FirebaseUser
     private lateinit var rv: RecyclerView
-    private lateinit var ivClose: ImageView
     private lateinit var options_progress: ProgressBar
     private lateinit var optionFailed: TextView
-    private var MAXOPTIONS: Int = 1
+    private var minOptions: Int = 1
     private var isValidation: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -80,18 +74,13 @@ class AddQuestion : AppCompatActivity() {
 
             Log.d("correct_answer", answer.text.toString())
             Log.d("optionList", creatingOptionsList.toString())
-//            saveClassToDatabase
 
-            var question_temp: String = question.text.toString().trim()
+            var questionTemp: String = question.text.toString().trim()
             var optionList: ArrayList<String?> = creatingOptionsList
-//        var optionB : String = option2.text.toString().trim()
-//        var optionC : String = option3.text.toString().trim()
-//        var optionD : String = option4.text.toString().trim()
             var correctAnswer = answer.text.toString().trim()
-            validations(question_temp, optionList, correctAnswer)
-            if (isValidation == true) {
-//                questionsList.add(Question(question_temp, optionList, correctAnswer))
-            saveClassToDatabase(question_temp, optionList, correctAnswer)
+            validations(questionTemp, optionList, correctAnswer)
+            if (isValidation) {
+            saveClassToDatabase(questionTemp, optionList, correctAnswer)
             }
 
 
@@ -105,10 +94,7 @@ class AddQuestion : AppCompatActivity() {
         }
     }
     private fun saveClassToDatabase(question_name: String, optionsList: ArrayList<String?>, correctAnswer: String ) {
-//        validations(question_name, optionA, optionB, optionC, optionD, correctAnswer)
-//
-//
-//            if (isValidation == true) {
+
                 val newQuestion = Question(
                     question_name,
                     optionsList,
@@ -158,17 +144,7 @@ class AddQuestion : AppCompatActivity() {
                                         }
                                 }
 
-                                else {
-                                    if (quizSize == 10) {
-                                        Toast.makeText(
-                                            this,
-                                            "Cannot add more questions to this quiz. Current size: $quizSize",
-                                            Toast.LENGTH_LONG
-                                        ).show()
-                                        sendQuiztoStudentDatabase(document, quiz)
-                                    } else {
-
-
+                                 else {
                                         Toast.makeText(
                                             this,
                                             "Cannot add more questions to this quiz. Current size: $quizSize",
@@ -176,37 +152,17 @@ class AddQuestion : AppCompatActivity() {
                                         ).show()
 
                                     }
-                                }
+
                             }
                         }
                     }
 
-
-//                washingtonRef.set(newQuestion)
-//                    .addOnSuccessListener {
-//                        Toast.makeText(this, "Created", Toast.LENGTH_LONG).show()
-//                        Log.d(TAG, "Created")
-//                        finish();
-//                        overridePendingTransition(0, 0);
-//                        startActivity(intent);
-//                        overridePendingTransition(0, 0);
-//                    }
-//                    .addOnFailureListener { exception ->
-//                        Toast.makeText(this, "Failed", Toast.LENGTH_LONG).show()
-//                        finish();
-////                this.recreate();
-//                        Log.d(TAG, "get failed with ", exception)
-//                    }
             }
-//    }
+
 
 
         private fun initViews() {
             question = findViewById(R.id.add_question)
-//        option1 = findViewById(R.id.option1)
-//        option2 = findViewById(R.id.option2)
-//        option3 = findViewById(R.id.option3)
-//        option4 = findViewById(R.id.option4)
             answer = findViewById(R.id.correct_answer_rv)
             save_button = findViewById(R.id.save_button)
             goBack = findViewById(R.id.goBackButton)
@@ -221,18 +177,10 @@ class AddQuestion : AppCompatActivity() {
 
         }
 
-        //    private fun createQuestion(){
-//        val q = new Question("1",
-//        question,
-//        creatingOptionsList
-//        )
-//    }
         private fun getOptions() {
-            for (i in 1..MAXOPTIONS) {
+            for (i in 1..minOptions) {
                 creatingOptionsList.add("")
             }
-//    creatingOptionsList = ArrayList(initialCapacity = MAXOPTIONS)
-
             Log.d("creatingOptionsList", creatingOptionsList.toString())
             if (creatingOptionsList.isEmpty()) {
                 options_progress.visibility = View.GONE
@@ -255,7 +203,8 @@ class AddQuestion : AppCompatActivity() {
 
         private fun getSpinnerValue() {
             val spinner = findViewById<Spinner>(R.id.spinner)
-            spinnerSelectedText = quizList.first().id
+            spinnerSelectedText?.set(quizList.first().id, quizList.first().questionsForQuiz.size)
+//            (quizList.first().id: quizList.first().questionsForQuiz.size)
 
 
             if (spinner != null) {
@@ -270,7 +219,9 @@ class AddQuestion : AppCompatActivity() {
                         position: Int,
                         id: Long
                     ) {
-                        spinnerSelectedText = quizList[position].id
+                        spinnerSelectedText?.set(quizList[position].id,
+                            quizList[position].questionsForQuiz.size
+                        )
                         println("QuizList selected is $spinnerSelectedText")  // <-- this works
                     }
 
@@ -281,7 +232,7 @@ class AddQuestion : AppCompatActivity() {
             }
 
 // selectedText is not seen here:
-            println("quizList selected is $spinnerSelectedText")
+            Log.d("$TAG- getSpinnerValue() -",  "quizList selected is $spinnerSelectedText")
 //        return
         }
 
@@ -290,23 +241,11 @@ class AddQuestion : AppCompatActivity() {
             var spinnerPassed = intent.getStringExtra(SPINNER) ?: return
             var options = intent.getIntExtra(OPTIONS, 1)
             question.setText(questionPassed)
-            spinnerSelectedText = spinnerPassed
-            MAXOPTIONS = options
-            Log.i("question", questionPassed)
-            Log.i("spinnerSelectedText", spinnerPassed)
-            Log.i("options", options.toString())
-//        if (questionPassed != null) {
-//            question.setText(questionPassed)
-//            Log.i(TAG, questionPassed)
-//        }
-//
-//
-//        if (spinnerPassed != null) {
-//            spinnerSelectedText = spinnerPassed
-//            Log.i(TAG, spinnerPassed)
-//        }
-
-
+            spinnerSelectedText?.set(spinnerPassed, 0)
+            minOptions = options
+            Log.d("$TAG- passedQuestionandSpinner - question", questionPassed)
+            Log.d("$TAG- passedQuestionandSpinner - spinnerSelectedText", spinnerPassed)
+            Log.d("$TAG- passedQuestionandSpinner - options", options.toString())
         }
 
         private fun validations(
@@ -314,12 +253,11 @@ class AddQuestion : AppCompatActivity() {
             temp_optionList: ArrayList<String?>,
             correctAnswer: String
         ) {
-//        if (question_set != "" && !question_set.isEmpty()) {
             if (question_check != "" && !question_check.isEmpty()) {
                 for (i in temp_optionList) {
                     if (i != null) {
                         if (i != "" && !i.isEmpty()) {
-                            if ((correctAnswer != "" && !correctAnswer.isEmpty()) && temp_optionList.contains(
+                            if ((correctAnswer != "" && !correctAnswer.isEmpty())  && temp_optionList.contains(
                                     correctAnswer
                                 )
                             ) {
@@ -347,65 +285,20 @@ class AddQuestion : AppCompatActivity() {
             }
         }
 
-//                if (optionA != "" && !optionA.isEmpty()) {
-//                    if (optionB != "" && !optionB.isEmpty()) {
-//                        if (optionC != "" && !optionC.isEmpty()) {
-//                            if (optionD != "" && !optionD.isEmpty()) {
-//                                if ((correctAnswer != "" && !correctAnswer.isEmpty()) && correctAnswer == optionA || correctAnswer == optionB || correctAnswer == optionC || correctAnswer == optionD)  {
-//                                    isValidation = true
-//                                    return
-//                                } else {
-//                                    answer.error = "Please enter correct answer"
-//                                    answer.requestFocus()
-//                                    isValidation = false
-//                                    return
-//                                }
-//                            } else {
-//                                option4.error = "Please enter option D"
-//                                option4.requestFocus()
-//                                isValidation = false
-//                                return
-//                            }
-//                        } else {
-//                            option3.error = "Please enter option C"
-//                            option3.requestFocus()
-//                            isValidation = false
-//                            return
-//                        }
-//                    } else {
-//                        option2.error = "Please enter option B"
-//                        option2.requestFocus()
-//                        isValidation = false
-//                        return
-//                    }
-//                } else {
-//                    option1.error = "Please enter option A"
-//                    option1.requestFocus()
-//                    isValidation = false
-//                    return
-//                }
-//            } else {
-//                question.error = "Please enter question"
-//                question.requestFocus()
-//                isValidation = false
-//                return
-//            }
-//        }
 
-        private fun sendQuiztoStudentDatabase(quid: QueryDocumentSnapshot, quiz: Quiz) {
+        private fun sendQuiztoStudentDatabase(quid: QueryDocumentSnapshot) {
             val docRef = database.collection("Student's quizzes").document(quid.id)
-            Log.d(TAG, quid.id)
             docRef.get().addOnCompleteListener(OnCompleteListener<DocumentSnapshot?> { task ->
                 if (task.isSuccessful) {
                     val document = task.result
                     if (document.exists()) {
-                        Log.d(TAG, "Document exists!")
+
                         Toast.makeText(
                             this,
                             "Failed to send Quiz, document already exists",
                             Toast.LENGTH_LONG
                         ).show()
-
+                        Log.d("$TAG- sendQuiztoStudentDatabase: ", "Document exists: ${document.id}")
                     } else {
                         Log.d(TAG, "Document does not exist!")
                         val save = (quid.toObject(Quiz::class.java))
@@ -417,12 +310,14 @@ class AddQuestion : AppCompatActivity() {
                                     "Quiz send to the student database",
                                     Toast.LENGTH_LONG
                                 ).show()
+                                Log.d("$TAG- sendQuiztoStudentDatabase- Sending quiz to the student database - ", save.toString())
 //                            makeInputFieldEmpty()
                             }
                             .addOnFailureListener {
                                 Toast.makeText(this, "Failed to send quiz", Toast.LENGTH_LONG)
                                     .show()
 //                            makeInputFieldEmpty()
+                                Log.d("$TAG- sendQuiztoStudentDatabase: ", "Failed to send quiz")
                             }
 
                     }
@@ -441,13 +336,13 @@ class AddQuestion : AppCompatActivity() {
 
                 }
         }
-        init {
-            addquestionActivity = this
-        }
+//        init {
+//            addquestionActivity = this
+//        }
         companion object {
             @SuppressLint("StaticFieldLeak")
+//            lateinit var addquestionActivity: Activity
             private const val TAG = "AddQuestion"
-            lateinit var addquestionActivity: Activity
             var QUESTION = "Question"
             var SPINNER = "Spinner"
             var OPTIONS = "Options"

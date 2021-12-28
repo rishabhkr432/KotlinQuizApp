@@ -50,6 +50,7 @@ class ResultsActivity : AppCompatActivity(){
     companion object {
         @SuppressLint("StaticFieldLeak")
         var SCORE_PASS = "scores"
+        private const val TAG = "ResultsActivity"
 
     }
 }

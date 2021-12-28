@@ -1,4 +1,4 @@
-package com.example.quizkotlin
+package com.example.quizkotlin.models
 
 data class Results(
 var quizID: String,

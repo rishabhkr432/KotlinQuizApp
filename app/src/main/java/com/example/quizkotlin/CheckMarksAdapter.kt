@@ -2,21 +2,17 @@ package com.example.quizkotlin
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
-import com.example.quizkotlin.models.Quiz
 import com.google.android.material.button.MaterialButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
 import android.content.Intent
-import androidx.core.content.ContextCompat.startActivity
-import com.google.firebase.auth.ktx.userProfileChangeRequest
+import com.example.quizkotlin.models.Results
 
 
 class CheckMarksAdapter(
@@ -80,27 +76,14 @@ class CheckMarksAdapter(
 
 
 
-//            else if (holder.viewbtn.text == view_btn) {
-//                database.collection("Quizzes").document(quizBank[position].id.trim())
-//                    .set(quizBank[position])
-//                    .addOnSuccessListener {
-//                        Toast.makeText(context, "Added", Toast.LENGTH_SHORT).show()
-//                        Quizz.questionsForQuiz.add(quizBank[position].questionID.trim())
-//                        Log.d(TAG, questionsForQuiz.toString())
-//                    }
-
-
-
     }
 
     override fun getItemCount(): Int {
         return quizBank.size
     }
-//    fun onClick(v: View?) {
-//        notifyItemRemoved(this.getLayoutPosition())
-//    }
+
     companion object {
-        private const val TAG = "ModifyQuizBank"
+        private const val TAG = "CheckMarksAdapter"
     }
 
 

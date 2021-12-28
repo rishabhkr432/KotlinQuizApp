@@ -16,7 +16,9 @@ import com.google.firebase.firestore.FirebaseFirestore
 
 import android.content.Intent
 import androidx.core.content.ContextCompat.startActivity
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.ktx.userProfileChangeRequest
+import com.google.firebase.firestore.DocumentSnapshot
 
 
 class ModifyQuestion(
@@ -34,6 +36,7 @@ class ModifyQuestion(
     val database = FirebaseFirestore.getInstance()
     val user = FirebaseAuth.getInstance()
     private lateinit var intent: Intent
+    private var quizSize: Int = 0
 
 
 
@@ -47,6 +50,7 @@ class ModifyQuestion(
             val delbtn: MaterialButton = view.findViewById(R.id.quizDeleteButton)
 
         val viewbtn: MaterialButton = view.findViewById(R.id.quizViewButton)
+        val studentDB: MaterialButton = view.findViewById(R.id.quizStudentDB)
 
 //        init {
 //            initClickListeners()
@@ -72,17 +76,13 @@ class ModifyQuestion(
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
 //        val docRef = database.collection("Quizzes").document()
         if (userType ==2){
-            holder.delbtn.visibility = View.INVISIBLE;
+            holder.delbtn.visibility = View.GONE;
+            holder.studentDB.visibility = View.GONE;
             holder.viewbtn.text = "Start"
-//            quizPath = "Student's quiz records"
         }
-        holder.quizcardtitle.text = quizBank[position].id.trim()
+        holder.quizcardtitle.text = "Quiz title - ${quizBank[position].id.trim()}"
 
 
-
-//        if (questionbanklist.contains(questionbanklist[position].id.trim())) {
-//
-//        }
         holder.delbtn.setOnClickListener {
             database.collection(quizPath).whereEqualTo("id",quizBank[position].id.trim())
                 .get()
@@ -90,17 +90,15 @@ class ModifyQuestion(
                     for (document in documents) {
                         document.reference.delete()
                         Toast.makeText(context, "Quiz deleted", Toast.LENGTH_SHORT).show()
+                        quizBank.removeAt(position)
                         Log.d(TAG, "Deleting - ${document.id} => ${document.data}")
-
-
+                        Log.d(TAG, "Deleting - $position from $quizBank")
 
                     }
 
                     notifyItemRemoved(holder.adapterPosition)
                     notifyItemRangeChanged(holder.adapterPosition, quizBank.size)
-
-
-//
+                    notifyDataSetChanged();
 
                 }
                 .addOnFailureListener { exception ->
@@ -111,35 +109,126 @@ class ModifyQuestion(
             }
 //        }
         holder.viewbtn.setOnClickListener {
-            database.collection(quizPath).document(quizBank[position].id.trim())
-                .set(quizBank[position])
-                .addOnSuccessListener {
-                    sendQuiz = quizBank[position]
+            quizSize = quizBank[position].questionsForQuiz.size
+            Log.d(TAG, "QuizSize - $quizSize")
+            if (quizSize in 1..10) {
+                database.collection(quizPath).document(quizBank[position].id.trim())
+                    .set(quizBank[position])
+                    .addOnSuccessListener {
+                        sendQuiz = quizBank[position]
 //                        showquestion = ShowQuestions(quizBank[position])
 
-                    intent = Intent(holder.itemView.context, AttemptQuizActivity::class.java)
-                    intent.putExtra(AttemptQuizActivity.QUIZ_PASS, sendQuiz)
-                    intent.putExtra(AttemptQuizActivity.USER_PASS, userType)
+                        intent = Intent(holder.itemView.context, AttemptQuizActivity::class.java)
+                        intent.putExtra(AttemptQuizActivity.QUIZ_PASS, sendQuiz)
+                        intent.putExtra(AttemptQuizActivity.USER_PASS, userType)
 
 
-                    Toast.makeText(holder.itemView.context, "Opening Quiz", Toast.LENGTH_SHORT).show()
-                   holder.itemView.context.startActivity(intent)
-                }
-                .addOnFailureListener {
-//                    holder.deletebtn_card.text = "Un Enroll"
-                    Toast.makeText(holder.itemView.context, "Failed to open Quiz", Toast.LENGTH_SHORT).show()
-                }
+                        Toast.makeText(holder.itemView.context, "Opening Quiz", Toast.LENGTH_SHORT)
+                            .show()
+                        holder.itemView.context.startActivity(intent)
+                    }
+                    .addOnFailureListener {
+                        Toast.makeText(
+                            holder.itemView.context,
+                            "Failed to open Quiz",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+
+            } else {
+                Toast.makeText(holder.itemView.context, "Quiz size is out of bounds. Try adding questions.", Toast.LENGTH_SHORT)
+                    .show()
+                Log.d("${TAG}-", "Quiz size is out of bounds:  Current size: ${quizSize}/10")
+
+            }
+        }
+        holder.studentDB.setOnClickListener {
+            quizSize = quizBank[position].questionsForQuiz.size
+            Log.d(TAG, "QuizSize - $quizSize")
+            if (quizSize == 10) {
+                database.collection("Quizzes")
+                    .get()
+                    .addOnSuccessListener { documents ->
+                        for (document in documents) {
+                            if (document.get("id") == (holder.quizcardtitle.text.toString())) {
+                                Log.d(
+                                    "holder.quizcardtitle.text",
+                                    holder.quizcardtitle.text.toString()
+                                )
+
+                                val docRef =
+                                    database.collection("Student's quizzes").document(document.id)
+                                docRef.get()
+                                    .addOnCompleteListener(OnCompleteListener<DocumentSnapshot?> { task ->
+                                        if (task.isSuccessful) {
+                                            val doc = task.result
+                                            if (doc.exists()) {
+
+                                                Toast.makeText(
+                                                    holder.itemView.context,
+                                                    "Failed to send Quiz, document already exists",
+                                                    Toast.LENGTH_LONG
+                                                ).show()
+                                                Log.d(
+                                                    "${TAG}-",
+                                                    "sendQuiztoStudentDatabase:  Document exists: ${document.id} ${holder.quizcardtitle.text}"
+                                                )
+                                            } else {
+                                                Log.d(
+                                                    "${TAG}-",
+                                                    "Document ${document.id} does not exist!"
+                                                )
+                                                val save = (document.toObject(Quiz::class.java))
+                                                docRef.set(save)
+                                                    //                    docRef.set((quid.id.toObject(Quiz::class.java))
+                                                    .addOnSuccessListener {
+                                                        Log.d(
+                                                            "${TAG}-",
+                                                            "sendQuiztoStudentDatabase- Sending quiz to the student database -  ${document.id} ${holder.quizcardtitle.text}"
+                                                        )
+                                                        Toast.makeText(
+                                                            holder.itemView.context,
+                                                            "Quiz send to the student database",
+                                                            Toast.LENGTH_LONG
+                                                        ).show()
+
+                                                        //                            makeInputFieldEmpty()
+                                                    }
+                                                    .addOnFailureListener {
+                                                        Toast.makeText(
+                                                            holder.itemView.context,
+                                                            "Failed to send quiz",
+                                                            Toast.LENGTH_LONG
+                                                        )
+                                                            .show()
+                                                        //                            makeInputFieldEmpty()
+                                                        Log.d(
+                                                            "${TAG}- sendQuiztoStudentDatabase: ",
+                                                            "Failed to send quiz"
+                                                        )
+                                                    }
+                                            }
 
 
-//            else if (holder.viewbtn.text == view_btn) {
-//                database.collection("Quizzes").document(quizBank[position].id.trim())
-//                    .set(quizBank[position])
-//                    .addOnSuccessListener {
-//                        Toast.makeText(context, "Added", Toast.LENGTH_SHORT).show()
-//                        Quizz.questionsForQuiz.add(quizBank[position].questionID.trim())
-//                        Log.d(TAG, questionsForQuiz.toString())
-//                    }
+                                        } else {
+                                            Log.d("${TAG}-", "Failed with:  ${task.exception}")
+                                        }
+                                    })
+                            }
 
+//                .addOnSuccessListener {
+//                    Toast.makeText(holder.itemView.context, "Quiz send to student database", Toast.LENGTH_LONG).show()
+
+//                }
+//                .addOnFailureListener {
+//                    Toast.makeText(holder.itemView.context, "Failed to send Quiz", Toast.LENGTH_LONG).show()
+//
+                        }
+                    }
+            } else {
+                Toast.makeText(holder.itemView.context, "Quiz size is too small:  Current size: ${quizSize}/10", Toast.LENGTH_LONG).show()
+                Log.d("${TAG}-", "Quiz size is too small:  Current size${quizSize}/10")
+            }
         }
 
     }
@@ -147,9 +236,6 @@ class ModifyQuestion(
     override fun getItemCount(): Int {
         return quizBank.size
     }
-//    fun onClick(v: View?) {
-//        notifyItemRemoved(this.getLayoutPosition())
-//    }
     companion object {
         private const val TAG = "ModifyQuizBank"
     }
@@ -157,6 +243,7 @@ class ModifyQuestion(
 
 
 }
+
 
 
 fun <E> ArrayList<E>.add(element: String) {

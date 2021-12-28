@@ -18,7 +18,7 @@
         <activity android:name=".CheckMarks"/>
         <activity android:name=".ResultsActivity"/>
         <activity android:name=".AddQuiz" />
-        <activity android:name=".ShowQuestions" />
+<!--        <activity android:name=".ShowQuestions" />-->
         <activity android:name=".QuestionPopup" />
         <activity android:name=".AttemptQuizActivity" />
         <activity android:name=".StudentHomeActivity" />

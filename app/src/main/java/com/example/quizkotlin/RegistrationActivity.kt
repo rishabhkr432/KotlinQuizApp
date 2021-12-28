@@ -1,5 +1,7 @@
 package com.example.quizkotlin
 
+import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -31,6 +33,11 @@ class RegistrationActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
+    }
+    companion object {
+        @SuppressLint("StaticFieldLeak")
+
+        private const val TAG = "RegistrationActivity"
     }
 
 }

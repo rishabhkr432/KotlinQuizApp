@@ -40,4 +40,7 @@ class SplashActivity : AppCompatActivity(){
         }, 3000)
 
     }
+    companion object {
+        private const val TAG = "SplashActivity"
+    }
 }

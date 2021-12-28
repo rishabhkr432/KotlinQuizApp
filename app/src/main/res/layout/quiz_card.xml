@@ -63,47 +63,62 @@
 <!--            android:text="@string/question_description"-->
 <!--            android:textSize="@dimen/text_16" />-->
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_10"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/quizViewButton"
+                style="?attr/borderlessButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_marginEnd="@dimen/margin_10"
+                android:layout_weight=".50"
+                android:text="@string/viewButton"
+                android:textAllCaps="false"
+                android:textSize="@dimen/text_18" />
+<!--                    <View android:id="@+id/strut"-->
+<!--                        android:layout_width="10dp"-->
+<!--                        android:layout_height="0dp"-->
+<!--                        android:background="@color/gray"-->
+<!--                        />-->
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/quizDeleteButton"
+                style="?attr/borderlessButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginEnd="@dimen/margin_10"
+                android:layout_weight=".50"
+                android:text="@string/deleteButton"
+                android:textAllCaps="false"
+                android:textSize="@dimen/text_18" />
+
+
+        </LinearLayout>
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin_10"
-        android:orientation="horizontal">
-
+        android:orientation="vertical">
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/quizViewButton"
+            android:id="@+id/quizStudentDB"
             style="?attr/borderlessButtonStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="end"
+            android:layout_gravity="center"
             android:layout_marginEnd="@dimen/margin_10"
-            android:layout_weight=".50"
+            android:layout_margin="@dimen/margin_10"
             android:paddingHorizontal="50dp"
-            android:text="@string/viewButton"
+            android:text="@string/send_student_DB"
             android:textAllCaps="false"
             android:textSize="@dimen/text_18" />
-        <View android:id="@+id/strut"
-            android:layout_width="10dp"
-            android:layout_height="0dp"
-            />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/quizDeleteButton"
-            style="?attr/borderlessButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:layout_marginEnd="@dimen/margin_10"
-            android:layout_weight=".50"
-            android:paddingHorizontal="50dp"
-            android:text="@string/deleteButton"
-            android:textAllCaps="false"
-            android:textSize="@dimen/text_18" />
-
-
-
-
     </LinearLayout>
-
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>

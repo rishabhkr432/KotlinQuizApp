@@ -273,10 +273,14 @@ class LoginActivity : AppCompatActivity() {
                     if (doc.exists()) {
                         val currentUser = doc.toObject(User::class.java)
                         if (currentUser != null) {
-                            if (currentUser.userType == 1)
+                            if (currentUser.userType == 1) {
                                 startTeacherActivity()
-                            else if (currentUser.userType == 2)
+                                Log.d("$TAG", "Loading Teacher's activity")
+                            }
+                            else if (currentUser.userType == 2) {
                                 startStudentActivity()
+                                Log.d("$TAG", "Loading Student activity")
+                            }
                         }
                     }
                 }

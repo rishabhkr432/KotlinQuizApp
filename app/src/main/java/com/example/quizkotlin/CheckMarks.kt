@@ -2,17 +2,15 @@ package com.example.quizkotlin
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.quizkotlin.models.Quiz
-import com.example.quizkotlin.models.User
+import com.example.quizkotlin.models.Results
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
@@ -46,7 +44,7 @@ class CheckMarks : AppCompatActivity() {
         fetchResults()
         goBackButton.setOnClickListener {
 
-            StudentHomeActivity.studenthomeActivity.finish()
+            StudentHomeActivity.studentHomeActivity.finish()
             val intent = Intent(this, StudentHomeActivity::class.java)
             startActivity(intent)
             finish()
@@ -94,5 +92,8 @@ class CheckMarks : AppCompatActivity() {
                 progress.visibility = View.GONE
                 emptyMessage.visibility = View.VISIBLE
             }
+    }
+    companion object {
+        private const val TAG = "CheckMarks"
     }
 }

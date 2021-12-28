@@ -94,6 +94,7 @@
     <string name="due_31_08_2021_11_59">Due: 31/08/2021 11:59</string>
     <string name="_78_100">78/100</string>
     <string name="deleteButton">Delete</string>
+    <string name="send_student_DB">Send Quiz to student database</string>
     <string name="viewButton">View</string>
     <string name="addButton">Add</string>
     <string name="no_results_found">No results found</string>
