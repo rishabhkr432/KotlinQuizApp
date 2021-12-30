@@ -14,15 +14,15 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 
-class AddQuiz : AppCompatActivity(){
+class AddQuiz : AppCompatActivity() {
     private lateinit var title: EditText
     private lateinit var save_button: MaterialButton
-    private lateinit var goBack: ImageView
+    private lateinit var goBackButton: ImageView
     private lateinit var database: FirebaseFirestore
     private lateinit var auth: FirebaseAuth
     private lateinit var user: FirebaseUser
     private lateinit var newQuiz: Quiz
-    private var addquiz : Boolean = true
+    private var addquiz: Boolean = true
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.create_quiz)
@@ -38,31 +38,32 @@ class AddQuiz : AppCompatActivity(){
             saveQuizToDatabase()
 
         }
-        goBack.setOnClickListener {
+        goBackButton.setOnClickListener {
             TeacherHomeActivity.teachershomeActivity.finish()
             val intent = Intent(this, TeacherHomeActivity::class.java)
             startActivity(intent)
             finish()
         }
     }
-        private fun saveQuizToDatabase() {
-            val docRef = database.collection("Quizzes").document()
-            if (title.text.toString().trim() == ""){
-                newQuiz = Quiz(docRef.id)
-            }
-            else{
-                newQuiz = Quiz(title.text.toString().trim())
-            }
-            docRef.set(newQuiz)
-                .addOnSuccessListener {
-                    Toast.makeText(this, "New quiz added", Toast.LENGTH_LONG).show()
-                    makeInputFieldEmpty()
-                }
-                .addOnFailureListener {
-                    Toast.makeText(this, "Failed", Toast.LENGTH_LONG).show()
-                    makeInputFieldEmpty()
-                }
+
+    private fun saveQuizToDatabase() {
+        val docRef = database.collection("Quizzes").document()
+        if (title.text.toString().trim() == "") {
+            newQuiz = Quiz(docRef.id)
+        } else {
+            newQuiz = Quiz(title.text.toString().trim())
         }
+        docRef.set(newQuiz)
+            .addOnSuccessListener {
+                Toast.makeText(this, "New quiz added", Toast.LENGTH_LONG).show()
+                makeInputFieldEmpty()
+            }
+            .addOnFailureListener {
+                Toast.makeText(this, "Failed", Toast.LENGTH_LONG).show()
+                makeInputFieldEmpty()
+            }
+    }
+
     private fun makeInputFieldEmpty() {
         title.setText("")
 
@@ -72,8 +73,9 @@ class AddQuiz : AppCompatActivity(){
         title = findViewById(R.id.add_title)
 
         save_button = findViewById(R.id.save_button_quiz)
-        goBack = findViewById(R.id.goBackButton_quiz)
+        goBackButton = findViewById(R.id.goBackButton_quiz)
     }
+
     companion object {
         @SuppressLint("StaticFieldLeak")
         private const val TAG = "AddQuiz"

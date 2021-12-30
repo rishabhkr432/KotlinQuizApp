@@ -1,10 +1,9 @@
 package com.example.quizkotlin
 
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import com.example.quizkotlin.fragments.UserTypeFragment
 import com.google.firebase.auth.FirebaseAuth
 
@@ -34,6 +33,7 @@ class RegistrationActivity : AppCompatActivity() {
             finish()
         }
     }
+
     companion object {
         @SuppressLint("StaticFieldLeak")
 

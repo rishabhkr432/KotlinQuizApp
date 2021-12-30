@@ -12,9 +12,9 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
+import com.example.quizkotlin.LoginActivity
 import com.example.quizkotlin.R
 import com.example.quizkotlin.StudentHomeActivity
-import com.example.quizkotlin.LoginActivity
 import com.example.quizkotlin.TeacherHomeActivity
 import com.example.quizkotlin.models.User
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -104,7 +104,7 @@ class SignupFragment : Fragment() {
     @RequiresApi(Build.VERSION_CODES.O)
     private fun validateUserInput() {
         progress.visibility = View.VISIBLE
-        tvMsg.text = "Validating User Input..."
+        tvMsg.text = "Validating com.example.quizkotlin.UserStarter Input..."
         tvMsg.visibility = View.VISIBLE
         val email = etEmail.text.toString().trim()
         val pwd = etPwd.text.toString().trim()
@@ -153,7 +153,7 @@ class SignupFragment : Fragment() {
                         Log.d(TAG, "registerUser:success")
                         val user = auth.currentUser
                         if (user != null) {
-                            Log.d(TAG, "User: ${user.uid}")
+                            Log.d(TAG, "com.example.quizkotlin.UserStarter: ${user.uid}")
                             storeUserInfo(user)
                         }
                     } else {
@@ -201,7 +201,7 @@ class SignupFragment : Fragment() {
                     Log.d(TAG, "registerUser:success")
                     val user = auth.currentUser
                     if (user != null) {
-                        Log.d(TAG, "User: ${user.uid}")
+                        Log.d(TAG, "com.example.quizkotlin.UserStarter: ${user.uid}")
                         storeUserInfo(user)
                     }
                 } else {

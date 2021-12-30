@@ -3,16 +3,19 @@ package com.example.quizkotlin
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.quizkotlin.models.User
+import com.google.android.material.appbar.CollapsingToolbarLayout
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
 class TeacherHomeActivity : AppCompatActivity() {
+    private lateinit var collapsingToolbar: CollapsingToolbarLayout
     private lateinit var quiz_bank: TextView
     private lateinit var add_quiz: TextView
     private lateinit var add_question: TextView
@@ -22,6 +25,7 @@ class TeacherHomeActivity : AppCompatActivity() {
     private lateinit var tvLogout: TextView
     private lateinit var auth: FirebaseAuth
     private lateinit var database: FirebaseFirestore
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -83,9 +87,12 @@ class TeacherHomeActivity : AppCompatActivity() {
             finish()
         }
     }
-    private fun initViews() {
 
-        quiz_bank = findViewById(R.id.question_bank)
+    private fun initViews() {
+        collapsingToolbar = findViewById(R.id.collapsing_toolbar)
+        collapsingToolbar.setExpandedTitleColor(Color.TRANSPARENT)
+        collapsingToolbar.setCollapsedTitleTextColor(Color.WHITE)
+        quiz_bank = findViewById(R.id.quiz_bank)
         add_quiz = findViewById(R.id.add_quiz)
         add_question = findViewById(R.id.add_question)
         tvLogout = findViewById(R.id.teacher_logout_tv)
@@ -94,6 +101,7 @@ class TeacherHomeActivity : AppCompatActivity() {
         tvUserType = findViewById(R.id.toolbar_userType_tv)
 
     }
+
     @SuppressLint("SetTextI18n")
     private fun populateUserDetail(user: User) {
         tvDisplayName.text = user.email[0].uppercaseChar().toString()
@@ -103,10 +111,13 @@ class TeacherHomeActivity : AppCompatActivity() {
             2 -> tvUserType.text = "Student"
             else -> tvUserType.text = "User Type Not determined"
         }
+
     }
+
     init {
         teachershomeActivity = this
     }
+
     companion object {
         @SuppressLint("StaticFieldLeak")
         lateinit var teachershomeActivity: Activity

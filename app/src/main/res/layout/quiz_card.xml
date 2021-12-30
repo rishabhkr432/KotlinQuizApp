@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/avlSubject_card"
+    android:id="@+id/option_card"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/margin_5"
@@ -50,7 +50,8 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/poppins_bold"
             android:text="@string/quiz_card_marks"
-            android:layout_marginStart="100dp"
+            android:gravity="end"
+            android:textAlignment="gravity"
             android:layout_weight="0.5"
             android:visibility="gone"
             android:textSize="@dimen/text_18" />
@@ -66,19 +67,19 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_10"
+
             android:orientation="horizontal"
             android:weightSum="1">
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/quizViewButton"
-                style="?attr/borderlessButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
                 android:layout_marginEnd="@dimen/margin_10"
                 android:layout_weight=".50"
                 android:text="@string/viewButton"
+
                 android:textAllCaps="false"
                 android:textSize="@dimen/text_18" />
 <!--                    <View android:id="@+id/strut"-->
@@ -89,7 +90,6 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/quizDeleteButton"
-                style="?attr/borderlessButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
@@ -104,11 +104,10 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/margin_10"
+
         android:orientation="vertical">
         <com.google.android.material.button.MaterialButton
             android:id="@+id/quizStudentDB"
-            style="?attr/borderlessButtonStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"

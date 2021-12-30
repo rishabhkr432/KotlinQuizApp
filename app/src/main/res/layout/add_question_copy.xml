@@ -136,7 +136,7 @@
         android:layout_marginStart="@dimen/margin_15"
         android:layout_marginTop="0dp"
         android:fontFamily="@font/poppins_semibold"
-        android:hint="@string/correct_answer"
+        android:hint="@string/enter_correct_answer"
         android:textColor="@color/black"
         android:textColorHint="#78909C"
         android:textSize="@dimen/text_18" />

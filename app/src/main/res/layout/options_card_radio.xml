@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/avlSubject_card"
+    android:id="@+id/option_card"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/margin_5"
@@ -31,7 +31,7 @@
             android:layout_marginStart="@dimen/margin_15"
             android:layout_marginTop="10dp"
             android:hint="@string/option"
-            android:fontFamily="@font/poppins_semibold"
+            android:fontFamily="@font/poppins"
             android:textColor="@color/black"
             android:textColorHint="#78909C"
             android:textSize="@dimen/text_18"/>

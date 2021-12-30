@@ -1,10 +1,8 @@
 package com.example.quizkotlin.fragments
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,9 +10,9 @@ import android.widget.Button
 import android.widget.RadioGroup
 import android.widget.TextView
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import com.example.quizkotlin.LoginActivity
 import com.example.quizkotlin.R
-import com.google.android.material.bottomsheet.BottomSheetDialog
 
 class UserTypeFragment : Fragment() {
 
@@ -31,15 +29,13 @@ class UserTypeFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_user_type, container, false)
 
         initViews(view)
-        Log.d(TAG,txtRoles.toString())
+        Log.d(TAG, txtRoles.toString())
 
         btnNext.setOnClickListener {
             verifyUserInput()
         }
 
-        txtRoles.setOnClickListener {
-            showBottomSheetDialog(container!!.context)
-        }
+
 
         txtLogin.setOnClickListener {
             val intent = Intent(container?.context, LoginActivity::class.java)
@@ -51,7 +47,6 @@ class UserTypeFragment : Fragment() {
 
     private fun initViews(view: View) {
         btnNext = view.findViewById(R.id.userType_next_btn)
-        txtRoles = view.findViewById(R.id.userType_role_txt)
         txtLogin = view.findViewById(R.id.userType_login_txt)
         rgUser = view.findViewById(R.id.userType_radioGroup)
 
@@ -82,11 +77,11 @@ class UserTypeFragment : Fragment() {
             .commit()
     }
 
-    private fun showBottomSheetDialog(context: Context) {
-        val bottomSheetDialog = BottomSheetDialog(context)
-        bottomSheetDialog.setContentView(R.layout.user_rights)
-        bottomSheetDialog.show()
-    }
+    //    private fun showBottomSheetDialog(context: Context) {
+//        val bottomSheetDialog = BottomSheetDialog(context)
+//        bottomSheetDialog.setContentView(R.layout.user_rights)
+//        bottomSheetDialog.show()
+//    }
     companion object {
         private const val TAG = "UserTypeActivity"
     }

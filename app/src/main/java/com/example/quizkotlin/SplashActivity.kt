@@ -1,4 +1,5 @@
 package com.example.quizkotlin
+
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
@@ -10,7 +11,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 
-class SplashActivity : AppCompatActivity(){
+class SplashActivity : AppCompatActivity() {
 
     private lateinit var logo: ImageView
     private lateinit var message: TextView
@@ -40,6 +41,7 @@ class SplashActivity : AppCompatActivity(){
         }, 3000)
 
     }
+
     companion object {
         private const val TAG = "SplashActivity"
     }

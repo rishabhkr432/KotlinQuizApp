@@ -14,8 +14,8 @@
         android:theme="@style/Theme.QuizKotlin">
 
 <!--        <activity android:name=".ResultsActivity"/>-->
-<!--        <activity android:name=".ResultsActivity"/>-->
-        <activity android:name=".CheckMarks"/>
+        <activity android:name=".CheckResultsActivity"/>
+        <activity android:name=".HistoryActivity"/>
         <activity android:name=".ResultsActivity"/>
         <activity android:name=".AddQuiz" />
 <!--        <activity android:name=".ShowQuestions" />-->

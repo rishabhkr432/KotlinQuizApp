@@ -55,6 +55,23 @@
         android:text="@string/question_bank_is_empty"
         android:textSize="@dimen/text_22"
         android:visibility="gone" />
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:orientation="vertical"
+            android:padding="@dimen/padding_large">
+    <TextView
+        android:id="@+id/choose_quiz"
+        android:layout_width="365dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="@dimen/margin_15"
+        android:textAlignment="center"
+        android:fontFamily="@font/poppins_bold"
+        android:text="@string/choose_quiz"
+        android:textColor="@color/grey"
+        android:textColorHint="@color/browser_actions_title_color"/>
 
 
     <Spinner
@@ -62,7 +79,7 @@
         android:layout_width="365dp"
         android:layout_height="47dp"
         android:layout_marginStart="@dimen/margin_15"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:fontFamily="@font/poppins_bold"
         android:hint="@string/select_question_bank"
         android:textColor="@color/black" />
@@ -71,6 +88,7 @@
         android:id="@+id/popup_add_question"
         android:layout_width="365dp"
         android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
         android:layout_marginStart="@dimen/margin_15"
         android:layout_marginTop="10dp"
         android:fontFamily="@font/poppins_bold"
@@ -84,8 +102,9 @@
         android:id="@+id/popup_options"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_15"
         android:layout_marginTop="10dp"
+        android:layout_marginStart="@dimen/margin_15"
+        android:background="@android:color/transparent"
         android:fontFamily="@font/poppins_semibold"
         android:hint="@string/enter_num_of_options"
         android:textColor="@color/black"
@@ -94,8 +113,8 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/popup_next_button"
-        style="?attr/borderlessButtonStyle"
-        android:layout_width="wrap_content"
+        android:layout_marginStart="@dimen/margin_15"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
         android:layout_marginTop="10dp"
@@ -103,5 +122,15 @@
         android:text="@string/next_button"
         android:textAllCaps="false"
         android:textSize="@dimen/text_24" />
-
+    <TextView
+        android:id="@+id/options_disclaimer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="@dimen/margin_15"
+        android:fontFamily="@font/poppins_bold"
+        android:text="@string/options_disclaimer"
+        android:textColor="@color/grey"
+        android:textColorHint="@color/browser_actions_title_color"/>
+    </LinearLayout>
 </LinearLayout>

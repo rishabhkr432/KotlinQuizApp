@@ -57,7 +57,10 @@
     <string name="bad_login_credential">Invalid Login Credential..</string>
 <!--    <string name="default_web_client_id">hi</string>-->
     <string name="question_bank">Question Bank</string>
+    <string name="quiz_bank">Quiz Bank</string>
     <string name="add_question">Add question</string>
+
+    <string name="quiz_name">Quiz Name</string>
     <string name="quiz_marks">Marks</string>
     <string name="add_quiz">Add quiz</string>
     <string name="storing_user_info">Storing user info…</string>
@@ -113,8 +116,9 @@
     <string name="you_will_no_longer_have_access_to_this_subject">You will no longer have access to this subject</string>
     <string name="un_enroll">Un Enroll</string>
     <string name="cancel">Cancel</string>
-    <string name="learn_and_test_yourself">Learn and Test Yourself</string>
-    <string name="results">You scored: </string>
+    <string name="splash_bottom_tag">Learn Adapt Overcome Repeat</string>
+    <string name="results_score">You scored: </string>
+    <string name="results_title">Summary</string>
     <string name="create_calendar_event_for_student">Create Calendar Event for Student.</string>
     <string name="title">Title</string>
     <string name="description">Description</string>
@@ -124,12 +128,14 @@
     <string name="calendar_note"><![CDATA[Note: Write -> Remote / Online <- in location field, if it is online.]]></string>
     <string name="calendar_warning">All fields are mandatory!!</string>
     <string name="enter_question_hint">Enter Question</string>
+    <string name="show_question">Show Question</string>
     <string name="enter_num_of_options">Enter number of options</string>
     <string name="enter_option1">Enter option A</string>
     <string name="enter_option2">Enter option B</string>
     <string name="enter_option3">Enter option C</string>
     <string name="enter_option4">Enter option D</string>
-    <string name="correct_answer">Enter correct option</string>
+    <string name="enter_correct_answer">Enter correct option</string>
+    <string name="correct_answer">Correct answer</string>
     <string name="save_button">Save</string>
     <string name="next_button">Next</string>
     <string name="teacherDisclaimer">Space for disclaimer</string>
@@ -138,6 +144,8 @@
     <string name="attempt_quiz">Attempt Quiz</string>
     <string name="quiz_list">View Quiz</string>
     <string name="question_is">Question</string>
+    <string name="options_disclaimer">If no options are entered, default option - 4 is used.</string>
+    <string name="choose_quiz">Please tap on the spinner to select a quiz.</string>
     <string name="option1">Option A</string>
     <string name="option2">Option B</string>
     <string name="option3">Option C</string>

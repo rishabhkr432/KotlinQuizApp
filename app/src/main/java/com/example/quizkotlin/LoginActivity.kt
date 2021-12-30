@@ -1,4 +1,5 @@
 package com.example.quizkotlin
+
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Intent
@@ -60,8 +61,7 @@ class LoginActivity : AppCompatActivity() {
                 Log.d(TAG, etEmail.text.toString().trim())
                 Log.d(TAG, etPwd.text.toString().trim())
                 login()
-            }
-            else
+            } else
                 Toast.makeText(this, "Email and Password can't be empty!", Toast.LENGTH_SHORT)
                     .show()
 //                Toast.makeText(RegWindow.this, "Fehler"+ task.getException().getMessage(), Toast.LENGTH_SHORT).show();
@@ -168,7 +168,7 @@ class LoginActivity : AppCompatActivity() {
                     Log.d(TAG, "registerUser:success")
                     val user = auth.currentUser
                     if (user != null) {
-                        Log.d(TAG, "User: ${user.uid}")
+                        Log.d(TAG, "com.example.quizkotlin.UserStarter: ${user.uid}")
                         storeUserInfo(user)
                     }
                 } else {
@@ -259,7 +259,7 @@ class LoginActivity : AppCompatActivity() {
                 progress.visibility = View.GONE
                 Snackbar.make(layout, "Failed!", Snackbar.LENGTH_LONG)
                     .setBackgroundTint(getColor(R.color.color_primary))
-                    .show();
+                    .show()
             }
     }
 
@@ -276,8 +276,7 @@ class LoginActivity : AppCompatActivity() {
                             if (currentUser.userType == 1) {
                                 startTeacherActivity()
                                 Log.d("$TAG", "Loading Teacher's activity")
-                            }
-                            else if (currentUser.userType == 2) {
+                            } else if (currentUser.userType == 2) {
                                 startStudentActivity()
                                 Log.d("$TAG", "Loading Student activity")
                             }

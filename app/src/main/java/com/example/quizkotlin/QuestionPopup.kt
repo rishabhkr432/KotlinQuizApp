@@ -8,7 +8,6 @@ import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.quizkotlin.models.Quiz
 import com.google.android.material.button.MaterialButton
@@ -16,12 +15,12 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 
-class QuestionPopup : AppCompatActivity(){
+class QuestionPopup : AppCompatActivity() {
     private lateinit var question: EditText
     private lateinit var optionsNumber: EditText
     private var quizList: ArrayList<Quiz> = arrayListOf()
     private var quizListString: ArrayList<String> = arrayListOf()
-    private lateinit var goBack: ImageView
+    private lateinit var goBackButton: ImageView
 
     private lateinit var next_button: MaterialButton
     private lateinit var database: FirebaseFirestore
@@ -33,7 +32,7 @@ class QuestionPopup : AppCompatActivity(){
     private lateinit var ivClose: ImageView
     private lateinit var options_progress: ProgressBar
     private lateinit var optionFailed: TextView
-    private var isValidation : Boolean = false
+    private var isValidation: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,29 +63,31 @@ class QuestionPopup : AppCompatActivity(){
         initViews()
 
         next_button.setOnClickListener {
-            var question_temp : String = question.text.toString().trim()
-            var options : Int = optionsNumber.text.toString().trim().toIntOrNull() ?: 4
+            var questionTemp: String = question.text.toString().trim()
+            var optionsTemp: Int = optionsNumber.text.toString().trim().toIntOrNull() ?: 4
+            Log.d(TAG, "options: $optionsTemp")
             validations(
-                question_temp,
-                options
+                questionTemp,
+                optionsTemp
             )
             if (isValidation) {
 //                getOptions(options)
 
                 val intent = Intent(this, AddQuestion::class.java)
-                intent.putExtra(AddQuestion.QUESTION, question.text.toString())
+                intent.putExtra(AddQuestion.QUESTION, questionTemp)
                 intent.putExtra(AddQuestion.SPINNER, spinnerSelectedText)
-                intent.putExtra(AddQuestion.OPTIONS, optionsNumber.text.toString().toInt())
+                intent.putExtra(AddQuestion.OPTIONS, optionsTemp)
                 startActivity(intent)
                 finish()
             }
         }
     }
+
     private fun initViews() {
         question = findViewById(R.id.popup_add_question)
         optionsNumber = findViewById(R.id.popup_options)
         next_button = findViewById(R.id.popup_next_button)
-        goBack = findViewById(R.id.popup_goBackButton)
+        goBackButton = findViewById(R.id.popup_goBackButton)
 
 //        rv = findViewById(R.id.options_list_rv)
 //        optionFailed = findViewById(R.id.options_failed_tv)
@@ -101,7 +102,8 @@ class QuestionPopup : AppCompatActivity(){
 
 
     }
-//    private fun getOptions(MAXOPTIONS: Int){
+
+    //    private fun getOptions(MAXOPTIONS: Int){
 //        for (i in 1..MAXOPTIONS){
 //            creatingOptionsList.add(i)
 //        }
@@ -112,17 +114,22 @@ class QuestionPopup : AppCompatActivity(){
 //        rv.adapter = addQuestionadapter
 //
 //    }
-    private fun getSpinnerValue(){
+    private fun getSpinnerValue() {
         val spinner = findViewById<Spinner>(R.id.popup_spinner)
         spinnerSelectedText = quizList.first().id
 
 
         if (spinner != null) {
-            val adapter = ArrayAdapter( this, android.R.layout.simple_spinner_item, quizListString)
+            val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, quizListString)
             spinner.adapter = adapter
 
             spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
+                override fun onItemSelected(
+                    parent: AdapterView<*>,
+                    view: View,
+                    position: Int,
+                    id: Long
+                ) {
                     spinnerSelectedText = quizList[position].id
                     println("QuizList selected is $spinnerSelectedText")  // <-- this works
                 }
@@ -137,11 +144,12 @@ class QuestionPopup : AppCompatActivity(){
         println("quizList selected is $spinnerSelectedText")
 //        return
     }
+
     private fun validations(
         question_check: String,
         options: Int,
 
-    ) {
+        ) {
         if (question_check != "" && !question_check.isEmpty()) {
             if (options in 1..10) {
                 isValidation = true

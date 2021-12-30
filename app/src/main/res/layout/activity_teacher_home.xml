@@ -22,14 +22,7 @@
             android:orientation="vertical"
             android:padding="@dimen/padding_large">
 
-            <TextView
-                android:id="@+id/teacher_createSubject_tv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/poppins_semibold"
-                android:text="@string/create_subject"
-                android:textSize="@dimen/text_22"
-                app:drawableEndCompat="@drawable/ic_arrow_down" />
+
 
             <LinearLayout
                 android:id="@+id/teacher_createSubject_layout"
@@ -139,13 +132,13 @@
 
 
             <TextView
-                android:id="@+id/question_bank"
+                android:id="@+id/quiz_bank"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_semibold"
                 android:paddingHorizontal="@dimen/padding_small"
                 android:paddingVertical="@dimen/padding_normal"
-                android:text="@string/question_bank"
+                android:text="@string/quiz_bank"
                 android:textSize="@dimen/text_22"
                 app:drawableEndCompat="@drawable/ic_arrow_forward" />
 

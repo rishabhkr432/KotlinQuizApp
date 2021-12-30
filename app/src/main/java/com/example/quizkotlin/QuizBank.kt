@@ -11,13 +11,13 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.quizkotlin.constants.STUDENT_QUIZ_PATH
+import com.example.quizkotlin.constants.TEACHERS_QUIZ_PATH
 import com.example.quizkotlin.models.Quiz
 import com.example.quizkotlin.models.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
-import com.example.quizkotlin.constants.TEACHERS_QUIZ_PATH
-import com.example.quizkotlin.constants.STUDENT_QUIZ_PATH
 
 class QuizBank : AppCompatActivity() {
 
@@ -29,13 +29,12 @@ class QuizBank : AppCompatActivity() {
     private lateinit var database: FirebaseFirestore
     private lateinit var auth: FirebaseAuth
     private lateinit var user: FirebaseUser
-    private  var userType: Int = 0
-    private var quizPath: String  = TEACHERS_QUIZ_PATH
-
-
-
-
-    private var quiz_bank_list: ArrayList<Quiz> = arrayListOf()
+//    private var userType: Int = 0
+    private var userEmail: String = ""
+    private var quizPath: String = TEACHERS_QUIZ_PATH
+    private var userType :HashMap<Int, String> = hashMapOf<Int, String>()
+    private var quiz_bank_forwarding: ArrayList<Quiz> = arrayListOf()
+    private var quiz_bank_incoming_firebase: ArrayList<Quiz> = arrayListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,7 +55,9 @@ class QuizBank : AppCompatActivity() {
                     if (doc.exists()) {
                         val userDetail = doc.toObject(User::class.java)
                         if (userDetail != null) {
-                            userType = userDetail.userType
+                            userType[userDetail.userType] = userDetail.email
+                            userEmail = userDetail.email
+
                         }
                     } else {
                         Toast.makeText(
@@ -69,14 +70,13 @@ class QuizBank : AppCompatActivity() {
                 fetchAllQuizzes()
             }
         ivClose.setOnClickListener {
-            if (userType == 1){
+            if (userType.containsKey(1)){
 
-            TeacherHomeActivity.teachershomeActivity.finish()
-            val intent = Intent(this, TeacherHomeActivity::class.java)
-            startActivity(intent)
-            finish()
-        }
-            else{
+                TeacherHomeActivity.teachershomeActivity.finish()
+                val intent = Intent(this, TeacherHomeActivity::class.java)
+                startActivity(intent)
+                finish()
+            } else {
                 StudentHomeActivity.studentHomeActivity.finish()
                 val intent = Intent(this, StudentHomeActivity::class.java)
                 startActivity(intent)
@@ -84,10 +84,9 @@ class QuizBank : AppCompatActivity() {
 
             }
 
-            }
+        }
 
     }
-
 
 
     private fun initViews() {
@@ -98,9 +97,10 @@ class QuizBank : AppCompatActivity() {
         rv.layoutManager = LinearLayoutManager(this)
         rv.setHasFixedSize(true)
     }
+
     private fun fetchAllQuizzes() {
         progress.visibility = View.VISIBLE
-        if (userType == 2){
+        if (userType.containsKey(2)) {
             quizPath = STUDENT_QUIZ_PATH
         }
 //        Log.i(TAG, "userType:" + userType)
@@ -114,12 +114,13 @@ class QuizBank : AppCompatActivity() {
                     tvMsg.visibility = View.GONE
                     for (doc in it) {
                         val quiz = doc.toObject(Quiz::class.java)
-                        quiz_bank_list.add(quiz)
+                        quiz_bank_incoming_firebase.add(quiz)
                     }
+                    checkExisting()
                     modifyQuestionSetting = ModifyQuestion(
-                            quiz_bank_list,userType,quizPath,
-                            this
-                        )
+                        quiz_bank_forwarding, userType, quizPath,
+                        this
+                    )
 
                     rv.adapter = modifyQuestionSetting
 
@@ -130,7 +131,19 @@ class QuizBank : AppCompatActivity() {
                 tvMsg.visibility = View.VISIBLE
             }
     }
+    private fun checkExisting() {
+        for (i in quiz_bank_incoming_firebase){
 
+            if (i.studentId.contains(userEmail).not() && userType.containsKey(2) || userType.containsKey(1)){
+                quiz_bank_forwarding.add(i)
+                Log.d(TAG, "Quiz added: ${i.studentId.toString()} user: ${userType.values.toString()}")
+
+            }
+            else{
+                Log.d(TAG, "Quiz removed: ${i.studentId.toString()} user: ${userType.values.toString()}")
+            }
+        }
+    }
     companion object {
         private const val TAG = "QuizBank"
     }

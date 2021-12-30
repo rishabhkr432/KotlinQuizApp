@@ -4,24 +4,81 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ResultsActivity">
+    <RelativeLayout
+        android:id="@+id/results_relative1"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/top_bar_height_normal"
+        android:background="@drawable/top_bar_bg"
+        android:padding="@dimen/padding_normal">
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/main_logo"
-        android:layout_width="@dimen/splash_logo_size"
-        android:layout_height="@dimen/splash_logo_size"
-        android:layout_centerInParent="true"
-        android:src="@drawable/quiz_app_logo" />
+        <ImageView
+            android:id="@+id/results_goBackButton"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/margin_10"
+            android:src="@drawable/ic_close"
+            tools:ignore="ContentDescription" />
 
-    <TextView
-        android:id="@+id/results"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="@dimen/margin_20"
-        android:fontFamily="@font/poppins_semibold"
-        android:text="@string/results"
-        android:textSize="@dimen/text_18" />
+        <TextView
+            android:id="@+id/results_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/margin_5"
+
+            android:layout_marginBottom="@dimen/margin_5"
+            android:layout_toEndOf="@+id/results_goBackButton"
+            android:fontFamily="@font/poppins_bold"
+            android:text="@string/results_title"
+            android:textAlignment="center"
+
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_26" />
+
+    </RelativeLayout>
+
+<!--    <LinearLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="0dp">-->
+<!--        android:layout_toEndOf="@+id/results_title">-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/results_relative1"
+        android:padding="@dimen/padding_normal">
+
+        <TextView
+            android:id="@+id/overlay_results"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/poppins_bold"
+            android:text="Quiz Results"
+            android:textAlignment="center"
+            android:textColor="@color/grey"
+            android:textSize="@dimen/text_26"
+
+            />
+
+        <com.github.mikephil.charting.charts.BarChart
+            android:id="@+id/barChart"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/overlay_results"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="32dp"
+            android:fontFamily="@font/poppins_bold"
+            android:textSize="@dimen/text_26" />
+    </RelativeLayout>
+<!--    </LinearLayout>-->
+
 
 
 </RelativeLayout>

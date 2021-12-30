@@ -16,6 +16,8 @@ import com.google.firebase.firestore.FirebaseFirestore
 
 import android.content.Intent
 import androidx.core.content.ContextCompat.startActivity
+import com.example.quizkotlin.constants.STUDENT_QUIZ_PATH
+import com.example.quizkotlin.constants.TEACHERS_QUIZ_PATH
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.ktx.userProfileChangeRequest
 import com.google.firebase.firestore.DocumentSnapshot
@@ -23,45 +25,26 @@ import com.google.firebase.firestore.DocumentSnapshot
 
 class ModifyQuestion(
     private val quizBank: ArrayList<Quiz>,
-    private val userType: Int,
+    private var userType :HashMap<Int, String> = hashMapOf<Int, String>(),
     private var quizPath: String,
-//    private val questionsForQuiz:  ArrayList<Question>,
     private val context: Context,
 //
 ) : RecyclerView.Adapter<ModifyQuestion.MyViewHolder>() {
-    private val view_btn: String = "Add question"
-    private val delete_btn: String = "Delete"
-//    private lateinit var showquestion: ShowQuestions
+
     private lateinit var sendQuiz: Quiz
     val database = FirebaseFirestore.getInstance()
     val user = FirebaseAuth.getInstance()
     private lateinit var intent: Intent
     private var quizSize: Int = 0
 
-
-
-//    var i = intent!!.
-
     class MyViewHolder(view: View): RecyclerView.ViewHolder(view) {
-//        if (userType == 1)
-//        {}
-        val quizcardtitle: TextView = view.findViewById(R.id.quiz_name)
 
+        val quizcardtitle: TextView = view.findViewById(R.id.quiz_name)
+        val marks: TextView = view.findViewById(R.id.quizMarks)
             val delbtn: MaterialButton = view.findViewById(R.id.quizDeleteButton)
 
         val viewbtn: MaterialButton = view.findViewById(R.id.quizViewButton)
         val studentDB: MaterialButton = view.findViewById(R.id.quizStudentDB)
-
-//        init {
-//            initClickListeners()
-//        }
-//
-////And pass data here with invoke
-//
-//
-//        private fun initClickListeners() {
-//            itemView.setOnClickListener { clickListener.invoke() }
-//        }
 
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -75,16 +58,20 @@ class ModifyQuestion(
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
 //        val docRef = database.collection("Quizzes").document()
-        if (userType ==2){
+        if (userType.containsKey(2)){
             holder.delbtn.visibility = View.GONE;
             holder.studentDB.visibility = View.GONE;
+            holder.marks.visibility = View.VISIBLE;
             holder.viewbtn.text = "Start"
+            holder.marks.text = "Not opened"
         }
-        holder.quizcardtitle.text = "Quiz title - ${quizBank[position].id.trim()}"
+        val tempPos = quizBank[position].id.trim()
+        holder.quizcardtitle.text = "Quiz title - $tempPos"
+
 
 
         holder.delbtn.setOnClickListener {
-            database.collection(quizPath).whereEqualTo("id",quizBank[position].id.trim())
+            database.collection(quizPath).whereEqualTo("id",tempPos)
                 .get()
                 .addOnSuccessListener { documents ->
                     for (document in documents) {
@@ -105,16 +92,17 @@ class ModifyQuestion(
                     Toast.makeText(context, "Failed", Toast.LENGTH_SHORT).show()
                     Log.w(TAG, "Error getting documents: ", exception)
                 }
-            Log.d(TAG, quizBank[position].id.trim())
+            Log.d(TAG, tempPos)
             }
 //        }
         holder.viewbtn.setOnClickListener {
             quizSize = quizBank[position].questionsForQuiz.size
             Log.d(TAG, "QuizSize - $quizSize")
             if (quizSize in 1..10) {
-                database.collection(quizPath).document(quizBank[position].id.trim())
-                    .set(quizBank[position])
+                database.collection(quizPath).document(tempPos).get()
+//                    .set(quizBank[position])
                     .addOnSuccessListener {
+
                         sendQuiz = quizBank[position]
 //                        showquestion = ShowQuestions(quizBank[position])
 
@@ -146,18 +134,19 @@ class ModifyQuestion(
             quizSize = quizBank[position].questionsForQuiz.size
             Log.d(TAG, "QuizSize - $quizSize")
             if (quizSize == 10) {
-                database.collection("Quizzes")
+                database.collection(TEACHERS_QUIZ_PATH)
                     .get()
                     .addOnSuccessListener { documents ->
                         for (document in documents) {
-                            if (document.get("id") == (holder.quizcardtitle.text.toString())) {
+                            if (document.get("id") == (tempPos)) {
                                 Log.d(
                                     "holder.quizcardtitle.text",
-                                    holder.quizcardtitle.text.toString()
+                                    tempPos
                                 )
 
                                 val docRef =
-                                    database.collection("Student's quizzes").document(document.id)
+                                    database.collection(STUDENT_QUIZ_PATH).document(document.id)
+
                                 docRef.get()
                                     .addOnCompleteListener(OnCompleteListener<DocumentSnapshot?> { task ->
                                         if (task.isSuccessful) {
@@ -182,15 +171,16 @@ class ModifyQuestion(
                                                 docRef.set(save)
                                                     //                    docRef.set((quid.id.toObject(Quiz::class.java))
                                                     .addOnSuccessListener {
-                                                        Log.d(
-                                                            "${TAG}-",
-                                                            "sendQuiztoStudentDatabase- Sending quiz to the student database -  ${document.id} ${holder.quizcardtitle.text}"
-                                                        )
                                                         Toast.makeText(
                                                             holder.itemView.context,
                                                             "Quiz send to the student database",
                                                             Toast.LENGTH_LONG
                                                         ).show()
+                                                        Log.d(
+                                                            "${TAG}-",
+                                                            "sendQuiztoStudentDatabase- Sending quiz to the student database -  ${document.id} ${holder.quizcardtitle.text}"
+                                                        )
+
 
                                                         //                            makeInputFieldEmpty()
                                                     }

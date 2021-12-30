@@ -20,7 +20,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="@dimen/margin_20"
         android:fontFamily="@font/poppins_semibold"
-        android:text="@string/learn_and_test_yourself"
+        android:text="@string/splash_bottom_tag"
         android:textSize="@dimen/text_18" />
 
 

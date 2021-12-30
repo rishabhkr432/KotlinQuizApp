@@ -6,7 +6,7 @@ data class Question(
     val question: String,
     val options: ArrayList<String?>? = arrayListOf(),
     val correct_answer: String
-): Serializable {
-    constructor() : this( "", null,"")
+) : Serializable {
+    constructor() : this("", null, "")
 
 }

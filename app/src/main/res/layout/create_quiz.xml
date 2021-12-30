@@ -57,25 +57,28 @@
 
     <EditText
         android:id="@+id/add_title"
-        android:layout_width="365dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+
         android:layout_marginStart="@dimen/margin_15"
+        android:layout_marginEnd="@dimen/margin_15"
         android:layout_marginTop="20dp"
         android:fontFamily="@font/poppins_bold"
         android:hint="@string/enter_quiz_title"
         android:textColor="@color/black"
+        android:background="@android:color/transparent"
         android:textColorHint="@color/browser_actions_title_color"
 
         android:textSize="@dimen/text_26" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/save_button_quiz"
-        style="?attr/borderlessButtonStyle"
-        android:layout_width="wrap_content"
+        android:layout_marginStart="@dimen/margin_15"
+        android:layout_marginEnd="@dimen/margin_15"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
         android:layout_marginTop="10dp"
-        android:layout_marginEnd="@dimen/margin_10"
         android:text="@string/save_button"
         android:textAllCaps="false"
         android:textSize="@dimen/text_24" />
