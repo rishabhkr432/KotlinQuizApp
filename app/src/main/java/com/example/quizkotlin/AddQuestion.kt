@@ -37,6 +37,7 @@ class AddQuestion : AppCompatActivity() {
     private lateinit var optionFailed: TextView
     private var minOptions: Int = 1
     private var isValidation: Boolean = false
+
 //    private var validateOptions: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -66,6 +67,7 @@ class AddQuestion : AppCompatActivity() {
 
         save_button.setOnClickListener {
 
+            Log.d("QuizTitle - ",spinnerSelectedText )
             Log.d("correct_answer", answer.text.toString())
             Log.d("optionList", creatingOptionsList.toString())
 
@@ -78,16 +80,18 @@ class AddQuestion : AppCompatActivity() {
             if (isValidation) {
                 saveClassToDatabase(questionTemp, optionList, correctAnswer)
             }
+        }
 
 
 
             goBackButton.setOnClickListener {
-                TeacherHomeActivity.teachershomeActivity.finish()
+
                 val intent = Intent(this, TeacherHomeActivity::class.java)
                 startActivity(intent)
+                Log.d("${TAG}", "Opening Teacher's activity")
                 finish()
             }
-        }
+
     }
 
     private fun saveClassToDatabase(

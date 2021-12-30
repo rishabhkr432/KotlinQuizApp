@@ -29,7 +29,6 @@ class UserTypeFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_user_type, container, false)
 
         initViews(view)
-        Log.d(TAG, txtRoles.toString())
 
         btnNext.setOnClickListener {
             verifyUserInput()

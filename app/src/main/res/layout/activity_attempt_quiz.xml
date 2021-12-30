@@ -119,6 +119,19 @@
                 android:layout_width="365dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_15" />
+            <EditText
+                android:id="@+id/attempt_quiz_correct_answer_rv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="50dp"
+                android:background="@android:color/transparent"
+                android:layout_marginTop="5dp"
+
+                android:fontFamily="@font/poppins_semibold"
+                android:hint="@string/enter_correct_answer"
+                android:textColor="@color/black"
+                android:textColorHint="#78909C"
+                android:textSize="@dimen/text_18" />
 
             <com.google.android.material.button.MaterialButton
             android:id="@+id/next_button_demo"

@@ -26,6 +26,7 @@ class AttemptQuizActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private lateinit var user: FirebaseUser
     private lateinit var next_button: MaterialButton
+    private lateinit var answer: TextView
     private lateinit var question: TextView
     private lateinit var qnum_display: TextView
     private var disclaimText: String = "Preview mode - Marks will not count"
@@ -178,6 +179,7 @@ class AttemptQuizActivity : AppCompatActivity() {
         optionFailed = findViewById(R.id.options_failed_attempt_tv)
         options_progress = findViewById(R.id.options_progress_attempt)
         goBackButton = findViewById(R.id.goBackButton_quiz_attempt)
+        answer = findViewById(R.id.attempt_quiz_correct_answer_rv)
         options_rv.layoutManager = LinearLayoutManager(this)
         options_rv.setHasFixedSize(true)
         if (userType.containsKey(1)) {
@@ -191,8 +193,12 @@ class AttemptQuizActivity : AppCompatActivity() {
         optionsList.shuffle()
         Log.i("optionsList", optionsList.toString())
         question.text = currentQuestion.question
+        answer.text = "Correct Answer - ${currentQuestion.correct_answer}"
+        if (userType.keys.contains(2)){
+            answer.visibility = View.GONE
+        }
         qNum += 1
-        qnum_display.text = ("Total Questions: " + (qNum).toString() + "/10")
+        qnum_display.text = ("Total Questions: " + (qNum).toString() + "/${questionsList.size}")
         if (optionsList.isEmpty()) {
             options_progress.visibility = View.GONE
             optionFailed.visibility = View.VISIBLE

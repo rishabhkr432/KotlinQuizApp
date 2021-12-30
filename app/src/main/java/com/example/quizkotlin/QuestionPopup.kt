@@ -81,6 +81,13 @@ class QuestionPopup : AppCompatActivity() {
                 finish()
             }
         }
+        goBackButton.setOnClickListener {
+
+            val intent = Intent(this, TeacherHomeActivity::class.java)
+            startActivity(intent)
+            Log.d(TAG, "Opening Teacher's activity")
+            finish()
+        }
     }
 
     private fun initViews() {
