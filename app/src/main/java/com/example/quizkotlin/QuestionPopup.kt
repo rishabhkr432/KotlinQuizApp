@@ -49,7 +49,7 @@ class QuestionPopup : AppCompatActivity() {
                     for (doc in it) {
                         val quiz = doc.toObject(Quiz::class.java)
                         quizList.add(quiz)
-                        quizListString.add(quiz.id)
+                        quizListString.add(quiz.quizId)
 //                        if (quiz.questionsForQuiz.size > 0) {
 //                            for (i in quiz.questionsForQuiz) {
 //                                questionsList.add(i)
@@ -123,7 +123,7 @@ class QuestionPopup : AppCompatActivity() {
 //    }
     private fun getSpinnerValue() {
         val spinner = findViewById<Spinner>(R.id.popup_spinner)
-        spinnerSelectedText = quizList.first().id
+        spinnerSelectedText = quizList.first().quizId
 
 
         if (spinner != null) {
@@ -137,7 +137,7 @@ class QuestionPopup : AppCompatActivity() {
                     position: Int,
                     id: Long
                 ) {
-                    spinnerSelectedText = quizList[position].id
+                    spinnerSelectedText = quizList[position].quizId
                     println("QuizList selected is $spinnerSelectedText")  // <-- this works
                 }
 

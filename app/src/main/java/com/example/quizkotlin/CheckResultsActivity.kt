@@ -56,7 +56,7 @@ class CheckResultsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.check_result_of_quiz)
         resultPassed = intent.getSerializableExtra(RESULT_PASS) as Results
-        Log.i(TAG, "Result_received: ${resultPassed.quizID}")
+        Log.i(TAG, "Result_received: ${resultPassed.quizId}")
         auth = FirebaseAuth.getInstance()
         database = FirebaseFirestore.getInstance()
         initViews()
@@ -67,7 +67,7 @@ class CheckResultsActivity : AppCompatActivity() {
                 progress.visibility = View.GONE
                 for (document in documents) {
                     // matching student quiz id with result quiz id
-                    if (document.get("id") == (resultPassed.quizID)) {
+                    if (document.get("id") == (resultPassed.quizId)) {
                         emptyMessage.visibility = View.GONE
 ////
                         setQuiz = (document.toObject(Quiz::class.java))
@@ -76,7 +76,7 @@ class CheckResultsActivity : AppCompatActivity() {
 
                     }
                 }
-                quizTitle.text = setQuiz.id
+                quizTitle.text = setQuiz.quizId
                 currentQuestion = questionsList[qNum]
                 setCurrentQuestion(currentQuestion)
 

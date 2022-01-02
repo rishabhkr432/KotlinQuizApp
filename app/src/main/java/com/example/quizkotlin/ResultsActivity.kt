@@ -129,7 +129,7 @@ class ResultsActivity : AppCompatActivity() {
             val index = value.toInt()
             Log.d("Results", "getAxisLabel: index $index")
             return if (index < scoreList.size) {
-                scoreList[index].name
+                scoreList[index].answerType
             } else {
                 ""
             }

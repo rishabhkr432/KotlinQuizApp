@@ -55,7 +55,7 @@ class AddQuestion : AppCompatActivity() {
                     for (doc in it) {
                         val quiz = doc.toObject(Quiz::class.java)
                         quizList.add(quiz)
-                        quizListString.add(quiz.id)
+                        quizListString.add(quiz.quizId)
                         Log.d(TAG, quiz.toString())
                     }
                     getSpinnerValue()
@@ -101,6 +101,7 @@ class AddQuestion : AppCompatActivity() {
     ) {
 
         val newQuestion = Question(
+
             question_name,
             optionsList,
             correctAnswer
@@ -232,7 +233,7 @@ class AddQuestion : AppCompatActivity() {
                     position: Int,
                     id: Long
                 ) {
-                    spinnerSelectedText = quizList[position].id
+                    spinnerSelectedText = quizList[position].quizId
                     println("QuizList selected is $spinnerSelectedText")  // <-- this works
                 }
 

@@ -63,7 +63,7 @@ class StudentHomeActivity : AppCompatActivity() {
 
             val intent = Intent(this, QuizBank::class.java)
             startActivity(intent)
-            Log.d("${TAG}", "Opening Quiz bank activity")
+            Log.d(TAG, "Opening Quiz bank activity")
 
             finish()
         }
@@ -71,7 +71,7 @@ class StudentHomeActivity : AppCompatActivity() {
 
             val intent = Intent(this, HistoryActivity::class.java)
             startActivity(intent)
-            Log.d("${TAG}", "Opening Check marks activity")
+            Log.d(TAG, "Opening Check marks activity")
 
             finish()
         }
@@ -79,7 +79,7 @@ class StudentHomeActivity : AppCompatActivity() {
             auth.signOut()
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
-            Log.d("${TAG}", "Exiting to login activity")
+            Log.d(TAG, "Exiting to login activity")
             finish()
         }
 

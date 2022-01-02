@@ -73,12 +73,12 @@ class HistoryAdapter(
 
 //            quizPath = "Student's quiz records"
 
-        holder.quizcardtitle.text = resultsBank[position].quizID.trim()
+        holder.quizcardtitle.text = resultsBank[position].quizId.trim()
         holder.marks.text = "You scored: " + resultsBank[position].results.toString() + "/10"
 
         holder.viewbtn.setOnClickListener {
 
-            database.collection(quizPath).document(resultsBank[position].quizID)
+            database.collection(quizPath).document(resultsBank[position].quizId)
                 .set(resultsBank[position])
                 .addOnSuccessListener {
                     sendResult = resultsBank[position]

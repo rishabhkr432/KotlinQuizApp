@@ -15,11 +15,9 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
 import android.content.Intent
-import androidx.core.content.ContextCompat.startActivity
 import com.example.quizkotlin.constants.STUDENT_QUIZ_PATH
 import com.example.quizkotlin.constants.TEACHERS_QUIZ_PATH
 import com.google.android.gms.tasks.OnCompleteListener
-import com.google.firebase.auth.ktx.userProfileChangeRequest
 import com.google.firebase.firestore.DocumentSnapshot
 
 
@@ -65,7 +63,7 @@ class ModifyQuestion(
             holder.viewbtn.text = "Start"
             holder.marks.text = "Not opened"
         }
-        val tempPos = quizBank[position].id.trim()
+        val tempPos = quizBank[position].quizId.trim()
         holder.quizcardtitle.text = "Quiz title - $tempPos"
 
 

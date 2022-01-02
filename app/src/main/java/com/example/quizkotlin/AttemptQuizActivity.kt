@@ -95,7 +95,7 @@ class AttemptQuizActivity : AppCompatActivity() {
             } else {
 
                 val quizResults =
-                    Results(quizPas.id, score, user.email.toString(), radioStoreAnswer)
+                    Results(quizPas.quizId, score, user.email.toString(), radioStoreAnswer)
                 Log.d("resultsData", quizResults.toString())
 
                 if (userType.containsKey(2)) {
@@ -120,7 +120,7 @@ class AttemptQuizActivity : AppCompatActivity() {
         }
     }
         private fun sendResultsToDatabase(quizResults: Results) {
-            database.collection(STUDENT_QUIZ_RESULTS_PATH).document(quizPas.id).set(quizResults)
+            database.collection(STUDENT_QUIZ_RESULTS_PATH).document(quizPas.quizId).set(quizResults)
 //                .addOnSuccessListener { Log.d(TAG, "DocumentSnapshot successfully written!") }
 //                .addOnFailureListener { e -> Log.w(TAG, "Error writing document", e) }
 //        }
@@ -136,7 +136,7 @@ class AttemptQuizActivity : AppCompatActivity() {
                         .get()
                         .addOnSuccessListener { documents ->
                             for (document in documents) {
-                                if (document.get("id") == (quizPas.id)) {
+                                if (document.get("id") == (quizPas.quizId)) {
                                     document.reference.update(
                                         "studentId",
                                         FieldValue.arrayUnion(userType[2])

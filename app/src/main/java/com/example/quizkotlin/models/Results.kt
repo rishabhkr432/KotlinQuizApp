@@ -3,7 +3,7 @@ package com.example.quizkotlin.models
 import java.io.Serializable
 
 data class Results(
-    var quizID: String,
+    var quizId: String,
     var results: Int,
     var studentId: String,
     var storeStudentAnswers: HashMap<String, String> = hashMapOf<String, String>()
