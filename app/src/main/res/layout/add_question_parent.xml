@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+<!--    <RelativeLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="@dimen/top_bar_height_normal"-->
+<!--        android:background="@drawable/top_bar_bg"-->
+<!--        android:padding="@dimen/padding_normal">-->
+
+<!--        <ImageView-->
+<!--            android:id="@+id/add_question_goBackButton"-->
+<!--            android:layout_width="40dp"-->
+<!--            android:layout_height="40dp"-->
+<!--            android:layout_centerVertical="true"-->
+<!--            android:layout_marginStart="@dimen/margin_10"-->
+<!--            android:src="@drawable/ic_close"-->
+<!--            tools:ignore="ContentDescription" />-->
+
+<!--        <TextView-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginStart="@dimen/margin_15"-->
+<!--            android:layout_toEndOf="@+id/add_question_goBackButton"-->
+<!--            android:fontFamily="@font/poppins_bold"-->
+<!--            android:text="@string/add_question"-->
+
+<!--            android:textColor="@color/white"-->
+<!--            android:textSize="@dimen/text_26" />-->
+
+<!--    </RelativeLayout>-->
+
+
+    <FrameLayout
+        android:id="@+id/askQuestion"
+        android:name="com.example.quizkotlin.fragments.QuestionFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        />
+
+</LinearLayout>

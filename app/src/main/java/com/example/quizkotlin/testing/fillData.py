@@ -15,10 +15,12 @@ def run():
     # for k in db.collection("Quizzes").get():
     #     print(k.id, k.to_dict())
 
+    # quizpath = "Student\'s quizzes"
+    quizpath = "Quizzes"
     # col_ref = db.collection('Quizzes') # col_ref is CollectionReference
-    col_ref = db.collection('Student\'s quizzes') # col_ref is CollectionReference
+    col_ref = db.collection(quizpath) # col_ref is CollectionReference
 
-    results = col_ref.where('id', '==', 'ok').get() # one way to query
+    results = col_ref.where('quizId', '==', 'ok').get() # one way to query
     # results = col_ref.order_by('date',direction='DESCENDING').limit(1).get() # another way - get the last document by date
 
     # questionsForQuiz = {

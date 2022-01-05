@@ -106,8 +106,8 @@
         android:id="@+id/results_correct_answer_rv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_15"
-        android:layout_marginTop="0dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="5dp"
         android:fontFamily="@font/poppins_semibold"
         android:text="@string/correct_answer"
         android:textColor="@color/black"
@@ -135,6 +135,18 @@
                 android:text="@string/next_button"
                 android:textAllCaps="false"
                 android:textSize="@dimen/text_24" />
+            <TextView
+                android:id="@+id/hidden_disclaimer_check_activity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/answerDisclaimer"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center"
+                android:textAlignment="center"
+                android:fontFamily="@font/poppins_bold"
+                android:textColor="@color/grey"
+                android:textColorHint="@color/browser_actions_title_color"
+                android:visibility="gone"/>
 
         </LinearLayout>
 

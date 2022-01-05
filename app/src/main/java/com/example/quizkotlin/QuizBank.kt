@@ -18,6 +18,7 @@ import com.example.quizkotlin.models.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Source
 
 class QuizBank : AppCompatActivity() {
 
@@ -48,7 +49,13 @@ class QuizBank : AppCompatActivity() {
         user = auth.currentUser!!
 //        val user = auth.currentUser
 
-        database.collection("Users").document(user.uid).get()
+        database.collection("Users").document(user.uid).
+            /**
+             * Reads the document referenced by this `DocumentReference`.
+             *
+             * @return A Task that will be resolved with the contents of the Document at this `DocumentReference`.
+             */
+        get(Source.DEFAULT)
             .addOnCompleteListener {
                 if (it.isSuccessful) {
                     val doc = it.result

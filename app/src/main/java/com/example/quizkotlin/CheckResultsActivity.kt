@@ -11,6 +11,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.quizkotlin.constants.QUIZ_ID
 import com.example.quizkotlin.constants.STUDENT_QUIZ_PATH
 import com.example.quizkotlin.models.Question
 import com.example.quizkotlin.models.Quiz
@@ -36,11 +37,12 @@ class CheckResultsActivity : AppCompatActivity() {
     private var qNum: Int = 0
     private lateinit var next_button: MaterialButton
     private lateinit var checkResultsAdapter: CheckResultsAdapter
-    private var quizPath: String = "Quizzes"
+    private var userNotFound: String = "User input not found"
 
+    private lateinit var disclaimer: TextView
     private lateinit var quizPas: Quiz
     private lateinit var resultPassed: Results
-    private lateinit var setQuiz: Quiz
+    private var setQuiz: Quiz? = null
     private var questionsList: List<Question> = ArrayList()
     private lateinit var currentQuestion: Question
     private lateinit var question: TextView
@@ -49,9 +51,10 @@ class CheckResultsActivity : AppCompatActivity() {
     private lateinit var quizTitle: TextView
     private lateinit var userAnswer: String
     private var quizQuestionUserAnswer: HashMap<String, String> = hashMapOf<String, String>()
-
+    private var quiz: String = "Quiz"
     private var quizbanklist: ArrayList<Results> = arrayListOf()
 
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.check_result_of_quiz)
@@ -67,18 +70,23 @@ class CheckResultsActivity : AppCompatActivity() {
                 progress.visibility = View.GONE
                 for (document in documents) {
                     // matching student quiz id with result quiz id
-                    if (document.get("id") == (resultPassed.quizId)) {
+                    if (document.get(QUIZ_ID) == (resultPassed.quizId)) {
                         emptyMessage.visibility = View.GONE
 ////
                         setQuiz = (document.toObject(Quiz::class.java))
-                        questionsList = setQuiz.questionsForQuiz
+                        questionsList = setQuiz!!.questionsForQuiz
                         quizQuestionUserAnswer = resultPassed.storeStudentAnswers
-
+                        quizTitle.text = setQuiz?.quizId
+                        currentQuestion = questionsList[qNum]
+                        setCurrentQuestion(currentQuestion)
+                    }
+                    else{
+                        Log.i(TAG, "${resultPassed.quizId} not found")
+                        quizTitle.text = quiz
+                        currentQuestion = Question("", null, "")
                     }
                 }
-                quizTitle.text = setQuiz.quizId
-                currentQuestion = questionsList[qNum]
-                setCurrentQuestion(currentQuestion)
+
 
             }.addOnFailureListener {
                 progress.visibility = View.GONE
@@ -97,6 +105,11 @@ class CheckResultsActivity : AppCompatActivity() {
             }
             // resetting question from the results one. Need to match with the student quiz and find the correct answer
         }
+        goBackButton.setOnClickListener {
+                val intent = Intent(this, HistoryActivity::class.java)
+                startActivity(intent)
+                finish()
+            }
     }
 
     private fun initViews() {
@@ -109,6 +122,7 @@ class CheckResultsActivity : AppCompatActivity() {
         correctAnswer = findViewById(R.id.results_correct_answer_rv)
         next_button = findViewById(R.id.results_next_button)
         quizTitle = findViewById(R.id.results_quiz_title)
+        disclaimer = findViewById(R.id.hidden_disclaimer_check_activity)
 
 
 
@@ -118,28 +132,55 @@ class CheckResultsActivity : AppCompatActivity() {
 
     }
 
+    @SuppressLint("SetTextI18n")
     private fun setCurrentQuestion(currentQuestion: Question) {
 
-        var optionsList = currentQuestion.options as ArrayList<String?>
+        val optionsList = currentQuestion.options as ArrayList<String?>
+
 
         Log.i("optionsList", optionsList.toString())
         question.text = currentQuestion.question
         qNum += 1
 
-        qnum_display.text = ("Total Questions: " + (qNum).toString() + "/10")
-        correctAnswer.text = currentQuestion.correct_answer
-//        loadQuestions(optionsList)
-        if (quizQuestionUserAnswer.containsKey(currentQuestion.question)) {
-            userAnswer = quizQuestionUserAnswer[currentQuestion.question].toString()
-            Log.i("$TAG-", "userAnswer: $userAnswer")
+        qnum_display.text = ("Total Questions: " + (qNum).toString() + "/${questionsList.size}")
+        correctAnswer.text = "Correct Answer - ${currentQuestion.correct_answer}"
 
+//        if (optionsList.isEmpty())
+//        setting question and user answer
+        when {
+            optionsList.size == 1 -> {
+                optionsList.clear()
+                disclaimer.visibility = View.GONE
+                userAnswer = quizQuestionUserAnswer[currentQuestion.question].toString()
+                if (userAnswer == ""){userAnswer = userNotFound
+                    disclaimer.visibility = View.VISIBLE
+                }
+                correctAnswer.visibility = View.VISIBLE
+                Log.i("$TAG-", "userAnswer: $userAnswer")
+                optionsList.add(userAnswer)
+
+            }
+            quizQuestionUserAnswer.containsKey(currentQuestion.question) -> {
+                userAnswer = quizQuestionUserAnswer[currentQuestion.question].toString()
+                if (userAnswer == ""){disclaimer.visibility = View.VISIBLE}
+                correctAnswer.visibility = View.GONE
+                Log.i("$TAG-", "userAnswer: $userAnswer")
+
+            }
+            else -> {
+                userAnswer = userNotFound
+                optionsList.clear()
+                optionsList.add(userAnswer)
+
+            }
+        }
             checkResultsAdapter = CheckResultsAdapter(
-                optionsList, userAnswer, correctAnswer.text.toString(), this
+                optionsList, userAnswer, currentQuestion.correct_answer, this
             )
 
             checkResultsRv.adapter = checkResultsAdapter
 
-        }
+
 
 
     }

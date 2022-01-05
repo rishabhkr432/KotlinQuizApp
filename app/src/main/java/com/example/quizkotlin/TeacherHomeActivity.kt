@@ -13,6 +13,7 @@ import com.example.quizkotlin.models.User
 import com.google.android.material.appbar.CollapsingToolbarLayout
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Source
 
 class TeacherHomeActivity : AppCompatActivity() {
     private lateinit var collapsingToolbar: CollapsingToolbarLayout
@@ -39,7 +40,13 @@ class TeacherHomeActivity : AppCompatActivity() {
         val user = auth.currentUser
 
         if (user != null) {
-            database.collection("Users").document(user.uid).get()
+            database.collection("Users").document(user.uid).
+                /**
+                 * Reads the document referenced by this `DocumentReference`.
+                 *
+                 * @return A Task that will be resolved with the contents of the Document at this `DocumentReference`.
+                 */
+            get(Source.DEFAULT)
                 .addOnCompleteListener {
                     if (it.isSuccessful) {
                         val doc = it.result
@@ -67,7 +74,7 @@ class TeacherHomeActivity : AppCompatActivity() {
         }
         add_question.setOnClickListener {
 
-            val intent = Intent(this, QuestionPopup::class.java)
+            val intent = Intent(this, AddQuestion::class.java)
             startActivity(intent)
             Log.d("${TAG}", "Opening Add question activity")
             finish()

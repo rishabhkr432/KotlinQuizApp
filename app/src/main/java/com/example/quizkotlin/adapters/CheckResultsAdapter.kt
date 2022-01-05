@@ -1,4 +1,4 @@
-package com.example.quizkotlin
+package com.example.quizkotlin.adapters
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -7,10 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
-import android.widget.LinearLayout
-import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.quizkotlin.R
 
 class CheckResultsAdapter(
     private val optionsList: ArrayList<String?>,
@@ -22,12 +21,13 @@ class CheckResultsAdapter(
 
 //
 ) : RecyclerView.Adapter<CheckResultsAdapter.MyViewHolder>() {
+    private var tempOp: Int = 0
+//    private fun colorChange(v: View ->
+//    )
 
     class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val option: EditText = view.findViewById(R.id.option_name)
         val optionBg: CardView = view.findViewById(R.id.option_card)
-        val userAnswer: TextView = view.findViewById(R.id.user_answer)
-
 
 
 
@@ -48,7 +48,6 @@ class CheckResultsAdapter(
         holder.option.isClickable = false
 //        if ([holder.adapterPosition] == userAnswer) {
 //        }
-//        holder.userAnswer.text = "Your Answer"
 
         holder.option.setText(optionsList[holder.adapterPosition])
         Log.i(
@@ -58,21 +57,14 @@ class CheckResultsAdapter(
         if (holder.option.text.toString() == userAnswer && holder.option.text.toString() == correctAnswer) {
 
             holder.optionBg.setCardBackgroundColor(holder.itemView.context.getColor(R.color.chartreuse))
-          holder.userAnswer.visibility = View.VISIBLE
+//            holder.option.setBackgroundResource(R.color.chartreuse)
 
 //            ("@color/chartreuse")
         } else if (holder.option.text.toString() == userAnswer && holder.option.text.toString() != correctAnswer) {
             holder.optionBg.setCardBackgroundColor(holder.itemView.context.getColor(R.color.light_red))
-            holder.userAnswer.visibility = View.VISIBLE
         } else if (holder.option.text.toString() != userAnswer && holder.option.text.toString() == correctAnswer) {
             holder.optionBg.setCardBackgroundColor(holder.itemView.context.getColor(R.color.chartreuse))
-            holder.userAnswer.text = "Correct Answer"
-            holder.userAnswer.visibility = View.VISIBLE
         }
-
-
-
-
     }
 
     override fun getItemCount(): Int {

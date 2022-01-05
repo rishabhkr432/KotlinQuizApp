@@ -19,6 +19,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Source
 
 class LoginActivity : AppCompatActivity() {
 
@@ -266,7 +267,13 @@ class LoginActivity : AppCompatActivity() {
     @SuppressLint("SetTextI18n")
     private fun callUserSpecificActivity(user: FirebaseUser) {
         tvMsg.text = "Processing Your data..."
-        database.collection("Users").document(user.uid).get()
+        database.collection("Users").document(user.uid).
+            /**
+             * Reads the document referenced by this `DocumentReference`.
+             *
+             * @return A Task that will be resolved with the contents of the Document at this `DocumentReference`.
+             */
+        get(Source.DEFAULT)
             .addOnCompleteListener {
                 if (it.isSuccessful) {
                     val doc = it.result

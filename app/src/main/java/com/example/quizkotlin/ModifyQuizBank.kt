@@ -19,6 +19,7 @@ import com.example.quizkotlin.constants.STUDENT_QUIZ_PATH
 import com.example.quizkotlin.constants.TEACHERS_QUIZ_PATH
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.Source
 
 
 class ModifyQuestion(
@@ -69,7 +70,7 @@ class ModifyQuestion(
 
 
         holder.delbtn.setOnClickListener {
-            database.collection(quizPath).whereEqualTo("id",tempPos)
+            database.collection(quizPath).whereEqualTo("quizId",tempPos)
                 .get()
                 .addOnSuccessListener { documents ->
                     for (document in documents) {
@@ -97,7 +98,13 @@ class ModifyQuestion(
             quizSize = quizBank[position].questionsForQuiz.size
             Log.d(TAG, "QuizSize - $quizSize")
             if (quizSize in 1..10) {
-                database.collection(quizPath).document(tempPos).get()
+                database.collection(quizPath).document(tempPos).
+                    /**
+                     * Reads the document referenced by this `DocumentReference`.
+                     *
+                     * @return A Task that will be resolved with the contents of the Document at this `DocumentReference`.
+                     */
+                get(Source.DEFAULT)
 //                    .set(quizBank[position])
                     .addOnSuccessListener {
 
@@ -136,7 +143,7 @@ class ModifyQuestion(
                     .get()
                     .addOnSuccessListener { documents ->
                         for (document in documents) {
-                            if (document.get("id") == (tempPos)) {
+                            if (document.get("quizId") == (tempPos)) {
                                 Log.d(
                                     "holder.quizcardtitle.text",
                                     tempPos
@@ -145,7 +152,13 @@ class ModifyQuestion(
                                 val docRef =
                                     database.collection(STUDENT_QUIZ_PATH).document(document.id)
 
-                                docRef.get()
+                                docRef.
+                                    /**
+                                     * Reads the document referenced by this `DocumentReference`.
+                                     *
+                                     * @return A Task that will be resolved with the contents of the Document at this `DocumentReference`.
+                                     */
+                                get(Source.DEFAULT)
                                     .addOnCompleteListener(OnCompleteListener<DocumentSnapshot?> { task ->
                                         if (task.isSuccessful) {
                                             val doc = task.result
@@ -233,7 +246,3 @@ class ModifyQuestion(
 }
 
 
-
-fun <E> ArrayList<E>.add(element: String) {
-
-}

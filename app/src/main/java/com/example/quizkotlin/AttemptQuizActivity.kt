@@ -32,17 +32,17 @@ class AttemptQuizActivity : AppCompatActivity() {
     private var disclaimText: String = "Preview mode - Marks will not count"
     private lateinit var options_rv: RecyclerView
     private var radioReturnAnswer: String = ""
-    private var radioStoreAnswer: HashMap<String, String> = hashMapOf<String, String>()
+    private var radioStoreAnswer: HashMap<String, String> = hashMapOf()
     private lateinit var options_progress: ProgressBar
     private lateinit var optionFailed: TextView
     private lateinit var attemptQuizAdapter: AttemptQuizAdapter
+    private lateinit var singleQuizAdapter: SingleQuestionAdapter
     private lateinit var quizPas: Quiz
     private var userType :HashMap<Int, String> = hashMapOf<Int, String>()
     private var qNum: Int = 0
     private lateinit var hiddenDisclaimer: TextView
     private lateinit var goBackButton: ImageView
     private lateinit var currentQuestion: Question
-    var radioGroup: RadioGroup? = null
 
     //
 //
@@ -57,7 +57,7 @@ class AttemptQuizActivity : AppCompatActivity() {
         quizPas = intent.getSerializableExtra(QUIZ_PASS) as Quiz
         userType = intent.getSerializableExtra(USER_PASS) as HashMap<Int, String>
         Log.d("$TAG- userType", userType.toString())
-        Log.d("$TAG", "quizPas: $quizPas")
+        Log.d("$TAG-", "quizPas: $quizPas")
         initViews()
         questionsList = quizPas.questionsForQuiz
         (questionsList as ArrayList<Question>).shuffle()
@@ -82,7 +82,7 @@ class AttemptQuizActivity : AppCompatActivity() {
 
         }
         next_button.setOnClickListener {
-
+            Log.i("CheckingAnswer", radioReturnAnswer)
             if (currentQuestion.correct_answer == radioReturnAnswer) {
                 score += 1
                 radioReturnAnswer = ""
@@ -136,7 +136,7 @@ class AttemptQuizActivity : AppCompatActivity() {
                         .get()
                         .addOnSuccessListener { documents ->
                             for (document in documents) {
-                                if (document.get("id") == (quizPas.quizId)) {
+                                if (document.get("quizId") == (quizPas.quizId)) {
                                     document.reference.update(
                                         "studentId",
                                         FieldValue.arrayUnion(userType[2])
@@ -174,7 +174,6 @@ class AttemptQuizActivity : AppCompatActivity() {
         hiddenDisclaimer = findViewById(R.id.hiddenDisclaimer)
         question = findViewById(R.id.question_attempt)
         options_rv = findViewById(R.id.options_list_attempt_rv)
-        radioGroup = findViewById(R.id.radioGrp)
         next_button = findViewById(R.id.next_button_demo)
         optionFailed = findViewById(R.id.options_failed_attempt_tv)
         options_progress = findViewById(R.id.options_progress_attempt)
@@ -188,8 +187,9 @@ class AttemptQuizActivity : AppCompatActivity() {
         }
     }
 
+    @SuppressLint("SetTextI18n")
     private fun setCurrentQuestion(currentQuestion: Question) {
-        var optionsList = currentQuestion.options as ArrayList<String?>
+        val optionsList = currentQuestion.options as ArrayList<String?>
         optionsList.shuffle()
         Log.i("optionsList", optionsList.toString())
         question.text = currentQuestion.question
@@ -202,7 +202,8 @@ class AttemptQuizActivity : AppCompatActivity() {
         if (optionsList.isEmpty()) {
             options_progress.visibility = View.GONE
             optionFailed.visibility = View.VISIBLE
-        } else {
+        } else if (optionsList.size > 1) {
+            options_rv.visibility = View.VISIBLE
             optionFailed.visibility = View.GONE
             attemptQuizAdapter = AttemptQuizAdapter(
                 optionsList,
@@ -210,11 +211,37 @@ class AttemptQuizActivity : AppCompatActivity() {
                 object : AttemptQuizAdapter.MyViewHolder.Listener {
                     override fun returnPosString(answer: String) {
                         radioReturnAnswer = answer
-                        radioStoreAnswer[currentQuestion.question] = radioReturnAnswer
+
                         Log.d("radioReturnAnswer", "optionsList returned : $answer")
                     }
                 })
+            radioStoreAnswer[currentQuestion.question] = radioReturnAnswer
             options_rv.adapter = attemptQuizAdapter
+        }else {
+            if (userType.keys.contains(1)) {
+                options_rv.visibility = View.GONE
+            } else {
+                optionFailed.visibility = View.GONE
+                singleQuizAdapter = SingleQuestionAdapter(
+                    optionsList,
+                    this,
+                    object : SingleQuestionAdapter.MyViewHolder.Listener {
+                        override fun returnPosString(list: ArrayList<String?>) {
+                            Log.d("returnList", list.toString())
+                            radioReturnAnswer = list[0].toString()
+                            Log.i("ReturnSingleAnswer", radioReturnAnswer)
+//                        radioReturnAnswer = answer
+                            radioStoreAnswer[currentQuestion.question] = radioReturnAnswer
+                            Log.d(
+                                "radioReturnAnswer",
+                                "optionsList returned single answer : $radioReturnAnswer"
+                            )
+                        }
+                    })
+                radioStoreAnswer[currentQuestion.question] = radioReturnAnswer
+                options_rv.adapter = singleQuizAdapter
+
+            }
         }
     }
 

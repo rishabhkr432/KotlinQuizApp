@@ -1,5 +1,6 @@
 package com.example.quizkotlin
 
+import com.example.quizkotlin.models.Quiz
 import org.junit.Test
 
 import org.junit.Assert.*
@@ -12,6 +13,13 @@ import org.junit.Assert.*
 class ExampleUnitTest {
     @Test
     fun addition_isCorrect() {
+        assertEquals(4, 2 + 2)
+    }
+    @Test
+    fun getQuiz(){
+        val q = "TestQuiz"
+        val addQuiz = AddQuiz()
+        val check = addQuiz.validation(q)
         assertEquals(4, 2 + 2)
     }
 }

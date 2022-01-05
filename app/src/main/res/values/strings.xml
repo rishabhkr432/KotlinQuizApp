@@ -74,6 +74,7 @@
     <string name="quiz_marks_view">Quiz Marks</string>
     <string name="question">Question</string>
     <string name="option">Option</string>
+    <string name="your_answer">Your answer</string>
     <string name="question_description">Question description</string>
     <string name="assignment">Assignment</string>
     <string name="quiz_test">Quiz / Test</string>
@@ -138,6 +139,7 @@
     <string name="correct_answer">Correct answer</string>
     <string name="save_button">Save</string>
     <string name="next_button">Next</string>
+    <string name="answerDisclaimer">User did not answer this question</string>
     <string name="teacherDisclaimer">Space for disclaimer</string>
     <string name="delete_button">Delete</string>
     <string name="Quiz">Quiz</string>
