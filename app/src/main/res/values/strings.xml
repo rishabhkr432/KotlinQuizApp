@@ -65,8 +65,7 @@
     <string name="add_quiz">Add quiz</string>
     <string name="storing_user_info">Storing user info…</string>
     <string name="_8_maths">8_Maths</string>
-    <string name="my_school">My School</string>
-    <string name="you_have_not_enrolled_in_any_subjects">You have not enrolled in any subjects!</string>
+    <string name="kotlin_quiz_app">Kotlin Quiz App</string>
     <string name="signing_in">Signing in…</string>
     <string name="login__info_msg">On Clicking -> Sign in with Google, You will be enrolled as a student. To enroll as
     enter as a teacher, please go to sign up screen via -> Create One</string>
@@ -80,14 +79,12 @@
     <string name="quiz_test">Quiz / Test</string>
     <string name="calendar">Calendar</string>
     <string name="logout">Logout</string>
-    <string name="enrolled_subjects">Enrolled Subjects</string>
     <string name="r">R</string>
     <string name="huzefabot_gmail_com">huzefabot@gmail.com</string>
     <string name="to_do">To Do</string>
     <string name="missing">Missing</string>
     <string name="done">Done</string>
     <string name="maths_assignment_1">Maths Assignment 1</string>
-    <string name="subject">Subject :</string>
     <string name="task_link">Task Link :</string>
     <string name="no_assignment_found">No Assignment found !</string>
     <string name="upcoming">Upcoming</string>
@@ -106,15 +103,10 @@
     <string name="options_not_found">Options not found</string>
     <string name="enter_quiz_title">Enter title(Optional)</string>
     <string name="select_question_bank">Select question bank</string>
-    <string name="create_subject">Create Subject</string>
-    <string name="subject_class">Subject/Class</string>
     <string name="your_name">Your Name</string>
-    <string name="class_link">Class Link (if any)</string>
-    <string name="timing_if_any">Timing (if any)</string>
     <string name="create">Create</string>
     <string name="no_announcement_from_your_teacher">No announcement from your teacher !!</string>
     <string name="warning">Warning</string>
-    <string name="you_will_no_longer_have_access_to_this_subject">You will no longer have access to this subject</string>
     <string name="un_enroll">Un Enroll</string>
     <string name="cancel">Cancel</string>
     <string name="splash_bottom_tag">Learn Adapt Overcome Repeat</string>

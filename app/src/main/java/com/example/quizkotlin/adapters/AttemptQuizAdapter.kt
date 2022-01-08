@@ -46,7 +46,7 @@ class AttemptQuizAdapter(
             } else {
                 mCheckedPostion = holder.adapterPosition
 
-                optionsList[mCheckedPostion]?.let { it1 -> listener.returnPosString(it1) }
+                optionsList[mCheckedPostion]?.let { it1 -> listener.returnPosString(it1.lowercase()) }
                 notifyDataSetChanged()
             }
         }

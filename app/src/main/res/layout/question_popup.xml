@@ -36,7 +36,7 @@
     </RelativeLayout>
 
     <ProgressBar
-        android:id="@+id/avlSubject_progress"
+        android:id="@+id/progress_bar"
         style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -45,7 +45,7 @@
         android:visibility="gone" />
 
     <TextView
-        android:id="@+id/avlSubject_msg_tv"
+        android:id="@+id/failed_msg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"

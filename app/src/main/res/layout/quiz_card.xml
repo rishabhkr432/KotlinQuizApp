@@ -15,7 +15,7 @@
     app:contentPaddingTop="@dimen/padding_small">
 
     <LinearLayout
-        android:id="@+id/avlSubject_card_layout"
+        android:id="@+id/quiz_card_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

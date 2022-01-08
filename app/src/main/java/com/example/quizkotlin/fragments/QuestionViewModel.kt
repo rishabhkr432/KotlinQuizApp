@@ -6,9 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.quizkotlin.constants.FAILED
-import com.example.quizkotlin.constants.NULLCHECK
-import com.example.quizkotlin.constants.SAVING
-import com.example.quizkotlin.constants.OVERLOADED
+
 import com.example.quizkotlin.constants.SUCCESS
 import com.example.quizkotlin.models.Question
 import com.example.quizkotlin.models.Quiz
@@ -24,13 +22,13 @@ class QuestionViewModel : ViewModel() {
     private lateinit var auth: FirebaseAuth
     private lateinit var user: FirebaseUser
 
-    private val _quizzes = MutableLiveData<List<Quiz>>()
-    val quizzesList: LiveData<List<Quiz>>
-    get() = _quizzes
+    private var _quizzes: MutableList<Quiz> = mutableListOf()
+    val quizzesList: MutableList<Quiz>
+        get() = _quizzes
 
     private val _options: MutableList<String?> = mutableListOf()
-    var options: MutableList<String?> = mutableListOf()
-    get() = _options
+    val options: MutableList<String?>
+        get() = _options
 
 
     private val _quizzesString = MutableLiveData<List<String>>()
@@ -63,7 +61,7 @@ class QuestionViewModel : ViewModel() {
 //                        }
                         Log.d(TAG, quiz.toString())
                     }
-                    _quizzes.value = quizList
+                    _quizzes = quizList
                     _quizzesString.value = quizListString
 //                    getSpinnerValue(view)
                     status = SUCCESS
@@ -71,79 +69,6 @@ class QuestionViewModel : ViewModel() {
             }
         return status
     }
-         fun saveClassToDatabase(
-            question_name: String,
-            optionsList: MutableList<String?>,
-            correctAnswer: String,
-            quiz: Quiz
-
-        ) {
-
-            val newQuestion = Question(
-
-                question_name,
-                optionsList,
-                correctAnswer
-            )
-            database.collection("Quizzes")
-                .get()
-                .addOnSuccessListener { documents ->
-                    for (document in documents) {
-                        if (document.get("quizId") == (quiz.quizId)) {
-////
-                            val quiz = (document.toObject(Quiz::class.java))
-                            val quizSize = quiz.questionsForQuiz.size
-                            Log.d(TAG, quiz.toString())
-//
-//
-                            if (quizSize < 10) {
-//
-                                document.reference.update(
-                                    "questionsForQuiz",
-                                    FieldValue.arrayUnion(newQuestion)
-
-                                )
-                                    .addOnSuccessListener {
-                                        Log.d(
-                                            TAG,
-                                            "Question successfully saved. Uploading.....!"
-                                        )
-
-
-//                                        (requireActivity() as AddQuestion).restartFragment(R.id.askQuestion)
-//                                        makeInputFieldEmpty()
-
-
-
-
-                                    }
-                                    .addOnFailureListener { e ->
-//                                        Toast.makeText(view.context, "Failed", Toast.LENGTH_LONG).show()
-                                        Log.w(
-                                            TAG,
-                                            "Error adding question",
-                                            e
-                                        )
-
-//                                        (requireActivity() as AddQuestion).restartFragment(R.id.askQuestion)
-                                    }
-                            } else {
-                                Log.i(TAG,"Cannot add more questions to this quiz. Current size: $quizSize")
-
-
-                            }
-
-                        }
-//                        else{
-//                            Log.i(TAG,"Quiz not found ${quiz.quizId}")
-//                            status = "${quiz.quizId} not found"
-//
-//                        }
-                    }
-                }
-
-
-        }
 
 
 

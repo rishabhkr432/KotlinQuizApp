@@ -15,7 +15,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
 import android.content.Intent
-import com.example.quizkotlin.AttemptQuizActivity
+import com.example.quizkotlin.activities.AttemptQuizActivity
 import com.example.quizkotlin.R
 import com.example.quizkotlin.constants.STUDENT_QUIZ_PATH
 import com.example.quizkotlin.constants.TEACHERS_QUIZ_PATH
@@ -97,7 +97,7 @@ class QuizBankAdapter(
             }
 //        }
         holder.viewbtn.setOnClickListener {
-            quizSize = quizBank[position].questionsForQuiz.size
+            quizSize = quizBank[position].quizQuestionList.size
             Log.d(TAG, "QuizSize - $quizSize")
             if (quizSize in 1..10) {
                 database.collection(quizPath).document(tempPos).
@@ -138,7 +138,7 @@ class QuizBankAdapter(
             }
         }
         holder.studentDB.setOnClickListener {
-            quizSize = quizBank[position].questionsForQuiz.size
+            quizSize = quizBank[position].quizQuestionList.size
             Log.d(TAG, "QuizSize - $quizSize")
             if (quizSize == 10) {
                 database.collection(TEACHERS_QUIZ_PATH)

@@ -14,7 +14,7 @@ import com.example.quizkotlin.R
 
 
 class AddQuestionAdapter(
-    private val optionsList: ArrayList<String?>,
+    private val optionsList:  MutableList<String?>,
     private val context: Context,
     private val listener: MyViewHolder.Listener,
 //
@@ -23,7 +23,7 @@ class AddQuestionAdapter(
         val option: EditText = view.findViewById(R.id.option_name)
 
         interface Listener {
-            fun optionsReturn(list: ArrayList<String?>)
+            fun optionsReturn(list:  MutableList<String?>)
         }
 
     }
@@ -48,7 +48,7 @@ class AddQuestionAdapter(
 //                isTextChanged = true
                 if (s.toString().trim() != "") {
                     Log.i("string is", s.toString())
-                    optionsList[holder.adapterPosition] = s.toString().trim()
+                    optionsList[holder.adapterPosition] = s.toString().lowercase().trim()
                     listener.optionsReturn(optionsList)
                 } else {
                     holder.option.error

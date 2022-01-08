@@ -6,12 +6,13 @@ import java.io.Serializable
 
 data class Quiz(
     var quizId: String,
-    var studentId: ArrayList<String> = arrayListOf(),
-    var questionsForQuiz: ArrayList<Question> = arrayListOf()
-
-
+    var studentId: MutableList<String?>? = mutableListOf(),
+    var quizQuestionList: ArrayList<Question> = arrayListOf()
 ) : Serializable {
     constructor() : this("")
+    override fun toString(): String {
+        return quizId
+    }
 //    fun validation(quizTitle: String,docRef: DocumentReference): Boolean{
 //        var result = false
 //        var newQuiz = Quiz()

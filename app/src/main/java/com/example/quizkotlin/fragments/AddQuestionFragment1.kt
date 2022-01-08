@@ -9,10 +9,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
-import com.example.quizkotlin.AddQuestion
+import com.example.quizkotlin.activities.AddQuestion
 import com.example.quizkotlin.R
-import com.example.quizkotlin.TeacherHomeActivity
+import com.example.quizkotlin.activities.TeacherHomeActivity
+import com.example.quizkotlin.constants
+import com.example.quizkotlin.constants.INVALID_Q_TEXT
+import com.example.quizkotlin.constants.SUCCESS
 import com.example.quizkotlin.models.Quiz
 import com.google.android.material.button.MaterialButton
 import com.google.firebase.auth.FirebaseAuth
@@ -43,6 +48,7 @@ class AddQuestionFragment1 : Fragment() {
     private lateinit var options_progress: ProgressBar
     private lateinit var optionFailed: TextView
     private var isValidation: Boolean = false
+    lateinit var questionViewModel: QuestionViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -53,25 +59,28 @@ class AddQuestionFragment1 : Fragment() {
         database = FirebaseFirestore.getInstance()
 
         user = auth.currentUser!!
-        database.collection("Quizzes").get()
-            .addOnSuccessListener {
-                if (it.isEmpty) {
-                    Toast.makeText(activity, "No quizzes found", Toast.LENGTH_SHORT).show()
-                } else {
-                    for (doc in it) {
-                        val quiz = doc.toObject(Quiz::class.java)
-                        quizList.add(quiz)
-                        quizListString.add(quiz.quizId)
-//                        if (quiz.questionsForQuiz.size > 0) {
-//                            for (i in quiz.questionsForQuiz) {
-//                                questionsList.add(i)
-//                            }
-//                        }
-                        Log.d(TAG, quiz.toString())
-                    }
-                    getSpinnerValue(view)
-                }
-            }
+        questionViewModel = ViewModelProvider(this)[QuestionViewModel::class.java]
+        when(questionViewModel.getQuizzes()){
+            SUCCESS -> {  Log.d(TAG, "quizList loaded")}}
+//        database.collection("Quizzes").get()
+//            .addOnSuccessListener {
+//                if (it.isEmpty) {
+//                    Toast.makeText(activity, "No quizzes found", Toast.LENGTH_SHORT).show()
+//                } else {
+//                    for (doc in it) {
+//                        val quiz = doc.toObject(Quiz::class.java)
+//                        quizList.add(quiz)
+//                        quizListString.add(quiz.quizId)
+////                        if (quiz.questionsForQuiz.size > 0) {
+////                            for (i in quiz.questionsForQuiz) {
+////                                questionsList.add(i)
+////                            }
+////                        }
+//                        Log.d(TAG, quiz.toString())
+//                    }
+//                    getSpinnerValue(view)
+//                }
+//            }
 
         initViews(view)
 
@@ -85,7 +94,7 @@ class AddQuestionFragment1 : Fragment() {
                 optionsTemp
             )
             if (isValidation) {
-                addOptions(questionTemp, spinnerSelectedText, optionsTemp)
+                addOptions(questionTemp, optionsTemp)
 
             }
         }
@@ -96,6 +105,31 @@ class AddQuestionFragment1 : Fragment() {
             Log.d(TAG, "Opening Teacher's activity")
 
         }
+//        questionViewModel.quizzesListString.observe(viewLifecycleOwner, Observer {
+//                quiz ->
+//            spinner.adapter =
+//                ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, quiz)
+//        }
+//        )
+//        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+//            override fun onItemSelected(
+//                parent: AdapterView<*>?,
+//                view: View?,
+//                position: Int,
+//                id: Long
+//            ) {
+////                val pos = parent?.getItemAtPosition(position)
+//                quiz = questionViewModel.quizzesList[position]
+////                quiz = parent?.getItemAtPosition(position) as Quiz
+//                questionViewModel.quiz = quiz
+////
+//                Log.i(TAG,"QuizList selected is $quiz")  // <-- this works
+//            }
+//
+//            override fun onNothingSelected(parent: AdapterView<*>?) {
+//                // write code to perform some action
+//            }
+//        }
         return view
     }
 private fun initViews(view: View) {
@@ -103,7 +137,7 @@ private fun initViews(view: View) {
     optionsNumber = view.findViewById(R.id.fragment_options)
     next_button = view.findViewById(R.id.fragment_next_button)
     goBackButton = view.findViewById(R.id.fragment_goBackButton)
-//    spinner = view.findViewById<Spinner>(R.id.fragment_spinner)
+
 
 //        rv = findViewById(R.id.options_list_rv)
 //        optionFailed = findViewById(R.id.options_failed_tv)
@@ -118,43 +152,44 @@ private fun initViews(view: View) {
 
 
 }
-    private fun getSpinnerValue(view: View) {
-        val spinner = view.findViewById<Spinner>(R.id.fragment_spinner)
-        spinnerSelectedText = quizList.first().quizId
-
-
-        if (spinner != null) {
-            val adapter = ArrayAdapter(view.context, android.R.layout.simple_spinner_item, quizListString)
-            spinner.adapter = adapter
-
-            spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(
-                    parent: AdapterView<*>,
-                    view: View,
-                    position: Int,
-                    id: Long
-                ) {
-                    spinnerSelectedText = quizList[position].quizId
-                    println("QuizList selected is $spinnerSelectedText")  // <-- this works
-                }
-
-                override fun onNothingSelected(parent: AdapterView<*>) {
-                    // write code to perform some action
-                }
-            }
-        }
-
-// selectedText is not seen here:
-        Log.i(TAG,"quizList selected is $spinnerSelectedText")
-//        return
-    }
+//    private fun getSpinnerValue(view: View) {
+//        val spinner = view.findViewById<Spinner>(R.id.fragment_spinner)
+//        spinnerSelectedText = quizList.first().quizId
+//
+//
+//        if (spinner != null) {
+//            val adapter = ArrayAdapter(view.context, android.R.layout.simple_spinner_item, quizListString)
+//            spinner.adapter = adapter
+//
+//            spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+//                override fun onItemSelected(
+//                    parent: AdapterView<*>,
+//                    view: View,
+//                    position: Int,
+//                    id: Long
+//                ) {
+//                    spinnerSelectedText = quizList[position].quizId
+//                    println("QuizList selected is $spinnerSelectedText")  // <-- this works
+//                }
+//
+//                override fun onNothingSelected(parent: AdapterView<*>) {
+//                    // write code to perform some action
+//                }
+//            }
+//        }
+//
+//// selectedText is not seen here:
+//        Log.i(TAG,"quizList selected is $spinnerSelectedText")
+////        return
+//    }
 
     private fun validations(
         question_check: String,
         options: Int,
 
         ) {
-        if (question_check != "" && !question_check.isEmpty()) {
+        if (question_check != "" && question_check.isNotEmpty() && question_check.length > constants.LENGTHCHECK_5 && question_check.length < constants.LENGTHCHECK_100 && question_check.matches(
+                constants.ALPHANUMQUESTION.toRegex())) {
             if (options in 1..10) {
                 isValidation = true
                 return
@@ -166,18 +201,18 @@ private fun initViews(view: View) {
                 return
             }
         } else {
-            question.error = "Please enter question"
+            question.error = INVALID_Q_TEXT
             question.requestFocus()
             isValidation = false
             return
         }
     }
-    private fun addOptions(questionTemp: String, spinnerText: String, options: Int) {
+    private fun addOptions(questionTemp: String, options: Int) {
         val questionFragment2 = AddQuestionFragment2()
         val args = Bundle()
 
         args.putString(AddQuestion.QUESTION, questionTemp)
-        args.putString(AddQuestion.SPINNER, spinnerText)
+//        args.putString(AddQuestion.SPINNER, spinnerText)
         args.putInt(AddQuestion.OPTIONS, options)
         questionFragment2.arguments = args
         requireActivity().supportFragmentManager.beginTransaction()

@@ -12,10 +12,10 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
-import com.example.quizkotlin.LoginActivity
+import com.example.quizkotlin.activities.LoginActivity
 import com.example.quizkotlin.R
-import com.example.quizkotlin.StudentHomeActivity
-import com.example.quizkotlin.TeacherHomeActivity
+import com.example.quizkotlin.activities.StudentHomeActivity
+import com.example.quizkotlin.activities.TeacherHomeActivity
 import com.example.quizkotlin.models.User
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient

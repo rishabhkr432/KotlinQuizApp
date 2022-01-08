@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/app_bar_bg"
-    tools:context=".TeacherHomeActivity">
+    android:id="@+id/teacher_home_head"
+    tools:context=".activities.TeacherHomeActivity">
 
     <include layout="@layout/collapsing_toolbar" />
 
@@ -21,108 +22,6 @@
             android:layout_margin="@dimen/margin_30"
             android:orientation="vertical"
             android:padding="@dimen/padding_large">
-
-
-
-            <LinearLayout
-                android:id="@+id/teacher_createSubject_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:visibility="gone">
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/gray" />
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/teacher_subjectName_til"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_5"
-                    android:hint="@string/subject_class"
-                    app:endIconMode="clear_text"
-                    app:startIconDrawable="@drawable/ic_class"
-                    app:startIconTint="@color/color_primary_variant">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/teacher_subjectName_et"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="text" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/teacher_yourName_til"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_10"
-                    android:hint="@string/your_name"
-                    app:endIconMode="clear_text"
-                    app:startIconDrawable="@drawable/ic_person"
-                    app:startIconTint="@color/color_primary_variant">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/teacher_yourName_et"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="text" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/teacher_classLink_til"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_10"
-                    android:hint="@string/class_link"
-                    app:endIconMode="clear_text"
-                    app:startIconDrawable="@drawable/ic_insert_link"
-                    app:startIconTint="@color/color_primary_variant">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/teacher_classLink_et"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="textUri" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/teacher_timing_til"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_10"
-                    android:hint="@string/timing_if_any"
-                    app:endIconMode="clear_text"
-                    app:startIconDrawable="@drawable/ic_access_time"
-                    app:startIconTint="@color/color_primary_variant">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/teacher_timing_et"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="text" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/teacher_create_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="end"
-                    android:layout_marginTop="@dimen/margin_10"
-                    android:text="@string/create"
-                    android:textAllCaps="false"
-                    android:textSize="@dimen/text_16" />
-
-            </LinearLayout>
 
             <View
                 android:layout_width="match_parent"

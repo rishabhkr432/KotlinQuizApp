@@ -14,20 +14,20 @@
         android:theme="@style/Theme.QuizKotlin">
 
 <!--        <activity android:name=".ResultsActivity"/>-->
-        <activity android:name=".CheckResultsActivity"/>
-        <activity android:name=".HistoryActivity"/>
-        <activity android:name=".ResultsActivity"/>
-        <activity android:name=".AddQuiz" />
+        <activity android:name=".activities.CheckResultsActivity"/>
+        <activity android:name=".activities.HistoryActivity"/>
+        <activity android:name=".activities.ResultsActivity"/>
+        <activity android:name=".activities.AddQuiz" />
 <!--        <activity android:name=".ShowQuestions" />-->
         <activity android:name=".QuestionPopup" />
-        <activity android:name=".AttemptQuizActivity" />
-        <activity android:name=".StudentHomeActivity" />
-        <activity android:name=".TeacherHomeActivity" />
-        <activity android:name=".RegistrationActivity" />
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".QuizBank" />
-        <activity android:name=".AddQuestion" />
-        <activity android:name=".SplashActivity"
+        <activity android:name=".activities.AttemptQuizActivity" />
+        <activity android:name=".activities.StudentHomeActivity" />
+        <activity android:name=".activities.TeacherHomeActivity" />
+        <activity android:name=".activities.RegistrationActivity" />
+        <activity android:name=".activities.LoginActivity" />
+        <activity android:name=".activities.QuizBank" />
+        <activity android:name=".activities.AddQuestion" />
+        <activity android:name=".activities.SplashActivity"
 
             android:exported="true">
             <intent-filter>

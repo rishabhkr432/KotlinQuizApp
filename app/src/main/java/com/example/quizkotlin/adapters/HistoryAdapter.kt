@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
-import com.example.quizkotlin.CheckResultsActivity
+import com.example.quizkotlin.activities.CheckResultsActivity
 import com.example.quizkotlin.R
 import com.example.quizkotlin.constants.STUDENT_QUIZ_RESULTS_PATH
 import com.example.quizkotlin.models.Results
