@@ -12,9 +12,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.quizkotlin.*
 import com.example.quizkotlin.adapters.AttemptQuizAdapter
 import com.example.quizkotlin.adapters.SingleQuestionAdapter
-import com.example.quizkotlin.constants.ALPHANUM
-import com.example.quizkotlin.constants.INVALID_ONE_ANSWER
-import com.example.quizkotlin.constants.STUDENT_QUIZ_RESULTS_PATH
+import com.example.quizkotlin.Constants.ALPHANUM
+import com.example.quizkotlin.Constants.INVALID_ONE_ANSWER
+import com.example.quizkotlin.Constants.QUIZ_ID
+import com.example.quizkotlin.Constants.STUDENTID
+import com.example.quizkotlin.Constants.STUDENTSDISCLAIMER
+import com.example.quizkotlin.Constants.STUDENT_QUIZ_PATH
+import com.example.quizkotlin.Constants.STUDENT_QUIZ_RESULTS_PATH
+import com.example.quizkotlin.Constants.TEACHERSDISCLAIMER
 import com.example.quizkotlin.models.Question
 import com.example.quizkotlin.models.Quiz
 import com.example.quizkotlin.models.Results
@@ -34,8 +39,6 @@ class AttemptQuizActivity : AppCompatActivity() {
     private lateinit var answer: TextView
     private lateinit var question: TextView
     private lateinit var qnum_display: TextView
-    private var teacherDisclaimText: String = "Preview mode - Marks will not count."
-    private var studentDisclaimText: String ="Pressing next button without answering the question will save your answer."
     private lateinit var options_rv: RecyclerView
     private var radioReturnAnswer: String = ""
     private var radioStoreAnswer: HashMap<String, String> = hashMapOf()
@@ -50,26 +53,26 @@ class AttemptQuizActivity : AppCompatActivity() {
     private lateinit var goBackButton: ImageView
     private lateinit var currentQuestion: Question
     private var isValidation: Boolean = false
-    //
-//
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_attempt_quiz)
         auth = FirebaseAuth.getInstance()
         database = FirebaseFirestore.getInstance()
         user = auth.currentUser!!
-//
-//
+
         quizPas = intent.getSerializableExtra(QUIZ_PASS) as Quiz
         userType = intent.getSerializableExtra(USER_PASS) as HashMap<Int, String>
         Log.d("$TAG- userType", userType.toString())
         Log.d("$TAG-", "quizPas: $quizPas")
         initViews()
+        /**
+         * setting up quiz and questions .
+         */
         questionsList = quizPas.quizQuestionList
         (questionsList as ArrayList<Question>).shuffle()
         currentQuestion = questionsList[qNum]
         setCurrentQuestion(currentQuestion)
-//
         goBackButton.setOnClickListener {
             if (userType.containsKey(1)) {
 
@@ -79,16 +82,13 @@ class AttemptQuizActivity : AppCompatActivity() {
                 finish()
             } else {
                 Toast.makeText(this, "Quiz cannnot be closed once opened.", Toast.LENGTH_SHORT).show()
-//                StudentHomeActivity.studentHomeActivity.finish()
-//                val intent = Intent(this, StudentHomeActivity::class.java)
-//                startActivity(intent)
-//                finish()
 
             }
 
         }
         next_button.setOnClickListener {
             Log.i("CheckingAnswer", radioReturnAnswer)
+            Log.i("QuestionAnswer", radioStoreAnswer.toString())
             (validation(radioReturnAnswer))
             if(isValidation) {
                 if (currentQuestion.correct_answer == radioReturnAnswer) {
@@ -131,32 +131,27 @@ class AttemptQuizActivity : AppCompatActivity() {
 
         }
     }
+    /**
+     * Uploading results to the firebase .
+     */
         private fun sendResultsToDatabase(quizResults: Results) {
             database.collection(STUDENT_QUIZ_RESULTS_PATH).document(quizPas.quizId).set(quizResults)
-//                .addOnSuccessListener { Log.d(TAG, "DocumentSnapshot successfully written!") }
-//                .addOnFailureListener { e -> Log.w(TAG, "Error writing document", e) }
-//        }
                 .addOnSuccessListener {
                     Log.i("Results", "Sending results to database")
                         Toast.makeText(this, "Calculating Results", Toast.LENGTH_LONG).show()
-
-//                    TURN THIS BACK ON
-
-
-//                    TURN THIS BACK ON
-                    database.collection("Student's quizzes")
+                    database.collection(STUDENT_QUIZ_PATH)
                         .get()
                         .addOnSuccessListener { documents ->
                             for (document in documents) {
-                                if (document.get("quizId") == (quizPas.quizId)) {
+                                if (document.get(QUIZ_ID) == (quizPas.quizId)) {
                                     document.reference.update(
-                                        "studentId",
+                                        STUDENTID,
                                         FieldValue.arrayUnion(userType[2])
                                     )
                                     Toast.makeText(this, "Attempt recorded", Toast.LENGTH_SHORT).show()
                                     Log.d(
                                         "Updated doc",
-                                        "Deleting - ${document.id} => ${document.data}"
+                                        "updating doc - ${document.id} => ${document.data}"
                                     )
                                 }
 
@@ -166,21 +161,16 @@ class AttemptQuizActivity : AppCompatActivity() {
 
                 }
                 .addOnFailureListener {
-//                        Toast.makeText(this, "Failed", Toast.LENGTH_LONG).show()
+
                     Log.i("Results", "Failed to send results to database")
-//                            val intent = Intent(this, TeacherHomeActivity::class.java)
-//                            startActivity(intent)
-//                            Log.d(TAG, "Opening Teacher's activity")
-//                            finish()
-////                    finish()
+
                 }
-//
-//                        }
-//                else{
-//                    Log.d("Breaks","Something is wrong")
+
         }
 
-
+    /**
+     * Setting all views .
+     */
     private fun initViews() {
         qnum_display = findViewById(R.id.qnum_display)
         hiddenDisclaimer = findViewById(R.id.hiddenDisclaimer)
@@ -194,20 +184,22 @@ class AttemptQuizActivity : AppCompatActivity() {
         options_rv.layoutManager = LinearLayoutManager(this)
         options_rv.setHasFixedSize(true)
         if (userType.containsKey(2)) {
-            hiddenDisclaimer.text = studentDisclaimText
+            hiddenDisclaimer.text = STUDENTSDISCLAIMER
         }
         else{
-            hiddenDisclaimer.text = teacherDisclaimText
+            hiddenDisclaimer.text = TEACHERSDISCLAIMER
         }
     }
-
+    /**
+     * this method updates questions from the question list.
+     */
     @SuppressLint("SetTextI18n")
     private fun setCurrentQuestion(currentQuestion: Question) {
         val optionsList = currentQuestion.options as ArrayList<String?>
         optionsList.shuffle()
         Log.i("optionsList", optionsList.toString())
         question.text = currentQuestion.question
-        answer.text = "Correct Answer - ${currentQuestion.correct_answer}"
+        answer.text = "Correct Answer: ${currentQuestion.correct_answer}"
         if (userType.keys.contains(2)){
             answer.visibility = View.GONE
         }
@@ -225,7 +217,7 @@ class AttemptQuizActivity : AppCompatActivity() {
                 object : AttemptQuizAdapter.MyViewHolder.Listener {
                     override fun returnPosString(answer: String) {
                         radioReturnAnswer = answer
-
+                        radioStoreAnswer[currentQuestion.question] = radioReturnAnswer
                         Log.d("radioReturnAnswer", "optionsList returned : $answer")
                     }
                 })
@@ -260,6 +252,9 @@ class AttemptQuizActivity : AppCompatActivity() {
             }
         }
     }
+    /**
+     * Errorchecking.
+     */
     private fun validation(correctAnswer: String) {
 
         if (correctAnswer.matches(

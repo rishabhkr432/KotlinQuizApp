@@ -31,7 +31,6 @@ class StudentHomeActivity : AppCompatActivity() {
         setContentView(R.layout.activity_student_home)
 
         initViews()
-//        setUser()
 
         auth = FirebaseAuth.getInstance()
         database = FirebaseFirestore.getInstance()
@@ -63,7 +62,6 @@ class StudentHomeActivity : AppCompatActivity() {
                     }
                 }
         }
-//        user = auth.currentUser!!
 
 
         view_quiz_bank.setOnClickListener {
@@ -91,7 +89,9 @@ class StudentHomeActivity : AppCompatActivity() {
         }
 
     }
-
+    /**
+     * Setting views
+     */
     private fun initViews() {
         collapsingToolbar = findViewById(R.id.collapsing_toolbar)
         collapsingToolbar.setExpandedTitleColor(Color.TRANSPARENT)

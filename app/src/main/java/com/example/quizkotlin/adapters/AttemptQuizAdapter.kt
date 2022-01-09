@@ -22,6 +22,10 @@ class AttemptQuizAdapter(
 
     class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val option: RadioButton = view.findViewById(R.id.option_name_radio)
+        /**
+         * Initialised to send data back to the activity.
+         * This sends back options text.
+         */
 
         interface Listener {
             fun returnPosString(answer: String)

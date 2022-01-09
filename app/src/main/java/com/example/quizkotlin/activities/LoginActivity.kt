@@ -35,7 +35,6 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var tvMsg: TextView
     private lateinit var progress: ProgressBar
     private lateinit var layout: ScrollView
-
     private lateinit var auth: FirebaseAuth
     private lateinit var googleSignInClient: GoogleSignInClient
     private lateinit var database: FirebaseFirestore
@@ -50,13 +49,13 @@ class LoginActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
         database = FirebaseFirestore.getInstance()
 
-//        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-//            .requestIdToken(getString(R.string.default_web_client_id))
-//            .requestEmail()
-//            .build()
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(getString(R.string.default_web_client_id))
+            .requestEmail()
+            .build()
 
 
-//        googleSignInClient = GoogleSignIn.getClient(this, gso)
+        googleSignInClient = GoogleSignIn.getClient(this, gso)
 
         btnLogin.setOnClickListener {
             if (etEmail.text.toString().trim().isNotEmpty() &&
@@ -68,7 +67,6 @@ class LoginActivity : AppCompatActivity() {
             } else
                 Toast.makeText(this, "Email and Password can't be empty!", Toast.LENGTH_SHORT)
                     .show()
-//                Toast.makeText(RegWindow.this, "Fehler"+ task.getException().getMessage(), Toast.LENGTH_SHORT).show();
         }
 
         tvForgotPwd.setOnClickListener {
@@ -148,7 +146,6 @@ class LoginActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
         if (requestCode == RC_SIGN_IN) {
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
             if (task.isSuccessful) {

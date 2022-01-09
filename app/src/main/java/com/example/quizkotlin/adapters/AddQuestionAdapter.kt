@@ -21,7 +21,10 @@ class AddQuestionAdapter(
 ) : RecyclerView.Adapter<AddQuestionAdapter.MyViewHolder>() {
     class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val option: EditText = view.findViewById(R.id.option_name)
-
+        /**
+         * Initialised to send data back to the activity.
+         * This sends back options text.
+         */
         interface Listener {
             fun optionsReturn(list:  MutableList<String?>)
         }
@@ -45,7 +48,6 @@ class AddQuestionAdapter(
 
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-//                isTextChanged = true
                 if (s.toString().trim() != "") {
                     Log.i("string is", s.toString())
                     optionsList[holder.adapterPosition] = s.toString().lowercase().trim()
@@ -54,15 +56,12 @@ class AddQuestionAdapter(
                     holder.option.error
                     holder.option.requestFocus()
 
-//                    Toast.makeText(holder.itemView.context, "Please enter a value option", Toast.LENGTH_LONG).show()
                 }
             }
 
 
         }
         )
-//        listener.optionsReturn(optionsList)
-
 
     }
 

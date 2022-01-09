@@ -19,6 +19,7 @@ import com.example.quizkotlin.activities.TeacherHomeActivity
 import com.example.quizkotlin.models.User
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -46,7 +47,6 @@ class SignupFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
 
         val view = inflater.inflate(R.layout.fragment_signup, container, false)
         initViews(view)
@@ -54,12 +54,14 @@ class SignupFragment : Fragment() {
         auth = FirebaseAuth.getInstance()
         database = FirebaseFirestore.getInstance()
 
-//        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-//            .requestIdToken(getString(R.string.default_web_client_id))
-//            .requestEmail()
-//            .build()
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(getString(R.string.default_web_client_id))
+            .requestEmail()
+            .build()
 //
-//        googleSignInClient = GoogleSignIn.getClient(context, gso)
+        if (container != null) {
+            googleSignInClient = GoogleSignIn.getClient(container.context, gso)
+        }
 
         btnPrev.setOnClickListener {
             callUserTypeFragment()
@@ -80,7 +82,9 @@ class SignupFragment : Fragment() {
 
         return view
     }
-
+    /**
+     * Setting views.
+     */
     private fun initViews(view: View) {
         btnPrev = view.findViewById(R.id.signup_prev_btn)
         btnSignup = view.findViewById(R.id.signup_signup_btn)

@@ -1,6 +1,6 @@
 package com.example.quizkotlin.models
 
-import com.example.quizkotlin.constants
+import com.example.quizkotlin.Constants
 import com.google.firebase.firestore.DocumentReference
 import java.io.Serializable
 
@@ -21,7 +21,7 @@ data class Quiz(
 //            result = true
 //        }
 //        else{
-//            if(quizTitle.matches(constants.ALPHANUM.toRegex()) && quizTitle.length < constants.LENGTHCHECK_50){
+//            if(quizTitle.matches(Constants.ALPHANUM.toRegex()) && quizTitle.length < Constants.LENGTHCHECK_50){
 //                newQuiz = Quiz(quizTitle)
 //                result = true
 //            }

@@ -17,20 +17,20 @@ import com.example.quizkotlin.activities.AddQuestion
 import com.example.quizkotlin.R
 import com.example.quizkotlin.activities.TeacherHomeActivity
 import com.example.quizkotlin.adapters.AddQuestionAdapter
-import com.example.quizkotlin.constants.ALPHANUM
-import com.example.quizkotlin.constants.ALPHANUMQUESTION
-import com.example.quizkotlin.constants.FAILED
-import com.example.quizkotlin.constants.INVALID_Q_TEXT
-import com.example.quizkotlin.constants.INVALID_ONE_ANSWER
-import com.example.quizkotlin.constants.INVALID_OP_ANSWER
-import com.example.quizkotlin.constants.LENGTHCHECK_100
-import com.example.quizkotlin.constants.LENGTHCHECK_5
-import com.example.quizkotlin.constants.LENGTHCHECK_50
-import com.example.quizkotlin.constants.MAX_QUIZ_SIZE
-import com.example.quizkotlin.constants.QUIZQUESTIONLIST
-import com.example.quizkotlin.constants.QUIZ_ID
-import com.example.quizkotlin.constants.SUCCESS
-import com.example.quizkotlin.constants.TEACHERS_QUIZ_PATH
+import com.example.quizkotlin.Constants.ALPHANUM
+import com.example.quizkotlin.Constants.ALPHANUMQUESTION
+import com.example.quizkotlin.Constants.FAILED
+import com.example.quizkotlin.Constants.INVALID_Q_TEXT
+import com.example.quizkotlin.Constants.INVALID_ONE_ANSWER
+import com.example.quizkotlin.Constants.INVALID_OP_ANSWER
+import com.example.quizkotlin.Constants.LENGTHCHECK_100
+import com.example.quizkotlin.Constants.LENGTHCHECK_5
+import com.example.quizkotlin.Constants.LENGTHCHECK_50
+import com.example.quizkotlin.Constants.MAX_QUIZ_SIZE
+import com.example.quizkotlin.Constants.QUIZQUESTIONLIST
+import com.example.quizkotlin.Constants.QUIZ_ID
+import com.example.quizkotlin.Constants.SUCCESS
+import com.example.quizkotlin.Constants.TEACHERS_QUIZ_PATH
 import com.example.quizkotlin.models.Question
 import com.example.quizkotlin.models.Quiz
 import com.google.android.material.button.MaterialButton
@@ -77,39 +77,19 @@ class AddQuestionFragment2 : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.question_fragment2, container, false)
+        val view = inflater.inflate(R.layout.fragment2_question, container, false)
         auth = FirebaseAuth.getInstance()
         database = FirebaseFirestore.getInstance()
 
         user = auth.currentUser!!
         questionViewModel = ViewModelProvider(this)[QuestionViewModel::class.java]
         when(questionViewModel.getQuizzes()){
-            SUCCESS -> { getSpinnerValue(view)
-//                val x = viewmodel.quizzes
-//                val y = viewmodel.quizTitle
-//                quizList = x.value!!
-//                quizListString = y.value!!
-//                Log.i(TAG, "Check ${quizList}")
-//                Log.i(TAG, "Check ${quizListString.toString()}")
-//                quizListString = viewmodel.quizTitle
+            SUCCESS -> { Log.i(TAG, "QuizList loaded")
             }
 
 
         }
-//        questionViewModel.options!!!!?.observe(this, Observer { options -> this.options = options })
-//        database.collection("Quizzes").get()
-//            .addOnSuccessListener {
-//                if (it.isEmpty) {
-//                    Toast.makeText(container?.context, "No quizzes found", Toast.LENGTH_SHORT).show()
-//                } else {
-//                    for (doc in it) {
-//                        val quiz = doc.toObject(Quiz::class.java)
-//                        quizList.add(quiz)
-//                        quizListString.add(quiz.quizId)
-//                        Log.d(TAG, quiz.toString())
-//                    }
-//                    getSpinnerValue(view)
-//                }
+
 
 
         initViews(view)
@@ -127,12 +107,11 @@ class AddQuestionFragment2 : Fragment() {
                 position: Int,
                 id: Long
             ) {
-//                val pos = parent?.getItemAtPosition(position)
+
                 quiz = questionViewModel.quizzesList[position]
-//                quiz = parent?.getItemAtPosition(position) as Quiz
+
                 questionViewModel.quiz = quiz
-//                    spinnerSelectedText = quizList[position].quizId
-//                    spinnerSelectedText = viewmodel
+
                 Log.i(TAG,"QuizList selected is $quiz")  // <-- this works
             }
 
@@ -140,24 +119,6 @@ class AddQuestionFragment2 : Fragment() {
                 // write code to perform some action
             }
         }
-//        database.collection(TEACHERS_QUIZ_PATH).get()
-//            .addOnSuccessListener {
-//                if (it.isEmpty) {
-//                    Toast.makeText(container?.context, "No quizzes found", Toast.LENGTH_SHORT)
-//                        .show()
-//                } else {
-//                    for (doc in it) {
-//                        val quiz = doc.toObject(Quiz::class.java)
-//                        quizList.add(quiz)
-//                        quizListString.add(quiz.quizId)
-//                        Log.d(TAG, quiz.toString())
-//                    }
-//                    getSpinnerValue(view)
-//                }
-//            }
-//
-//
-//        initViews(view)
 
         save_button.setOnClickListener {
 
@@ -174,18 +135,6 @@ class AddQuestionFragment2 : Fragment() {
             validations(questionTemp, optionList, correctAnswer,view)
             if (isValidation) {
                 saveClassToDatabase(questionTemp, optionList, correctAnswer, quiz, view)
-
-
-//                    SUCCESS -> Toast.makeText(
-//                                        view.context,
-//                                        "Question added",
-//                                        Toast.LENGTH_LONG
-//                                    ).show()
-//                    FAILED -> Toast.makeText(view.context, "Failed to add questions", Toast.LENGTH_LONG).show()
-//                OVERLOADED -> Toast.makeText(view.context,"Cannot add more questions to this quiz.", Toast.LENGTH_LONG).show()
-//                    NULLCHECK -> Log.i(TAG, "loaded")
-//                    else -> Toast.makeText(view.context, "${quiz.quizId} not found", Toast.LENGTH_LONG).show()
-//                }
             }
             else{
                 Toast.makeText(view.context, "Failed to add questions", Toast.LENGTH_LONG).show()
@@ -204,7 +153,9 @@ class AddQuestionFragment2 : Fragment() {
         }
         return view
     }
-
+    /**
+     * Uploading new question the firebase
+     */
     private fun saveClassToDatabase(
         question_name: String,
         optionsList: MutableList<String?>,
@@ -222,20 +173,10 @@ class AddQuestionFragment2 : Fragment() {
             optionsList,
             correctAnswer
         )
-//             Log.i("options", options.toString())
+
 
         Log.i("newQuestion1", newQuestion.toString())
-//            updateDatabase(quiz, newQuestion,view)
-//
-//        }
-//
-//
-//    private fun updateDatabase(
-//        quiz: Quiz,
-//        newQuestion: Question,
-//    view: View
-//    ) {
-//        Log.i("newQuestion", newQuestion.toString())
+
 
 
         database.collection(
@@ -289,8 +230,6 @@ class AddQuestionFragment2 : Fragment() {
                                             "Error adding question",
                                             e
                                         )
-
-//                                                                                (requireActivity() as AddQuestion).restartFragment(R.id.askQuestion)
                                     }
                             } else {
                                 Log.i(
@@ -308,11 +247,7 @@ class AddQuestionFragment2 : Fragment() {
 
                         }
                     }
-                    //                        else{
-                    //                            Log.i(TAG,"Quiz not found ${quiz.quizId}")
-                    //                            status = "${quiz.quizId} not found"
-                    //
-                    //                        }
+
                 }
             }
 
@@ -325,52 +260,11 @@ class AddQuestionFragment2 : Fragment() {
         answer.setText("")
 
     }
-    private fun getSpinnerValue(view: View) {
-//        val spinner = view.findViewById<Spinner>(R.id.spinner)
-//            spinnerSelectedText = quizList.first().id
-//        if (spinner != null) {
-//            val adapter =
-//        viewmodel.quizzesList.observe(viewLifecycleOwner, Observer {
-//            val spinnerAdapter =
-//                ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, it)
-//            spinner.adapter = spinnerAdapter
-//        })
-
-//        viewmodel.quizzesList.observe(this, Observer {
-//                quiz -> spinner.setAdapter(ArrayAdapter(view.context, android.R.layout.simple_spinner_item, quiz)) }
-//        println("QuizList selected is $spinnerSelectedText")
 
 
-
-//        if (spinner != null) {
-//            val adapter =
-//                ArrayAdapter(view.context, android.R.layout.simple_spinner_item, quizListString)
-//            spinner.adapter = adapter
-//
-//            spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-//                override fun onItemSelected(
-//                    parent: AdapterView<*>,
-//                    view: View,
-//                    position: Int,
-//                    id: Long
-//                ) {
-////                    spinnerSelectedText = quizList[position].quizId
-////                    spinnerSelectedText = viewmodel
-//                    println("QuizList selected is $spinnerSelectedText")  // <-- this works
-//                }
-//
-//                override fun onNothingSelected(parent: AdapterView<*>) {
-//                    // write code to perform some action
-//                }
-//            }
-//        }
-
-// selectedText is not seen here:
-//        Log.d("$TAG- getSpinnerValue() -", "quizList selected is $spinnerSelectedText")
-//        return
-    }
-
-
+    /**
+     * Setting views.
+     */
     private fun initViews(view: View) {
         spinner = view.findViewById(R.id.spinner)
         question = view.findViewById(R.id.add_question)
@@ -386,13 +280,15 @@ class AddQuestionFragment2 : Fragment() {
         getOptions(view)
 
     }
-
+    /**
+     * This method gets nums of options and calls recycler view to display the list.
+     */
     private fun getOptions(view: View) {
 
         for (i in 1..minOptions) {
             options.add("")
         }
-        Log.d("questionViewModel.options", options.toString())
+        Log.d("Options", options.toString())
         if (options.isEmpty()) {
 
             options_progress.visibility = View.GONE
@@ -419,20 +315,19 @@ class AddQuestionFragment2 : Fragment() {
         }
 
     }
+    /**
+     * passing parameters to the next fragment.
+     */
 
     private fun passedQuestionandSpinner() {
         val questionPassed = arguments?.getString(QUESTION)
-//        val spinnerPassed = arguments?.getString(SPINNER)
         val options = arguments?.getInt(OPTIONS, 1)
 
         if (questionPassed != null) {
             question.setText(questionPassed)
             Log.d("$TAG- passedQuestionandSpinner - question", questionPassed)
         }
-//        if (spinnerPassed != null) {
-//            spinnerSelectedText = spinnerPassed
-//            Log.d("$TAG- passedQuestionandSpinner - spinnerSelectedText", spinnerPassed)
-//        }
+
         if (options != null) {
             minOptions = options
             Log.d("$TAG- passedQuestionandSpinner - options", options.toString())
@@ -442,33 +337,12 @@ class AddQuestionFragment2 : Fragment() {
 
     }
 
-// selectedText is not seen here:
-//        Log.d("$TAG- getSpinnerValue() -", "quizList selected is $spinnerSelectedText")
-////        return
-//    }
-
-//    private fun passedQuestionandSpinner() {
-//        val questionPassed = arguments?.getString(QUESTION)
-//        val spinnerPassed = arguments?.getString(SPINNER)
-//        val options = arguments?.getInt(OPTIONS, 1)
-//
-//        if (questionPassed != null) {
-//            question.setText(questionPassed)
-//            Log.d("$TAG- passedQuestionandSpinner - question", questionPassed)
-//        }
-//        if (spinnerPassed != null) {
-//            spinnerSelectedText = spinnerPassed
-//            Log.d("$TAG- passedQuestionandSpinner - spinnerSelectedText", spinnerPassed)
-//        }
-//        if (options != null) {
-//            minOptions = options
-//            Log.d("$TAG- passedQuestionandSpinner - options", options.toString())
-//        }
 
 
 
-
-
+    /**
+     * Errorchecking userinput.
+     */
     private fun validations(
         question_check: String,
         temp_optionList: MutableList<String?>,
@@ -524,8 +398,7 @@ class AddQuestionFragment2 : Fragment() {
 
 //
                         else{
-                            //                        creatingOptionsList.error = "Please enter option D"
-                            //                        creatingOptionsList.requestFocus()
+
                             Toast.makeText(
                                 view.context,
                                 "Please enter valid option for the quiz. \nFor 1 word answers leave options blank",

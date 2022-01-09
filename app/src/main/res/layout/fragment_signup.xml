@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/warm_orange">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -11,7 +12,8 @@
         android:orientation="vertical"
         android:paddingHorizontal="@dimen/padding_large"
         android:paddingVertical="@dimen/padding_normal"
-        tools:context=".fragments.SignupFragment">
+        tools:context=".fragments.SignupFragment"
+        android:background="@color/warm_orange">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:layout_width="80dp"

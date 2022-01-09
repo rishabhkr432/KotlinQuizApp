@@ -4,14 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/userType_rootLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/warm_orange">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="@dimen/padding_xlarge"
-        tools:context=".fragments.UserTypeFragment">
+        tools:context=".fragments.UserTypeFragment"
+        android:background="@color/warm_orange">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:layout_width="100dp"
@@ -58,7 +60,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_15"
             android:fontFamily="@font/poppins_bold"
-            android:text="@string/i_m_a"
+            android:text="@string/select_user"
             android:textSize="@dimen/text_22" />
 
         <RadioGroup

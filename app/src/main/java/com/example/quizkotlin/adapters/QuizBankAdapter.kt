@@ -17,8 +17,10 @@ import com.google.firebase.firestore.FirebaseFirestore
 import android.content.Intent
 import com.example.quizkotlin.activities.AttemptQuizActivity
 import com.example.quizkotlin.R
-import com.example.quizkotlin.constants.STUDENT_QUIZ_PATH
-import com.example.quizkotlin.constants.TEACHERS_QUIZ_PATH
+import com.example.quizkotlin.Constants.MAX_QUIZ_SIZE
+import com.example.quizkotlin.Constants.QUIZ_ID
+import com.example.quizkotlin.Constants.STUDENT_QUIZ_PATH
+import com.example.quizkotlin.Constants.TEACHERS_QUIZ_PATH
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.Source
@@ -29,7 +31,7 @@ class QuizBankAdapter(
     private var userType :HashMap<Int, String> = hashMapOf<Int, String>(),
     private var quizPath: String,
     private val context: Context,
-//
+
 ) : RecyclerView.Adapter<QuizBankAdapter.MyViewHolder>() {
 
     private lateinit var sendQuiz: Quiz
@@ -58,7 +60,6 @@ class QuizBankAdapter(
 
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-//        val docRef = database.collection("Quizzes").document()
         if (userType.containsKey(2)){
             holder.delbtn.visibility = View.GONE;
             holder.studentDB.visibility = View.GONE;
@@ -72,7 +73,7 @@ class QuizBankAdapter(
 
 
         holder.delbtn.setOnClickListener {
-            database.collection(quizPath).whereEqualTo("quizId",tempPos)
+            database.collection(quizPath).whereEqualTo(QUIZ_ID,tempPos)
                 .get()
                 .addOnSuccessListener { documents ->
                     for (document in documents) {
@@ -140,7 +141,7 @@ class QuizBankAdapter(
         holder.studentDB.setOnClickListener {
             quizSize = quizBank[position].quizQuestionList.size
             Log.d(TAG, "QuizSize - $quizSize")
-            if (quizSize == 10) {
+            if (quizSize == MAX_QUIZ_SIZE) {
                 database.collection(TEACHERS_QUIZ_PATH)
                     .get()
                     .addOnSuccessListener { documents ->
@@ -194,8 +195,6 @@ class QuizBankAdapter(
                                                             "sendQuiztoStudentDatabase- Sending quiz to the student database -  ${document.id} ${holder.quizcardtitle.text}"
                                                         )
 
-
-                                                        //                            makeInputFieldEmpty()
                                                     }
                                                     .addOnFailureListener {
                                                         Toast.makeText(
@@ -204,7 +203,6 @@ class QuizBankAdapter(
                                                             Toast.LENGTH_LONG
                                                         )
                                                             .show()
-                                                        //                            makeInputFieldEmpty()
                                                         Log.d(
                                                             "${TAG}- sendQuiztoStudentDatabase: ",
                                                             "Failed to send quiz"
@@ -218,14 +216,6 @@ class QuizBankAdapter(
                                         }
                                     })
                             }
-
-//                .addOnSuccessListener {
-//                    Toast.makeText(holder.itemView.context, "Quiz send to student database", Toast.LENGTH_LONG).show()
-
-//                }
-//                .addOnFailureListener {
-//                    Toast.makeText(holder.itemView.context, "Failed to send Quiz", Toast.LENGTH_LONG).show()
-//
                         }
                     }
             } else {
@@ -235,7 +225,6 @@ class QuizBankAdapter(
         }
 
     }
-
     override fun getItemCount(): Int {
         return quizBank.size
     }
@@ -244,11 +233,5 @@ class QuizBankAdapter(
     }
 
 
-
-}
-
-
-
-fun <E> ArrayList<E>.add(element: String) {
 
 }

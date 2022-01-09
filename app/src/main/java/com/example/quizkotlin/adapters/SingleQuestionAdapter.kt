@@ -21,12 +21,10 @@ class SingleQuestionAdapter(
 ) : RecyclerView.Adapter<SingleQuestionAdapter.MyViewHolder>() {
     class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val option: EditText = view.findViewById(R.id.option_name)
-
-//        if(optionsList.size ==1){
-//            option.setEnabled(false)
-//            option.setKeyListener(null)
-//        }
-
+        /**
+         * Initialised to send data back to the activity.
+         * This sends back optionsList.
+         */
         interface Listener {
             fun returnPosString(list: ArrayList<String?>)
         }
@@ -51,7 +49,7 @@ class SingleQuestionAdapter(
                     "Position in options:" + pos
                 )
                 Log.d("Optionslist size", itemCount.toString())
-//                listener.returnPosString(optionsList)
+
             }
 
             override fun beforeTextChanged(
@@ -63,22 +61,16 @@ class SingleQuestionAdapter(
             }
 
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-//                isTextChanged = true
                 if (s.toString().trim() != "") {
                     Log.i("string is", s.toString())
-                        optionsList[holder.adapterPosition] = s.toString().trim()
+                        optionsList[holder.adapterPosition] = s.toString().lowercase().trim()
                         listener.returnPosString(optionsList)
                 } else {
                     holder.option.error
                     holder.option.requestFocus()
 
-//                    Toast.makeText(holder.itemView.context, "Please enter a value option", Toast.LENGTH_LONG).show()
                 }
             }
-
-//            holder.option.visibility = View.GONE
-//        listener.optionsReturn(optionsList)
-
 
 
     })

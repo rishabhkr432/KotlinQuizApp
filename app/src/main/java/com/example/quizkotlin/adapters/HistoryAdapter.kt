@@ -11,7 +11,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.quizkotlin.activities.CheckResultsActivity
 import com.example.quizkotlin.R
-import com.example.quizkotlin.constants.STUDENT_QUIZ_RESULTS_PATH
+import com.example.quizkotlin.Constants.STUDENT_QUIZ_RESULTS_PATH
 import com.example.quizkotlin.models.Results
 import com.google.android.material.button.MaterialButton
 import com.google.firebase.auth.FirebaseAuth
@@ -30,12 +30,8 @@ class HistoryAdapter(
     private lateinit var sendResult: Results
     private var quizPath = STUDENT_QUIZ_RESULTS_PATH
 
-
-//    var i = intent!!.
-
     class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        //        if (userType == 1)
-//        {}
+
         val quizcardtitle: TextView = view.findViewById(R.id.quiz_name)
         val marks: TextView = view.findViewById(R.id.quizMarks)
 
@@ -43,17 +39,6 @@ class HistoryAdapter(
         val delbtn: MaterialButton = view.findViewById(R.id.quizDeleteButton)
 
         val viewbtn: MaterialButton = view.findViewById(R.id.quizViewButton)
-
-//        init {
-//            initClickListeners()
-//        }
-//
-////And pass data here with invoke
-//
-//
-//        private fun initClickListeners() {
-//            itemView.setOnClickListener { clickListener.invoke() }
-//        }
 
     }
 
@@ -70,10 +55,8 @@ class HistoryAdapter(
 
         holder.delbtn.visibility = View.GONE
         holder.viewbtn.visibility = View.VISIBLE
-//        holder.marks.visibility = View.VISIBLE
         holder.studentDB.visibility = View.GONE
 
-//            quizPath = "Student's quiz records"
 
         holder.quizcardtitle.text = resultsBank[position].quizId.trim()
         holder.marks.text = "You scored: " + resultsBank[position].results.toString() + "/10"
@@ -84,12 +67,8 @@ class HistoryAdapter(
                 .set(resultsBank[position])
                 .addOnSuccessListener {
                     sendResult = resultsBank[position]
-//                        showquestion = ShowQuestions(quizBank[position])
-
                     intent = Intent(holder.itemView.context, CheckResultsActivity::class.java)
                     intent.putExtra(CheckResultsActivity.RESULT_PASS, sendResult)
-
-
                     Toast.makeText(holder.itemView.context, "Opening Quiz", Toast.LENGTH_SHORT)
                         .show()
                     holder.itemView.context.startActivity(intent)

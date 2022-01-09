@@ -95,7 +95,9 @@ class TeacherHomeActivity : AppCompatActivity() {
             finish()
         }
     }
-
+    /**
+     * Setting views
+     */
     private fun initViews() {
         collapsingToolbar = findViewById(R.id.collapsing_toolbar)
         collapsingToolbar.setExpandedTitleColor(Color.TRANSPARENT)

@@ -12,7 +12,8 @@
     app:contentPaddingBottom="@dimen/padding_small"
     app:contentPaddingLeft="@dimen/padding_normal"
     app:contentPaddingRight="@dimen/padding_normal"
-    app:contentPaddingTop="@dimen/padding_small">
+    app:contentPaddingTop="@dimen/padding_small"
+    >
 
     <LinearLayout
         android:id="@+id/quiz_card_layout"
@@ -43,7 +44,8 @@
             android:fontFamily="@font/poppins_bold"
             android:text="@string/quiz_card"
             android:layout_weight="0.5"
-            android:textSize="@dimen/text_18" />
+            android:textSize="@dimen/text_18"
+            />
         <TextView
             android:id="@+id/quizMarks"
             android:layout_width="wrap_content"
@@ -76,6 +78,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
+                android:layout_marginStart="@dimen/margin_10"
                 android:layout_marginEnd="@dimen/margin_10"
                 android:layout_weight=".50"
                 android:text="@string/viewButton"

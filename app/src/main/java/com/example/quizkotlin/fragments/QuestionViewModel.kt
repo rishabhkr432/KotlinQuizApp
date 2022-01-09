@@ -5,9 +5,10 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.quizkotlin.constants.FAILED
+import com.example.quizkotlin.Constants.FAILED
 
-import com.example.quizkotlin.constants.SUCCESS
+import com.example.quizkotlin.Constants.SUCCESS
+import com.example.quizkotlin.Constants.TEACHERS_QUIZ_PATH
 import com.example.quizkotlin.models.Question
 import com.example.quizkotlin.models.Quiz
 import com.google.firebase.auth.FirebaseAuth
@@ -20,7 +21,7 @@ class QuestionViewModel : ViewModel() {
     val spinner: String = ""
     private lateinit var database: FirebaseFirestore
     private lateinit var auth: FirebaseAuth
-    private lateinit var user: FirebaseUser
+
 
     private var _quizzes: MutableList<Quiz> = mutableListOf()
     val quizzesList: MutableList<Quiz>
@@ -37,12 +38,14 @@ class QuestionViewModel : ViewModel() {
 
     private var _quiz = Quiz()
 
-
+    /**
+     * Pulling quizzes from the firebase
+     */
     fun getQuizzes(): String {
         var status = FAILED
         auth = FirebaseAuth.getInstance()
         database = FirebaseFirestore.getInstance()
-        database.collection("Quizzes").get()
+        database.collection(TEACHERS_QUIZ_PATH).get()
             .addOnSuccessListener {
                 if (it.isEmpty) {
                     Log.i(TAG, "No quizzes found")
@@ -54,16 +57,11 @@ class QuestionViewModel : ViewModel() {
                         val quiz = doc.toObject(Quiz::class.java)
                         quizList.add(quiz)
                         quizListString.add(quiz.quizId)
-//                        if (quiz.questionsForQuiz.size > 0) {
-//                            for (i in quiz.questionsForQuiz) {
-//                                questionsList.add(i)
-//                            }
-//                        }
+
                         Log.d(TAG, quiz.toString())
                     }
                     _quizzes = quizList
                     _quizzesString.value = quizListString
-//                    getSpinnerValue(view)
                     status = SUCCESS
                 }
             }
@@ -78,21 +76,4 @@ class QuestionViewModel : ViewModel() {
         get() {return _quiz}
         set(value) {_quiz = value}
 
-
-//internal var options:MutableLiveData<ArrayList<String>>
-//    get() { return _options}
-//    set(value) {_options = value}
-//internal var quizzes:MutableLiveData<ArrayList<Quiz>>
-//    get() { return _quizzes}
-//    set(value) {_quizzes = value}
-//
-//    internal var quizTitle:MutableLiveData<ArrayList<String>>
-//        get() { return _quizTitle}
-//        set(value) {_quizTitle = value}
-
-//internal var quizzes: Quiz
-//    get() {return _quizzes}
-//    set(value) {_quizzes = value}
-
-// TODO: Implement the ViewModel
 }

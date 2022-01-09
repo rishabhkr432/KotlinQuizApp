@@ -9,11 +9,10 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.quizkotlin.R
-import com.example.quizkotlin.constants.ALPHANUM
-import com.example.quizkotlin.constants.INVALID_TITLE
-import com.example.quizkotlin.constants.LENGTHCHECK_40
-import com.example.quizkotlin.constants.LENGTHCHECK_50
-import com.example.quizkotlin.constants.TEACHERS_QUIZ_PATH
+import com.example.quizkotlin.Constants.ALPHANUM
+import com.example.quizkotlin.Constants.INVALID_TITLE
+import com.example.quizkotlin.Constants.LENGTHCHECK_40
+import com.example.quizkotlin.Constants.TEACHERS_QUIZ_PATH
 import com.example.quizkotlin.models.Quiz
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.button.MaterialButton
@@ -32,10 +31,9 @@ class AddQuiz : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private lateinit var user: FirebaseUser
     private lateinit var newQuiz: Quiz
-    private var addquiz: Boolean = true
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.create_quiz)
+        setContentView(R.layout.activity_add_quiz)
 
         initViews()
         auth = FirebaseAuth.getInstance()
@@ -55,7 +53,9 @@ class AddQuiz : AppCompatActivity() {
             finish()
         }
     }
-
+    /**
+     * Setting quiz name.
+     */
     private fun getQuizInput() {
         val tempTitle = title.text.toString().trim()
         val docRef = database.collection(TEACHERS_QUIZ_PATH).document()
@@ -63,7 +63,7 @@ class AddQuiz : AppCompatActivity() {
             newQuiz = Quiz(docRef.id)
             sendToDatabase(docRef)
         } else {
-//            matches(ALPHANUM.toRegex()
+//
             if(validation(tempTitle)){
                 newQuiz = Quiz(tempTitle)
                 sendToDatabase(docRef)
@@ -81,15 +81,14 @@ class AddQuiz : AppCompatActivity() {
 
 
     }
-
+    /**
+     * Reads the document referenced by this `DocumentReference`.
+     *
+     * @return A Task that will be resolved with the contents of the Document at this `DocumentReference`.
+     */
     private fun sendToDatabase(docRef: DocumentReference) {
         val docReference = database.collection(TEACHERS_QUIZ_PATH).document(newQuiz.quizId)
         docReference.
-            /**
-             * Reads the document referenced by this `DocumentReference`.
-             *
-             * @return A Task that will be resolved with the contents of the Document at this `DocumentReference`.
-             */
         get(Source.DEFAULT)
             .addOnCompleteListener(OnCompleteListener<DocumentSnapshot?> { task ->
                 if (task.isSuccessful) {
@@ -127,7 +126,10 @@ class AddQuiz : AppCompatActivity() {
         title.setText("")
 
     }
-     fun validation(tempTitle: String ): Boolean {
+    /**
+     * Error checking
+     */
+     private fun validation(tempTitle: String ): Boolean {
         Log.d("tempTitle", tempTitle)
          return if (tempTitle.matches(ALPHANUM.toRegex()) && tempTitle.length < LENGTHCHECK_40) true
          else{

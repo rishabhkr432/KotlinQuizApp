@@ -24,7 +24,6 @@ class UserTypeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_user_type, container, false)
 
         initViews(view)
@@ -50,7 +49,9 @@ class UserTypeFragment : Fragment() {
 
 
     }
-
+    /**
+     * this method decides the usertype.
+     */
     private fun verifyUserInput() {
         when (rgUser.checkedRadioButtonId) {
             R.id.userType_teacher_rb -> {
@@ -64,7 +65,9 @@ class UserTypeFragment : Fragment() {
             }
         }
     }
-
+    /**
+     * passinng usertype to the signup fragment.
+     */
     private fun callSignupFragment(user: Int) {
         val signupFragment = SignupFragment()
         val args = Bundle()
@@ -75,11 +78,6 @@ class UserTypeFragment : Fragment() {
             .commit()
     }
 
-    //    private fun showBottomSheetDialog(context: Context) {
-//        val bottomSheetDialog = BottomSheetDialog(context)
-//        bottomSheetDialog.setContentView(R.layout.user_rights)
-//        bottomSheetDialog.show()
-//    }
     companion object {
         private const val TAG = "UserTypeActivity"
     }

@@ -57,8 +57,6 @@ class ResultsActivity : AppCompatActivity() {
         barDataSet.valueFormatter = DefaultValueFormatter(0)
         barDataSet.barBorderWidth = 1f
         barDataSet.valueFormatter
-//        val barDataSet1 = BarDataSet(entries, "Wrong Answers")
-
 
         barDataSet.setColors(
             resources.getColor(R.color.chartreuse),
@@ -78,7 +76,9 @@ class ResultsActivity : AppCompatActivity() {
 
     }
 
-
+    /**
+     * Setting views
+     */
     private fun initViews() {
         barChart = findViewById(R.id.barChart)
         goBackButton = findViewById(R.id.results_goBackButton)
@@ -86,7 +86,9 @@ class ResultsActivity : AppCompatActivity() {
 
     }
 
-
+    /**
+     * Setting barchart
+     */
     private fun initBarChart() {
 
 
@@ -119,7 +121,7 @@ class ResultsActivity : AppCompatActivity() {
 
         xAxis.setDrawLabels(true)
         xAxis.granularity = 1f
-//        xAxis.labelRotationAngle = +90f
+
 
     }
 
@@ -128,32 +130,15 @@ class ResultsActivity : AppCompatActivity() {
 
         override fun getAxisLabel(value: Float, axis: AxisBase?): String {
             val index = value.toInt()
-            Log.d("Results", "getAxisLabel: index $index")
+//            Log.d("Results", "getAxisLabel: index $index")
             return if (index < scoreList.size) {
                 scoreList[index].answerType
             } else {
+                // added log here was bugging the barchart. Left empty for a reason.
                 ""
             }
         }
     }
-
-
-    // simulate api call
-    // we are initialising it directly
-//    private fun getScoreList(): ArrayList<Score> {
-//        scoreList.add(Score("John", 56))
-//        scoreList.add(Score("Rey", 75))
-//
-//
-//        return scoreList
-
-
-
-
-//{
-//            val loginIntent = Intent(this, StudentHomeActivity::class.java)
-//            startActivity(loginIntent)
-//            finish()
 
 
 

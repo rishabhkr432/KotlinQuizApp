@@ -13,8 +13,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.quizkotlin.R
 import com.example.quizkotlin.adapters.QuizBankAdapter
-import com.example.quizkotlin.constants.STUDENT_QUIZ_PATH
-import com.example.quizkotlin.constants.TEACHERS_QUIZ_PATH
+import com.example.quizkotlin.Constants.STUDENT_QUIZ_PATH
+import com.example.quizkotlin.Constants.TEACHERS_QUIZ_PATH
 import com.example.quizkotlin.models.Quiz
 import com.example.quizkotlin.models.User
 import com.google.firebase.auth.FirebaseAuth
@@ -41,7 +41,7 @@ class QuizBank : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.list_quizzes_in_bank)
+        setContentView(R.layout.activity_quiz_bank)
 
         initViews()
 
@@ -96,8 +96,9 @@ class QuizBank : AppCompatActivity() {
         }
 
     }
-
-
+    /**
+     * Setting views
+     */
     private fun initViews() {
         ivClose = findViewById(R.id.go_back_button_quiz_bank)
         rv = findViewById(R.id.quiz_recycler_view)
@@ -106,7 +107,9 @@ class QuizBank : AppCompatActivity() {
         rv.layoutManager = LinearLayoutManager(this)
         rv.setHasFixedSize(true)
     }
-
+    /**
+     * Downloading quizzes from the firebase.
+     */
     private fun fetchAllQuizzes() {
         progress.visibility = View.VISIBLE
         if (userType.containsKey(2)) {
@@ -140,6 +143,9 @@ class QuizBank : AppCompatActivity() {
                 tvMsg.visibility = View.VISIBLE
             }
     }
+    /**
+     * This method removes the quiz if the student has already used their attempt.
+     */
     private fun checkExisting() {
         for (i in quiz_bank_incoming_firebase){
 

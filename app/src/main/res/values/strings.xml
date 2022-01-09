@@ -30,19 +30,15 @@
     <string name="sign_in">Sign in</string>
     <string name="to_continue">to continue</string>
     <string name="create_account">Create Account</string>
-    <string name="i_m_a">I am a</string>
+    <string name="select_user">Select user</string>
     <string name="teacher">Teacher</string>
     <string name="student">Student</string>
     <string name="next">Next</string>
-    <string name="or">or\u0020</string>
+    <string name="or">Already have an account? \u0020</string>
     <string name="or1">or</string>
-    <string name="login_to_your_account">Login to your account</string>
-    <string name="view_roles_and_access_of_user">View Roles and Access of User</string>
-    <string name="teacher_roles">This user has the right to create classes,upload the assignments, tests and can
-    also share the link to join video lectures. He can also review the assignment and
-    tests and give the marks on the platform itself. This user will be kind of an administrator.</string>
-    <string name="student_roles">This user will have the right to perform the assignments, attend the tests and
-    join the lectures. He will also be able to see the timetable and test results as mentioned above.</string>
+    <string name="login_to_your_account">Sign in here!</string>
+
+
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="sign_up">Sign up</string>
@@ -50,12 +46,13 @@
     <string name="prev">Prev</string>
     <string name="sign_up_with_google">Sign up with Google</string>
     <string name="sign_in_with_google">Sign in with Google</string>
-    <string name="no_account">No account?\u0020</string>
-    <string name="create_one">Create One!</string>
+    <string name="no_account">Don’t have an account?\u0020</string>
+    <string name="create_one">Create one now!</string>
     <string name="forgot_password">Forgot Password</string>
     <string name="confirm_password">Confirm Password</string>
     <string name="bad_login_credential">Invalid Login Credential..</string>
-<!--    <string name="default_web_client_id">hi</string>-->
+
+
     <string name="question_bank">Question Bank</string>
     <string name="quiz_bank">Quiz Bank</string>
     <string name="add_question">Add question</string>
@@ -67,9 +64,10 @@
     <string name="_8_maths">8_Maths</string>
     <string name="kotlin_quiz_app">Kotlin Quiz App</string>
     <string name="signing_in">Signing in…</string>
-    <string name="login__info_msg">On Clicking -> Sign in with Google, You will be enrolled as a student. To enroll as
+    <string name="login__info_msg">Pressing Sign in with Google, You will be enrolled as a student. To enroll as
     enter as a teacher, please go to sign up screen via -> Create One</string>
     <string name="question_bank_view">Question Bank</string>
+    <string name="quiz_bank_view">Quiz Bank</string>
     <string name="quiz_marks_view">Quiz Marks</string>
     <string name="question">Question</string>
     <string name="option">Option</string>
@@ -122,7 +120,7 @@
     <string name="calendar_warning">All fields are mandatory!!</string>
     <string name="enter_question_hint">Enter Question</string>
     <string name="show_question">Show Question</string>
-    <string name="enter_num_of_options">Enter number of options</string>
+    <string name="enter_num_of_options">Enter number</string>
     <string name="enter_option1">Enter option A</string>
     <string name="enter_option2">Enter option B</string>
     <string name="enter_option3">Enter option C</string>
@@ -140,6 +138,7 @@
     <string name="question_is">Question</string>
     <string name="options_disclaimer">If no options are entered, default option - 4 is used.</string>
     <string name="choose_quiz">Please tap on the spinner to select a quiz.</string>
+    <string name="enter_options">Please choose an option between 1 and 10.</string>
     <string name="option1">Option A</string>
     <string name="option2">Option B</string>
     <string name="option3">Option C</string>
