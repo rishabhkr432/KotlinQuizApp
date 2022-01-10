@@ -13,22 +13,5 @@ data class Quiz(
     override fun toString(): String {
         return quizId
     }
-//    fun validation(quizTitle: String,docRef: DocumentReference): Boolean{
-//        var result = false
-//        var newQuiz = Quiz()
-//        if (quizTitle == ""){
-//            newQuiz = Quiz(quizTitle)
-//            result = true
-//        }
-//        else{
-//            if(quizTitle.matches(Constants.ALPHANUM.toRegex()) && quizTitle.length < Constants.LENGTHCHECK_50){
-//                newQuiz = Quiz(quizTitle)
-//                result = true
-//            }
-//            else{
-//                result = false
-//            }
-//        }
-//        return result
-//    }
+
 }

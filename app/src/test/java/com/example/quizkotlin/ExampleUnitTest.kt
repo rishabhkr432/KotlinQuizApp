@@ -20,6 +20,9 @@ class ExampleUnitTest {
     var rule: TestRule =  InstantTaskExecutorRule()
     lateinit var qvm:QuestionViewModel
 
+    /**
+     * Testing if the quiz can be create successfully and only outputs quizId instead of all the feilds
+     */
 
     @Test
     fun testQuizNameOutput() {
@@ -31,7 +34,7 @@ class ExampleUnitTest {
     @Test
     fun testingMockQuiz(){
         val quizList: MutableList<Quiz>  = mutableListOf()
-        val questionList: MutableList<Question>  = mutableListOf()
+        val questionList: ArrayList<Question>  = arrayListOf()
 
         val options: MutableList<String?> = mutableListOf("7","3","4")
         val question: Question = Question("What is 5+2?",options,"7")
@@ -42,24 +45,5 @@ class ExampleUnitTest {
         assertEquals(quizList[0].quizQuestionList[0].correct_answer,"7")
 
     }
-    @Test
-    fun testViewModel() {
-        qvm = QuestionViewModel()
-        qvm.getQuizzes()
 
-        }
-
-
-    @Test
-    fun addition_isCorrect() {
-        assertEquals(4, 2 + 2)
-    }
-
-//    @Test
-//    fun getQuiz(){
-//        val q = "TestQuiz"
-//        val addQuiz = AddQuiz()
-//        val check = addQuiz.validation(q)
-//        assertEquals(4, 2 + 2)
-//    }
 }

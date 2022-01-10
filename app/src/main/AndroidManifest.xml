@@ -12,14 +12,11 @@
         android:supportsRtl="true"
 
         android:theme="@style/Theme.QuizKotlin">
-
-<!--        <activity android:name=".ResultsActivity"/>-->
         <activity android:name=".activities.CheckResultsActivity"/>
         <activity android:name=".activities.HistoryActivity"/>
         <activity android:name=".activities.ResultsActivity"/>
         <activity android:name=".activities.AddQuiz" />
-<!--        <activity android:name=".ShowQuestions" />-->
-        <activity android:name=".QuestionPopup" />
+
         <activity android:name=".activities.AttemptQuizActivity" />
         <activity android:name=".activities.StudentHomeActivity" />
         <activity android:name=".activities.TeacherHomeActivity" />

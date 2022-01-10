@@ -146,7 +146,7 @@ class QuizBankAdapter(
                     .get()
                     .addOnSuccessListener { documents ->
                         for (document in documents) {
-                            if (document.get("quizId") == (tempPos)) {
+                            if (document.get(QUIZ_ID) == (tempPos)) {
                                 Log.d(
                                     "holder.quizcardtitle.text",
                                     tempPos

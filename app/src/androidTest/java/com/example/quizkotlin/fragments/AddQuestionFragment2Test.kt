@@ -66,9 +66,9 @@ fun setUp() {
     fun testingInput () {
         val answer = "?"
         val quizList: MutableList<Quiz>  = mutableListOf()
-        val questionList: MutableList<Question>  = mutableListOf()
+        val questionList: ArrayList<Question>  = arrayListOf()
 
-        val options: MutableList<String?> = mutableListOf("7","3","4")
+        val options: ArrayList<String?> = arrayListOf("7","3","4")
         val question: Question = Question("What is 5+2?",options,"7")
         questionList.add(question)
         val quiz: Quiz = Quiz("English",null,questionList)

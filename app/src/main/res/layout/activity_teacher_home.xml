@@ -33,6 +33,7 @@
 
             <TextView
                 android:id="@+id/quiz_bank"
+                android:textColor="?android:textColorPrimary"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_semibold"
@@ -40,6 +41,7 @@
                 android:paddingVertical="@dimen/padding_normal"
                 android:text="@string/quiz_bank"
                 android:textSize="@dimen/text_22"
+
                 app:drawableEndCompat="@drawable/ic_arrow_forward" />
 
             <View
@@ -49,6 +51,7 @@
 
             <TextView
                 android:id="@+id/add_question"
+                android:textColor="?android:textColorPrimary"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_semibold"
@@ -56,6 +59,7 @@
                 android:paddingVertical="@dimen/padding_normal"
                 android:text="@string/add_question"
                 android:textSize="@dimen/text_22"
+
                 app:drawableEndCompat="@drawable/ic_arrow_forward" />
 
             <View
@@ -65,12 +69,14 @@
 
             <TextView
                 android:id="@+id/add_quiz"
+                android:textColor="?android:textColorPrimary"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_semibold"
                 android:paddingHorizontal="@dimen/padding_small"
                 android:paddingVertical="@dimen/padding_normal"
                 android:text="@string/add_quiz"
+
                 android:textSize="@dimen/text_22"
                 app:drawableEndCompat="@drawable/ic_arrow_forward" />
 

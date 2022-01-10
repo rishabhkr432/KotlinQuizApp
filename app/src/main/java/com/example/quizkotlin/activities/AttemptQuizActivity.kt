@@ -132,7 +132,8 @@ class AttemptQuizActivity : AppCompatActivity() {
         }
     }
     /**
-     * Uploading results to the firebase .
+     * Creates a result doc for student result db then
+     * adds the student's email to the quizList within student quizzes so student cannot make another attempt at the quiz.
      */
         private fun sendResultsToDatabase(quizResults: Results) {
             database.collection(STUDENT_QUIZ_RESULTS_PATH).document(quizPas.quizId).set(quizResults)

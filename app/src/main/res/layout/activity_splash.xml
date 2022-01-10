@@ -20,6 +20,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="@dimen/margin_20"
+        android:textColor="?android:textColorPrimary"
         android:fontFamily="@font/poppins_semibold"
         android:text="@string/splash_bottom_tag"
         android:textSize="@dimen/text_18" />

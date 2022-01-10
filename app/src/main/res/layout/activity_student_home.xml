@@ -42,7 +42,7 @@
                 android:paddingVertical="@dimen/padding_normal"
                 android:text="@string/quiz_list"
                 android:textSize="@dimen/text_22"
-                app:drawableEndCompat="@drawable/ic_arrow_forward" />
+                android:textColor="?android:textColorPrimary"                app:drawableEndCompat="@drawable/ic_arrow_forward" />
 
             <View
                 android:layout_width="match_parent"
@@ -58,6 +58,7 @@
                 android:paddingVertical="@dimen/padding_normal"
                 android:text="@string/quiz_marks"
                 android:textSize="@dimen/text_22"
+                android:textColor="?android:textColorPrimary"
                 app:drawableEndCompat="@drawable/ic_arrow_forward" />
 
             <View
