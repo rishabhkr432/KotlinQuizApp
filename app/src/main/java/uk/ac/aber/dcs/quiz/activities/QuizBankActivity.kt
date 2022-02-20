@@ -1,4 +1,4 @@
-package com.example.quizkotlin.activities
+package uk.ac.aber.dcs.quiz.activities
 
 import android.content.Intent
 import android.os.Bundle
@@ -11,16 +11,17 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.quizkotlin.R
-import com.example.quizkotlin.adapters.QuizBankAdapter
-import com.example.quizkotlin.Constants.STUDENT_QUIZ_PATH
-import com.example.quizkotlin.Constants.TEACHERS_QUIZ_PATH
-import com.example.quizkotlin.models.Quiz
-import com.example.quizkotlin.models.User
+import uk.ac.aber.dcs.quiz.R
+import uk.ac.aber.dcs.quiz.adapters.QuizBankAdapter
+import uk.ac.aber.dcs.quiz.constants.Constants.STUDENT_QUIZ_PATH
+import uk.ac.aber.dcs.quiz.constants.Constants.TEACHERS_QUIZ_PATH
+import uk.ac.aber.dcs.quiz.models.Quiz
+import uk.ac.aber.dcs.quiz.models.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Source
+import uk.ac.aber.dcs.quiz.constants.Constants.USERS
 
 class QuizBank : AppCompatActivity() {
 
@@ -32,7 +33,6 @@ class QuizBank : AppCompatActivity() {
     private lateinit var database: FirebaseFirestore
     private lateinit var auth: FirebaseAuth
     private lateinit var user: FirebaseUser
-//    private var userType: Int = 0
     private var userEmail: String = ""
     private var quizPath: String = TEACHERS_QUIZ_PATH
     private var userType :HashMap<Int, String> = hashMapOf<Int, String>()
@@ -49,9 +49,9 @@ class QuizBank : AppCompatActivity() {
         database = FirebaseFirestore.getInstance()
 
         user = auth.currentUser!!
-//        val user = auth.currentUser
 
-        database.collection("Users").document(user.uid).
+
+        database.collection(USERS).document(user.uid).
             /**
              * Reads the document referenced by this `DocumentReference`.
              *

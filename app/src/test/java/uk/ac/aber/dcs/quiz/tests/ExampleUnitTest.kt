@@ -1,9 +1,9 @@
-package com.example.quizkotlin
+package uk.ac.aber.dcs.quiz
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.example.quizkotlin.fragments.QuestionViewModel
-import com.example.quizkotlin.models.Question
-import com.example.quizkotlin.models.Quiz
+import uk.ac.aber.dcs.quiz.fragments.QuestionViewModel
+import uk.ac.aber.dcs.quiz.models.Question
+import uk.ac.aber.dcs.quiz.models.Quiz
 import org.junit.Test
 
 import org.junit.Assert.*

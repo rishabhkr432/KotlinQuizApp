@@ -1,5 +1,4 @@
-package com.example.quizkotlin
-
+package uk.ac.aber.dcs.quiz
 object Constants {
     // firebase paths
     const val TEACHERS_QUIZ_PATH = "Quizzes"

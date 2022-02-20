@@ -1,18 +1,15 @@
-package com.example.quizkotlin.activities
+package uk.ac.aber.dcs.quiz.activities
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import com.example.quizkotlin.R
-import com.example.quizkotlin.fragments.AddQuestionFragment1
+import uk.ac.aber.dcs.quiz.R
+import uk.ac.aber.dcs.quiz.fragments.AddQuestionFragment1
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.firestore.FirebaseFirestore
-
 
 class AddQuestion : AppCompatActivity() {
-    private lateinit var database: FirebaseFirestore
+
     private lateinit var auth: FirebaseAuth
     private lateinit var user: FirebaseUser
 
@@ -22,9 +19,7 @@ class AddQuestion : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_question)
-
         auth = FirebaseAuth.getInstance()
-        database = FirebaseFirestore.getInstance()
 
         user = auth.currentUser!!
 

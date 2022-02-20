@@ -1,4 +1,4 @@
-package com.example.quizkotlin.activities
+package uk.ac.aber.dcs.quiz.activities
 
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -8,12 +8,12 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.quizkotlin.R
-import com.example.quizkotlin.Constants.ALPHANUM
-import com.example.quizkotlin.Constants.INVALID_TITLE
-import com.example.quizkotlin.Constants.LENGTHCHECK_40
-import com.example.quizkotlin.Constants.TEACHERS_QUIZ_PATH
-import com.example.quizkotlin.models.Quiz
+import uk.ac.aber.dcs.quiz.R
+import uk.ac.aber.dcs.quiz.constants.Constants.ALPHANUM
+import uk.ac.aber.dcs.quiz.constants.Constants.INVALID_TITLE
+import uk.ac.aber.dcs.quiz.constants.Constants.LENGTHCHECK_40
+import uk.ac.aber.dcs.quiz.constants.Constants.TEACHERS_QUIZ_PATH
+import uk.ac.aber.dcs.quiz.models.Quiz
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.button.MaterialButton
 import com.google.firebase.auth.FirebaseAuth
@@ -65,7 +65,7 @@ class AddQuiz : AppCompatActivity() {
         } else {
 //
             if(validation(tempTitle)){
-                newQuiz = Quiz(tempTitle)
+                newQuiz = Quiz(tempTitle.toLowerCase())
                 sendToDatabase(docRef)
             }
             else{

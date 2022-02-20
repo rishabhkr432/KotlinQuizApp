@@ -1,4 +1,4 @@
-package com.example.quizkotlin
+package uk.ac.aber.dcs.quiz
 
 import androidx.test.core.app.ActivityScenario
 import androidx.test.espresso.Espresso
@@ -8,7 +8,7 @@ import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner
-import com.example.quizkotlin.activities.TeacherHomeActivity
+import uk.ac.aber.dcs.quiz.activities.TeacherHomeActivity
 
 import org.junit.Test
 import org.junit.runner.RunWith
